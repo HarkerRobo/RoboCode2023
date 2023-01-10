@@ -1,72 +1,141 @@
 package frc.robot.util;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.CANCoder;
-
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
+import harkerrobolib.util.Constants;
+import harkerrobolib.util.HSFalconBuilder;
 import harkerrobolib.wrappers.HSFalcon;
 
-public class SwerveModule {
-    private HSFalcon translation;
-    private HSFalcon rotation;
+public class SwerveModule implements Sendable{
+  private HSFalcon translation;
+  private HSFalcon rotation;
 
-    private CANCoder canCoder;
+  private CANCoder canCoder;
 
-    private int id; // swerveID
+  private int id;
 
-    public SwerveModule(int id) {
-        this.id = id;
+  private MotorVelocitySystem transLoop;
 
-        translation = new HSFalcon(RobotMap.SwerveModule.TRANSLATION_ID[id], RobotMap.CAN_CHAIN);
-        rotation = new HSFalcon(RobotMap.SwerveModule.ROTATION_ID[id], RobotMap.CAN_CHAIN);
-        canCoder = new CANCoder(RobotMap.SwerveModule.CAN_CODER_ID[id], RobotMap.CAN_CHAIN);
+  // PID Constants
+  private static double ROTATION_kP = 0.0;
+  private static double TRANSLATION_kS = 0.0;
+  private static double TRANSLATION_kV = 0.0; //TODO: tune
+  private static double TRANSLATION_kA = 0.0;
 
-        motorInit();
-    }
+  private static double TRANSLATION_QELMS = 5;
 
-    public HSFalcon getMotor() {
-        return translation;
-    }
+  public SwerveModule(int id) {
+    this.id = id;
 
-    public void setAngleAndDrive(double angle, double drive) {
-    }
+    translation =
+        new HSFalconBuilder()
+            .invert(RobotMap.SwerveModule.TRANSLATION_INVERT[id])
+            .supplyLimit(
+                RobotMap.SwerveModule.TRANS_MOTOR_CURRENT_PEAK,
+                RobotMap.SwerveModule.TRANS_MOTOR_CURRENT_CONTINUOUS,
+                RobotMap.SwerveModule.TRANS_MOTOR_CURRENT_PEAK_DUR)
+            .build(RobotMap.SwerveModule.TRANSLATION_ID[id], RobotMap.CAN_CHAIN);
 
-    public void motorInit() {
-        // Factory Default
-        translation.configFactoryDefault();
-        rotation.configFactoryDefault();
+    transLoop = new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
 
-        // Inverts
-        translation.setInverted(RobotMap.SwerveModule.TRANSLATION_INVERT[id]);
-        rotation.setInverted(RobotMap.SwerveModule.ROTATION_INVERT[id]);
+    rotation =
+        new HSFalconBuilder()
+            .invert(RobotMap.SwerveModule.ROTATION_INVERT[id])
+            .statorLimit(
+                RobotMap.SwerveModule.ROTATION_MOTOR_CURRENT_PEAK,
+                RobotMap.SwerveModule.ROTATION_MOTOR_CURRENT_CONTINUOUS,
+                RobotMap.SwerveModule.ROTATION_MOTOR_CURRENT_PEAK_DUR)
+            .build(RobotMap.SwerveModule.ROTATION_ID[id], RobotMap.CAN_CHAIN);
+    canCoder = new CANCoder(RobotMap.SwerveModule.CAN_CODER_ID[id], RobotMap.CAN_CHAIN);
 
-        // Feedback Sensor
-        translation.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
-        rotation.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
+    initModule();
+  }
 
-        // Current Limits
-        translation.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration());
-        rotation.configStatorCurrentLimit(new StatorCurrentLimitConfiguration());
+  public void setAngleAndDrive(double angle, double drive) {
+    setAngle(angle);
+    setDrive(drive);
+  }
 
-        // Voltage Comp
-        translation.enableVoltageCompensation(true);
-        rotation.enableVoltageCompensation(true);
-        translation.configVoltageCompSaturation(RobotMap.MAX_CONTROL_EFFORT);
-        rotation.configVoltageCompSaturation(RobotMap.MAX_CONTROL_EFFORT);
+  private void setAngle(double angle) {
+    rotation.set(ControlMode.Position, angle / RobotMap.SwerveModule.ROTATION_CONVERSION);
+  }
 
-        // Velocity Measurement Window | Sensitivity / Rolling Average
-        translation.configVelocityMeasurementWindow(RobotMap.SwerveModule.VELOCITY_FILTER);
+  private void setDrive(double drive) {
+    translation.setVoltage(transLoop.getVoltage(drive, getSpeed()));
+  }
 
-        // Neutral Mode
-        rotation.setNeutralMode(NeutralMode.Brake);
+  private void initModule() {
+    SendableRegistry.addLW(
+      translation, "Drivetrain/" + swerveIDToName(id) + " Module", "Drive Motor");
+    SendableRegistry.addLW(
+      rotation, "Drivetrain/" + swerveIDToName(id) + " Module", "Rotation Motor");
+    setkP(ROTATION_kP);
+    setAbsolutePosition();
+  }
+  
+  private void setkP(double kP) {
+    ROTATION_kP = kP;
+    rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
+  }
 
-        // PID
-        rotation.selectProfileSlot(RobotMap.SwerveModule.SLOT_INDEX, RobotMap.SwerveModule.PID_INDEX);
-        rotation.config_kP(RobotMap.SwerveModule.SLOT_INDEX, RobotMap.SwerveModule.kP);
-        rotation.config_kI(RobotMap.SwerveModule.SLOT_INDEX, RobotMap.SwerveModule.kP);
-        rotation.config_kD(RobotMap.SwerveModule.SLOT_INDEX, RobotMap.SwerveModule.kP);
-    }
+  private void setkS(double kS) {
+    TRANSLATION_kS = kS;
+    transLoop = new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
+  }
+
+  private void setkV(double kV) {
+    TRANSLATION_kV = kV;
+    transLoop = new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
+  }
+
+  private void setQelms(double error) {
+    TRANSLATION_QELMS = error;
+    transLoop = new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
+  }
+
+  private void setAbsolutePosition() {
+    double pos = canCoder.getAbsolutePosition() - RobotMap.SwerveModule.CAN_CODER_OFFSETS[id];
+    rotation.setSelectedSensorPosition(pos / RobotMap.SwerveModule.ROTATION_CONVERSION);
+    translation.setSelectedSensorPosition(0);
+  }
+
+  public double getAngle() {
+    return rotation.getSelectedSensorPosition() * RobotMap.SwerveModule.ROTATION_CONVERSION;
+  }
+
+  public double getSpeed() {
+    return translation.getSelectedSensorVelocity() * RobotMap.SwerveModule.VELOCITY_CONVERSION;
+  }
+
+  public double getWheelPosition() {
+    return translation.getSelectedSensorPosition() * RobotMap.SwerveModule.POSITION_CONVERSION;
+  }
+
+  public static String swerveIDToName(int swerveID) {
+    String output = "";
+    if (swerveID < 2) output += "Front ";
+    else output += "Back ";
+    if (swerveID % 2 == 0) output += "Left";
+    else output += "Right";
+    return output;
+  }
+
+  public void initSendable(SendableBuilder builder) {
+    builder.setSmartDashboardType("Swerve Module");
+    builder.addDoubleProperty("Translation Speed", this::getSpeed, this::setDrive);
+    builder.addDoubleProperty("Translation Position", this::getWheelPosition, null);
+    builder.addDoubleProperty("Translation Position", this::getWheelPosition, null);
+    builder.addDoubleProperty("Translation kS", () -> TRANSLATION_kS, this::setkS);
+    builder.addDoubleProperty("Translation kV", () -> TRANSLATION_kV, this::setkV);
+    builder.addDoubleProperty("Translation Error", () -> TRANSLATION_QELMS, this::setQelms);
+
+    builder.addDoubleProperty("Rotation Angle", this::getAngle, this::setAngle);
+    builder.addDoubleProperty("Rotation kP", () -> ROTATION_kP, this::setkP);
+  }
 }

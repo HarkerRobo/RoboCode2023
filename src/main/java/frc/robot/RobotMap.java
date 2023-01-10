@@ -1,91 +1,67 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import harkerrobolib.util.Conversions;
 
 public final class RobotMap {
-    public static final Field2d FIELD = new Field2d();
+  public static final Field2d FIELD = new Field2d();
 
-    public static final String CAN_CHAIN = "BINGCHILLING";
+  public static final String CAN_CHAIN = "BINGCHILLING";
 
-    // Conversion Rates
-    public static final double TICKS_TO_DEGRESS = 360.0 / 2048.0;
-    public static final double INCHES_TO_METERS = 0.0254;
-    public static final double TICKS_TO_METERS = (10.0 * Math.PI * INCHES_TO_METERS) / 2048.0;
+  // Robot Constants
+  public static final double MAX_DRIVING_SPEED = 4.0; // m/s
+  public static final double MAX_TURNING_SPEED = 1.0; // rad/s
 
-    // Voltage Compensation
-    public static final double MAX_CONTROL_EFFORT = 10.0;
+  // Robot Dimensions
+  public static final double ROBOT_LENGTH = 0.0;
+  public static final double ROBOT_WIDTH = 0.0;
 
-    // Robot Constants
-    public static final double MAX_DRIVING_SPEED = 2; // m/s
-    public static final double MAX_TURNING_SPEED = 1; // rad/s
+  public static final class SwerveModule {
+    // IDs and Inverts
+    public static final int[] TRANSLATION_ID = {0, 0, 0, 0};
 
-    // Robot Dimensions
-    public static final double ROBOT_LENGTH = 0.0;
-    public static final double ROBOT_WIDTH = 0.0;
-    public static final double WHEEL_DIAMETER = 0.0;
+    public static final boolean[] TRANSLATION_INVERT = {false, false, false, false};
 
+    public static final int[] ROTATION_ID = {0, 0, 0, 0};
 
-    public static final class OI {
-        public static final double DEADBAND = 0.0;
+    public static final boolean[] ROTATION_INVERT = {false, false, false, false};
 
-        public static final int DRIVER_ID = 0;
-        public static final int OPERATOR_ID = 1;
-    }
-    
-    public static final class SwerveModule {
-        // IDs and Inverts
-        public static final int[] TRANSLATION_ID = {
-            0, 0, 0, 0
-        };
+    public static final int[] CAN_CODER_ID = {0, 0, 0, 0};
 
-        public static final boolean[] TRANSLATION_INVERT = {
-            false, false, false, false
-        };
+    public static final double[] CAN_CODER_OFFSETS = {0, 0, 0, 0};
 
-        public static final int[] ROTATION_ID = {
-            0, 0, 0, 0
-        };
+    // Current Limiting Constants
+    public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
+    public static final double ROTATION_MOTOR_CURRENT_PEAK = 40;
+    public static final double ROTATION_MOTOR_CURRENT_PEAK_DUR = 0.1;
 
-        public static final boolean[] ROTATION_INVERT = {
-            false, false, false, false
-        };
+    public static final double TRANS_MOTOR_CURRENT_CONTINUOUS = 30;
+    public static final double TRANS_MOTOR_CURRENT_PEAK = 60;
+    public static final double TRANS_MOTOR_CURRENT_PEAK_DUR = 0.1;
 
-        public static final int[] CAN_CODER_ID = {
-            0, 0, 0, 0
-        };
+    // Translation Motor Conversions
+    public static final double TRANSLATION_GEAR_RATIO = 6.75;
+    public static final double WHEEL_DIAMETER = 4.0; // TODO: Change
+    public static final double VELOCITY_CONVERSION =
+        Conversions.conversionConstant(
+            Conversions.System.VELOCITY, TRANSLATION_GEAR_RATIO, WHEEL_DIAMETER);
 
-        // Rolling Average
-        public static final int VELOCITY_FILTER = 32;
+    public static final double POSITION_CONVERSION = Conversions.conversionConstant(Conversions.System.POSITION, TRANSLATION_GEAR_RATIO, WHEEL_DIAMETER);
 
-        // Current Limiting Constants
-        public static final int TRANS_PEAK_CURRENT = 0;
-        public static final int TRANS_PEAK_TIME = 0;
-        public static final int TRANS_CONT_CURRENT = 0;
+    // Rotation Motor Conversions
+    public static final double ROTATION_GEAR_RATIO = 12.8;
+    // All conversion factors convert native units to wanted units
+    public static final double ROTATION_CONVERSION =
+        Conversions.conversionConstant(
+            Conversions.System.ANGLE, ROTATION_GEAR_RATIO, WHEEL_DIAMETER);
+  }
 
-        public static final int ROTATE_PEAK_CURRENT = 0;
-        public static final int ROTATE_PEAK_TIME = 0;
-        public static final int ROTATE_CONT_CURRENT = 0;
+  public static final class Drivetrain {
+    // Pigeon ID
+    public static final int PIGEON_ID = 0;
 
-        // PID Indexes
-        public static final int SLOT_INDEX = 0;
-        public static final int PID_INDEX = 0;
+    public static final double MIN_OUTPUT = 0.01;
 
-        // PID Constants
-        public static final double kP = 0.0;
-        public static final double kI = 0.0;
-        public static final double kD = 0.0;
-    }
-
-    public static final class Drivetrain {
-        // Pigeon ID
-        public static final int PIGEON_ID = 0;
-
-        // Translation Motor Conversions
-        public static final double TRANSLATION_GEAR_RATIO = 6.75;
-        public static final double TRANSLATION_CONVERSION = TICKS_TO_METERS * WHEEL_DIAMETER / TRANSLATION_GEAR_RATIO;
-
-        // Rotation Motor Conversions
-        public static final double ROTATION_GEAR_RATIO = 12.8;
-        public static final double ROTATION_CONVERSION = TICKS_TO_DEGRESS / ROTATION_GEAR_RATIO;
-    }
+    public static final double PIGEON_kP = 0.007;
+  }
 }
