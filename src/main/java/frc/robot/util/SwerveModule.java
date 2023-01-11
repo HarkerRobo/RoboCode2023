@@ -4,10 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-<<<<<<< HEAD
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-=======
->>>>>>> 7c79c90bfc3a8bc38719f73a6013a476790dad6a
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
