@@ -16,6 +16,8 @@ public final class RobotMap {
   public static final double ROBOT_LENGTH = 0.0;
   public static final double ROBOT_WIDTH = 0.0;
 
+  public static final boolean IS_PIGEON_UP = false;
+
   public static final class SwerveModule {
     // IDs and Inverts
     public static final int[] TRANSLATION_ID = {0, 0, 0, 0};
@@ -62,7 +64,11 @@ public final class RobotMap {
 
     public static final double MIN_OUTPUT = 0.01;
 
-    public static final double PIGEON_kP = 0.007;
+  }
+
+  public static final class Claw {
+    public static final int CLAW_FOWARD_ID = 0;
+    public static final int CLAW_REVERSE_ID = 0;
   }
 
   public static final class AngledElevator

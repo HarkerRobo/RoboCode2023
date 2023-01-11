@@ -25,7 +25,11 @@ public class Drivetrain extends SubsystemBase {
 
   private double prevHeading;
 
+<<<<<<< HEAD
   private SwerveModulePosition[] modulePositions;
+=======
+  private static double PIGEON_kP = 0.007;
+>>>>>>> 7c79c90bfc3a8bc38719f73a6013a476790dad6a
 
   private Drivetrain() {
     swerveModules =
@@ -43,6 +47,7 @@ public class Drivetrain extends SubsystemBase {
             new Translation2d(RobotMap.ROBOT_LENGTH / 2, RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, RobotMap.ROBOT_WIDTH / 2),
+<<<<<<< HEAD
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2));
     
     Pose2d initalPoseMeters = new Pose2d();
@@ -54,17 +59,24 @@ public class Drivetrain extends SubsystemBase {
     };
     poseEstimator = new SwerveDrivePoseEstimator(kinematics, Rotation2d.fromDegrees(getHeading()), modulePositions, initalPoseMeters);
   }
+=======
+            new Translation2d(-RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2)
+        );
+>>>>>>> 7c79c90bfc3a8bc38719f73a6013a476790dad6a
 
-  public double getHeading() {
-    return -pigeon.getYaw();
-  }
+        poseEstimator = new SwerveDrivePoseEstimator(kinematics, Rotation2d.fromDegrees(getHeading()), null, null);
+    }
 
   public double adjustPigeon(double omega) {
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
-      omega = -RobotMap.Drivetrain.PIGEON_kP * (getHeading() - prevHeading);
+        omega = -PIGEON_kP * (getHeading() - prevHeading);
     else prevHeading = getHeading();
 
     return omega;
+  }
+    
+  public double getHeading() {
+    return (RobotMap.IS_PIGEON_UP) ? -pigeon.getYaw() : pigeon.getYaw();
   }
 
   public Rotation2d getRotation() {
@@ -72,11 +84,22 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void updatePose() {
+<<<<<<< HEAD
     poseEstimator.update(getRotation(), modulePositions);
   }
 
   public void setAngleAndDrive(ChassisSpeeds chassis) {
     
+=======
+  }
+
+  public void setAngleAndDrive(ChassisSpeeds chassis) {
+    SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassis);
+    swerveModules[0].setAngleAndDrive(states[0]);
+    swerveModules[1].setAngleAndDrive(states[1]);
+    swerveModules[2].setAngleAndDrive(states[2]);
+    swerveModules[3].setAngleAndDrive(states[3]);
+>>>>>>> 7c79c90bfc3a8bc38719f73a6013a476790dad6a
   }
 
   @Override
