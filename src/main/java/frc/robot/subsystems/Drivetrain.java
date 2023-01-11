@@ -2,10 +2,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.util.SwerveModule;
@@ -21,6 +24,8 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
 
   private double prevHeading;
+
+  private SwerveModulePosition[] modulePositions;
 
   private Drivetrain() {
     swerveModules =
@@ -39,6 +44,15 @@ public class Drivetrain extends SubsystemBase {
             new Translation2d(RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2));
+    
+    Pose2d initalPoseMeters = new Pose2d();
+    modulePositions = new SwerveModulePosition[] {
+        swerveModules[0].getSwerveModulePosition(), 
+        swerveModules[1].getSwerveModulePosition(), 
+        swerveModules[2].getSwerveModulePosition(),
+        swerveModules[3].getSwerveModulePosition()
+    };
+    poseEstimator = new SwerveDrivePoseEstimator(kinematics, Rotation2d.fromDegrees(getHeading()), modulePositions, initalPoseMeters);
   }
 
   public double getHeading() {
@@ -57,9 +71,13 @@ public class Drivetrain extends SubsystemBase {
     return Rotation2d.fromDegrees(getHeading());
   }
 
-  public void updatePose() {}
+  public void updatePose() {
+    poseEstimator.update(getRotation(), modulePositions);
+  }
 
-  public void setAngleAndDrive(ChassisSpeeds chassis) {}
+  public void setAngleAndDrive(ChassisSpeeds chassis) {
+    
+  }
 
   @Override
   public void periodic() {

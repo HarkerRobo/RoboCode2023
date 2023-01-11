@@ -64,4 +64,25 @@ public final class RobotMap {
 
     public static final double PIGEON_kP = 0.007;
   }
+
+  public static final class AngledElevator
+  {
+    public static final int MASTER_ID = 0;
+    public static final int FOLLOWER_ID = 0;
+
+    public static final boolean MASTER_INVERTED = true;
+    public static final boolean FOLLOWER_INVERTED = true;
+
+    public static final double MASTER_CURRENT_PEAK = 0;
+    public static final double MASTER_CURRENT_CONTINOUS = 0;
+    public static final double MASTER_CURRENT_PEAK_DUR = 0;
+    public static final double FOLLOWER_CURRENT_PEAK = 0;
+    public static final double FOLLOWER_CURRENT_CONTINOUS = 0;
+    public static final double FOLLOWER_CURRENT_PEAK_DUR = 0;
+
+    public static final double WHEEL_DIAMETER = 1.044;
+    public static final double GEAR_RATIO = 0;
+
+    public static final double ELEVATOR_CONVERSION = Conversions.conversionConstant(Conversions.System.POSITION, GEAR_RATIO, WHEEL_DIAMETER);
+  }
 }

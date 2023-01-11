@@ -2,6 +2,10 @@ package frc.robot.util;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.CANCoder;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
@@ -124,6 +128,16 @@ public class SwerveModule implements Sendable{
     if (swerveID % 2 == 0) output += "Left";
     else output += "Right";
     return output;
+  }
+
+  public SwerveModulePosition getSwerveModulePosition()
+  {
+    return new SwerveModulePosition(getWheelPosition(), Rotation2d.fromDegrees(getAngle()));
+  }
+
+  public SwerveModuleState getSwerveModuleState()
+  {
+    return new SwerveModuleState(getSpeed(), Rotation2d.fromDegrees(getAngle()));
   }
 
   public void initSendable(SendableBuilder builder) {
