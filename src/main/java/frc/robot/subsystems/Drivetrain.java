@@ -2,10 +2,13 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.util.SwerveModule;
@@ -21,6 +24,8 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
 
   private double prevHeading;
+
+  private static double PIGEON_kP = 0.007;
 
   private Drivetrain() {
     swerveModules =
@@ -38,28 +43,38 @@ public class Drivetrain extends SubsystemBase {
             new Translation2d(RobotMap.ROBOT_LENGTH / 2, RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, RobotMap.ROBOT_WIDTH / 2),
-            new Translation2d(-RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2));
-  }
+            new Translation2d(-RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2)
+        );
 
-  public double getHeading() {
-    return -pigeon.getYaw();
-  }
+        poseEstimator = new SwerveDrivePoseEstimator(kinematics, Rotation2d.fromDegrees(getHeading()), null, null);
+    }
 
   public double adjustPigeon(double omega) {
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
-      omega = -RobotMap.Drivetrain.PIGEON_kP * (getHeading() - prevHeading);
+        omega = -PIGEON_kP * (getHeading() - prevHeading);
     else prevHeading = getHeading();
 
     return omega;
+  }
+    
+  public double getHeading() {
+    return (RobotMap.IS_PIGEON_UP) ? -pigeon.getYaw() : pigeon.getYaw();
   }
 
   public Rotation2d getRotation() {
     return Rotation2d.fromDegrees(getHeading());
   }
 
-  public void updatePose() {}
+  public void updatePose() {
+  }
 
-  public void setAngleAndDrive(ChassisSpeeds chassis) {}
+  public void setAngleAndDrive(ChassisSpeeds chassis) {
+    SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassis);
+    swerveModules[0].setAngleAndDrive(states[0]);
+    swerveModules[1].setAngleAndDrive(states[1]);
+    swerveModules[2].setAngleAndDrive(states[2]);
+    swerveModules[3].setAngleAndDrive(states[3]);
+  }
 
   @Override
   public void periodic() {
