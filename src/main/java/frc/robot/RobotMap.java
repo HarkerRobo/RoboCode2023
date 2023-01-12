@@ -48,7 +48,9 @@ public final class RobotMap {
         Conversions.conversionConstant(
             Conversions.System.VELOCITY, TRANSLATION_GEAR_RATIO, WHEEL_DIAMETER);
 
-    public static final double POSITION_CONVERSION = Conversions.conversionConstant(Conversions.System.POSITION, TRANSLATION_GEAR_RATIO, WHEEL_DIAMETER);
+    public static final double POSITION_CONVERSION =
+        Conversions.conversionConstant(
+            Conversions.System.POSITION, TRANSLATION_GEAR_RATIO, WHEEL_DIAMETER);
 
     // Rotation Motor Conversions
     public static final double ROTATION_GEAR_RATIO = 12.8;
@@ -63,7 +65,6 @@ public final class RobotMap {
     public static final int PIGEON_ID = 0;
 
     public static final double MIN_OUTPUT = 0.01;
-
   }
 
   public static final class Claw {
@@ -71,8 +72,7 @@ public final class RobotMap {
     public static final int CLAW_REVERSE_ID = 0;
   }
 
-  public static final class AngledElevator
-  {
+  public static final class AngledElevator {
     public static final int MASTER_ID = 0;
     public static final int FOLLOWER_ID = 0;
 
@@ -89,6 +89,7 @@ public final class RobotMap {
     public static final double WHEEL_DIAMETER = 1.044;
     public static final double GEAR_RATIO = 0;
 
-    public static final double ELEVATOR_CONVERSION = Conversions.conversionConstant(Conversions.System.POSITION, GEAR_RATIO, WHEEL_DIAMETER);
+    public static final double ELEVATOR_CONVERSION =
+        Conversions.conversionConstant(Conversions.System.POSITION, GEAR_RATIO, WHEEL_DIAMETER);
   }
 }
