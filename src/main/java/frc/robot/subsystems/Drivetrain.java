@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -60,6 +61,11 @@ public class Drivetrain extends SubsystemBase {
   public void updatePose() {}
 
   public void setAngleAndDrive(ChassisSpeeds chassis) {}
+
+  public Pose2d getPoseEstimatorPose2d() {
+    return poseEstimator.getEstimatedPosition();
+  }
+
 
   @Override
   public void periodic() {

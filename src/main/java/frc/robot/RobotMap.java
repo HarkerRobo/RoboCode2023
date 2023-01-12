@@ -55,6 +55,23 @@ public final class RobotMap {
         Conversions.conversionConstant(
             Conversions.System.ANGLE, ROTATION_GEAR_RATIO, WHEEL_DIAMETER);
   }
+  public static final class SwervePositionController{
+    public static final double X_KP = 0;
+    public static final double X_KI = 0;
+    public static final double X_KD = 0;
+  
+    public static final double Y_KP = 0;
+    public static final double Y_KI = 0;
+    public static final double Y_KD = 0;
+  
+    public static final double THETA_KP = 0;
+    public static final double THETA_KI = 0.0;
+    public static final double THETA_KD = 0.0;
+
+    public static double MAX_ANGLE_VELOCITY = Math.PI;
+    public static double MAX_ANGLE_ACCELERATION = Math.PI / 2;
+  
+  }
 
   public static final class Drivetrain {
     // Pigeon ID
