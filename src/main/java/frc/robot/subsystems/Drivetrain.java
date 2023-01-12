@@ -7,6 +7,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.util.SwerveModule;
@@ -22,6 +24,8 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
 
   private double prevHeading;
+
+  private static double PIGEON_kP = 0.007;
 
   private Drivetrain() {
     swerveModules =
@@ -40,27 +44,49 @@ public class Drivetrain extends SubsystemBase {
             new Translation2d(RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2));
-  }
+    
+    Pose2d initalPoseMeters = new Pose2d();
+    
+    poseEstimator = new SwerveDrivePoseEstimator(kinematics, Rotation2d.fromDegrees(getHeading()), getModulePositions(), initalPoseMeters);
 
-  public double getHeading() {
-    return -pigeon.getYaw();
-  }
+    }
 
   public double adjustPigeon(double omega) {
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
-      omega = -RobotMap.Drivetrain.PIGEON_kP * (getHeading() - prevHeading);
+        omega = -PIGEON_kP * (getHeading() - prevHeading);
     else prevHeading = getHeading();
 
     return omega;
+  }
+    
+  public double getHeading() {
+    return (RobotMap.IS_PIGEON_UP) ? -pigeon.getYaw() : pigeon.getYaw();
   }
 
   public Rotation2d getRotation() {
     return Rotation2d.fromDegrees(getHeading());
   }
 
-  public void updatePose() {}
+  private SwerveModulePosition[] getModulePositions()
+  {
+    return new SwerveModulePosition[] {
+      swerveModules[0].getSwerveModulePosition(), 
+      swerveModules[1].getSwerveModulePosition(),
+      swerveModules[2].getSwerveModulePosition(),
+      swerveModules[3].getSwerveModulePosition()
+    };
+  }
 
-  public void setAngleAndDrive(ChassisSpeeds chassis) {}
+  public void updatePose() {
+    poseEstimator.update(getRotation(), getModulePositions());
+  }
+
+  public void setAngleAndDrive(ChassisSpeeds chassis) {
+    SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassis);
+    swerveModules[1].setAngleAndDrive(states[1]);
+    swerveModules[2].setAngleAndDrive(states[2]);
+    swerveModules[3].setAngleAndDrive(states[3]);
+  }
 
   public Pose2d getPoseEstimatorPose2d() {
     return poseEstimator.getEstimatedPosition();
@@ -71,7 +97,6 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     updatePose();
   }
-
   public static Drivetrain getInstance() {
     if (instance == null) instance = new Drivetrain();
     return instance;
