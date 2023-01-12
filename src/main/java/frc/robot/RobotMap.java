@@ -92,4 +92,18 @@ public final class RobotMap {
     public static final double ELEVATOR_CONVERSION =
         Conversions.conversionConstant(Conversions.System.POSITION, GEAR_RATIO, WHEEL_DIAMETER);
   }
+  public static final class SwervePositionController{
+    public static final double X_KP = 0.0;
+    public static final double X_KI = 0.0;
+    public static final double X_KD = 0.0;
+    public static final double Y_KP = 0.0;
+    public static final double Y_KI = 0.0;
+    public static final double Y_KD = 0.0;
+    public static final double THETA_KP = 0.0;
+    public static final double THETA_KI = 0.0;
+    public static final double THETA_KD = 0.0;
+
+    public static final double MAX_ANGLE_VELOCITY = 0.0;
+    public static final double MAX_ANGLE_ACCELERATION = 0.0;
+  }
 }

@@ -87,7 +87,9 @@ public class Drivetrain extends SubsystemBase {
     swerveModules[2].setAngleAndDrive(states[2]);
     swerveModules[3].setAngleAndDrive(states[3]);
   }
-
+  public Pose2d getPoseEstimatorPose2d() {
+    return null;
+  }
   @Override
   public void periodic() {
     updatePose();
@@ -96,4 +98,6 @@ public class Drivetrain extends SubsystemBase {
     if (instance == null) instance = new Drivetrain();
     return instance;
   }
+
+ 
 }
