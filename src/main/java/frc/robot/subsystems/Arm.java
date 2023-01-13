@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import harkerrobolib.util.HSFalconBuilder;
@@ -18,6 +19,9 @@ public class Arm extends SubsystemBase {
 
     private static double MAX_EXTENSION_ERROR = 0;
     private static double MAX_ROTATION_ERROR = 0;
+
+    private DigitalInput extensionLimitSwitch;
+    private DigitalInput rotationLimitSwitch;
 
     private Arm(){
         extensionMotor =
@@ -52,6 +56,8 @@ public class Arm extends SubsystemBase {
     private void initMotors() {
         addChild("Extension Motor", extensionMotor);
         addChild("Angle Motor", angleMotor);
+        addChild("Extension Limit Switch",extensionLimitSwitch);
+        addChild("Rotation Limit Switch", rotationLimitSwitch);
         setExtensionkP(EXTENSION_kP);
         setRotationkP(ROTATION_kP);
     }
@@ -90,6 +96,19 @@ public class Arm extends SubsystemBase {
     public double getAngle() {
         return angleMotor.getSelectedSensorPosition() * RobotMap.Arm.CONVERSION_ANGLE;
     }
+    public void setExtensionPower(double power){
+        extensionMotor.set(ControlMode.PercentOutput,power);
+      }
+    public void setRotationPower(double power){
+        angleMotor.set(ControlMode.PercentOutput,power);
+    }
+    public boolean extensionStop(){
+        return extensionLimitSwitch.get();
+    }
+    public boolean rotationStop(){
+        return rotationLimitSwitch.get();
+    }
+    
 
     public static Arm getInstance() {
         if (instance == null){
@@ -97,6 +116,7 @@ public class Arm extends SubsystemBase {
         }
         return instance;
     }
+    
 
     /*@Override
     public void initSendable(SendableBuilder builder) {
