@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import harkerrobolib.util.HSFalconBuilder;
@@ -97,10 +98,10 @@ public class Arm extends SubsystemBase {
         return instance;
     }
 
-    @Override
+    /*@Override
     public void initSendable(SendableBuilder builder) {
-        builder.addDoubleProperty("extension", )
-    }
+        builder.addDoubleProperty("extension", "a");
+    }*/
 
         
 }

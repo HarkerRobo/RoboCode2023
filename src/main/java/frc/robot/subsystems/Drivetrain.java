@@ -6,6 +6,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -102,4 +103,10 @@ public class Drivetrain extends SubsystemBase {
     if (instance == null) instance = new Drivetrain();
     return instance;
   }
+  
+  public SwerveDriveKinematics getKinematics() {
+    return kinematics;
+  }
+
+
 }
