@@ -121,6 +121,11 @@ public class SwerveModule implements Sendable{
     translation.setSelectedSensorPosition(0);
   }
 
+  public void resetEncoders()
+  {
+    translation.setSelectedSensorPosition(0);
+  }
+
   public double getAngle() {
     return rotation.getSelectedSensorPosition() * RobotMap.SwerveModule.ROTATION_CONVERSION;
   }

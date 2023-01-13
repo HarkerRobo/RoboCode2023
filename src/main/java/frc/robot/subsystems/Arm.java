@@ -12,7 +12,7 @@ public class Arm extends SubsystemBase {
     private static Arm instance;
     
     private HSFalcon extensionMotor;
-    private HSFalcon angleMotor;
+    private HSFalcon rotationMotor;
 
     private static double EXTENSION_kP = 0;
     private static double ROTATION_kP = 0;
@@ -33,7 +33,7 @@ public class Arm extends SubsystemBase {
                     RobotMap.Arm.EXTENSION_CURRENT_PEAK_DUR)
                 .build(RobotMap.Arm.EXTENSION_ID, RobotMap.CAN_CHAIN);
 
-        angleMotor =
+        rotationMotor =
             new HSFalconBuilder()
                 .invert(RobotMap.Arm.ANGLE_INVERTED)
                 .supplyLimit(
@@ -50,14 +50,15 @@ public class Arm extends SubsystemBase {
 
     public void rotateToAngle(double angle)
     {
-        angleMotor.set(ControlMode.Position, angle / RobotMap.Arm.CONVERSION_ANGLE);
+        rotationMotor.set(ControlMode.Position, angle / RobotMap.Arm.CONVERSION_ANGLE);
     }
 
     private void initMotors() {
         addChild("Extension Motor", extensionMotor);
-        addChild("Angle Motor", angleMotor);
+        addChild("Angle Motor", rotationMotor);
         addChild("Extension Limit Switch",extensionLimitSwitch);
         addChild("Rotation Limit Switch", rotationLimitSwitch);
+
         setExtensionkP(EXTENSION_kP);
         setRotationkP(ROTATION_kP);
     }
@@ -69,7 +70,7 @@ public class Arm extends SubsystemBase {
 
     private void setRotationkP(double kP) {
         ROTATION_kP = kP;
-        angleMotor.config_kP(RobotMap.Arm.SLOT_INDEX, ROTATION_kP);
+        rotationMotor.config_kP(RobotMap.Arm.SLOT_INDEX, ROTATION_kP);
     }
 
     public boolean checkAngle(double desired) {
@@ -94,21 +95,28 @@ public class Arm extends SubsystemBase {
     }
 
     public double getAngle() {
-        return angleMotor.getSelectedSensorPosition() * RobotMap.Arm.CONVERSION_ANGLE;
+        return rotationMotor.getSelectedSensorPosition() * RobotMap.Arm.CONVERSION_ANGLE;
+    }
+
+    public double getRotationkP() {
+        return ROTATION_kP;
+    }
+
+    public double getExtensionkP() {
+        return EXTENSION_kP;
     }
     public void setExtensionPower(double power){
-        extensionMotor.set(ControlMode.PercentOutput,power);
+        extensionMotor.set(ControlMode.PercentOutput, power);
       }
     public void setRotationPower(double power){
-        angleMotor.set(ControlMode.PercentOutput,power);
+        rotationMotor.set(ControlMode.PercentOutput, power);
     }
     public boolean extensionStop(){
-        return extensionLimitSwitch.get();
+        return !extensionLimitSwitch.get();
     }
     public boolean rotationStop(){
-        return rotationLimitSwitch.get();
+        return !rotationLimitSwitch.get();
     }
-    
 
     public static Arm getInstance() {
         if (instance == null){
@@ -118,10 +126,16 @@ public class Arm extends SubsystemBase {
     }
     
 
-    /*@Override
+    @Override
     public void initSendable(SendableBuilder builder) {
-        builder.addDoubleProperty("extension", "a");
-    }*/
+        builder.setSmartDashboardType("Arm");
+        builder.addDoubleProperty("Extension Position", this::getExtension, this::extendToPosition);
+        builder.addDoubleProperty("Extension kP", this::getExtensionkP, this::setExtensionkP);
+
+        builder.addDoubleProperty("Rotation Angle", this::getAngle, this::rotateToAngle);
+        builder.addDoubleProperty("Rotation kP", this::getRotationkP, this::setRotationkP);
+
+    }
 
         
 }
