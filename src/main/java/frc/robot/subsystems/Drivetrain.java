@@ -1,11 +1,13 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -83,13 +85,17 @@ public class Drivetrain extends SubsystemBase {
 
   public void setAngleAndDrive(ChassisSpeeds chassis) {
     SwerveModuleState[] states = kinematics.toSwerveModuleStates(chassis);
+    swerveModules[0].setAngleAndDrive(states[0]);
     swerveModules[1].setAngleAndDrive(states[1]);
     swerveModules[2].setAngleAndDrive(states[2]);
     swerveModules[3].setAngleAndDrive(states[3]);
   }
+
   public Pose2d getPoseEstimatorPose2d() {
-    return null;
+    return poseEstimator.getEstimatedPosition();
   }
+
+
   @Override
   public void periodic() {
     updatePose();
@@ -98,8 +104,10 @@ public class Drivetrain extends SubsystemBase {
     if (instance == null) instance = new Drivetrain();
     return instance;
   }
-  public SwerveDriveKinematics getKinematics(){
+  
+  public SwerveDriveKinematics getKinematics() {
     return kinematics;
   }
- 
+
+
 }

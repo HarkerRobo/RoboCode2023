@@ -16,15 +16,11 @@ public class Claw extends SubsystemBase {
     }
 
     public void release() {
-        if (claw.get() == Value.kForward) {
-            claw.set(Value.kReverse);
-        }
+        claw.set(Value.kReverse);
     }
 
     public void pinch() {
-        if (claw.get() == Value.kReverse) {
-            claw.set(Value.kForward);
-        }
+        claw.set(Value.kForward);
     }
 
     public static Claw getInstance() {
