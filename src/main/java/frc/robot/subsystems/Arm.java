@@ -12,8 +12,11 @@ public class Arm extends SubsystemBase {
     private HSFalcon extensionMotor;
     private HSFalcon angleMotor;
 
-    public double EXTENSION_KP = 0;
-    public double ANGLE_KP = 0;
+    private static double EXTENSION_kP = 0;
+    private static double ROTATION_kP = 0;
+
+    private static double MAX_EXTENSION_ERROR = 0;
+    private static double MAX_ROTATION_ERROR = 0;
 
     private Arm(){
         extensionMotor =
@@ -48,28 +51,35 @@ public class Arm extends SubsystemBase {
     private void initMotors() {
         addChild("Extension Motor", extensionMotor);
         addChild("Angle Motor", angleMotor);
-        setkP();
+        setExtensionkP(EXTENSION_kP);
+        setRotationkP(ROTATION_kP);
     }
 
-    private void setkP() {
-        extensionMotor.config_kP(RobotMap.Arm.SLOT_INDEX, EXTENSION_KP);
-        angleMotor.config_kP(RobotMap.Arm.SLOT_INDEX, ANGLE_KP);
+    private void setExtensionkP(double kP) {
+        EXTENSION_kP = kP;
+        extensionMotor.config_kP(RobotMap.Arm.SLOT_INDEX, EXTENSION_kP);
+    }
+
+    private void setRotationkP(double kP) {
+        ROTATION_kP = kP;
+        angleMotor.config_kP(RobotMap.Arm.SLOT_INDEX, ROTATION_kP);
     }
 
     public boolean checkAngle(double desired) {
-        if (desired == getExtension()) {
-            return true;
-        }
+        return Math.abs(getRotationError(desired)) < MAX_ROTATION_ERROR;
 
-        return false;
     }
 
     public boolean checkExtend(double desired) {
-        if (desired == getAngle()) {
-            return true;
-        }
-        
-        return false;
+        return Math.abs(getExtensionError(desired)) < MAX_EXTENSION_ERROR;
+    }
+
+    private double getExtensionError(double desired) {
+        return desired - getExtension();
+    }
+
+    private double getRotationError(double desired) {
+        return desired - getAngle();
     }
 
     public double getExtension() {

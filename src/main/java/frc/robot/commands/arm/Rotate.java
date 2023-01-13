@@ -24,6 +24,6 @@ public class Rotate extends CommandBase{
     }
 
     public boolean isFinished() {
-        return Arm.getInstance().checkAngle();
+        return Arm.getInstance().checkAngle(angle);
     }
 }
