@@ -15,11 +15,14 @@ public class Claw extends SubsystemBase {
         claw = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Claw.CLAW_FOWARD_ID, RobotMap.Claw.CLAW_REVERSE_ID);
     }
 
-    public void toggleClaw() {
+    public void release() {
         if (claw.get() == Value.kForward) {
             claw.set(Value.kReverse);
         }
-        else {
+    }
+
+    public void pinch() {
+        if (claw.get() == Value.kReverse) {
             claw.set(Value.kForward);
         }
     }
