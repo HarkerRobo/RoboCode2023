@@ -11,6 +11,8 @@ public final class RobotMap {
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
   public static final double MAX_TURNING_SPEED = 1.0; // rad/s
+  public static final double MAX_ANGLE_VELOCITY = Math.PI * MAX_TURNING_SPEED;
+  public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY/2;
 
   // Robot Dimensions
   public static final double ROBOT_LENGTH = 0.0;
@@ -93,17 +95,6 @@ public final class RobotMap {
         Conversions.conversionConstant(Conversions.System.POSITION, GEAR_RATIO, WHEEL_DIAMETER);
   }
   public static final class SwervePositionController{
-    public static final double X_KP = 0.0;
-    public static final double X_KI = 0.0;
-    public static final double X_KD = 0.0;
-    public static final double Y_KP = 0.0;
-    public static final double Y_KI = 0.0;
-    public static final double Y_KD = 0.0;
-    public static final double THETA_KP = 0.0;
-    public static final double THETA_KI = 0.0;
-    public static final double THETA_KD = 0.0;
-
-    public static final double MAX_ANGLE_VELOCITY = 0.0;
-    public static final double MAX_ANGLE_ACCELERATION = 0.0;
+    
   }
 }
