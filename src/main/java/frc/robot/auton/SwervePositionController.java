@@ -16,10 +16,20 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class SwervePositionController extends CommandBase {
-  private static PIDController xController = new PIDController(RobotMap.SwervePositionController.X_KP, RobotMap.SwervePositionController.X_KI, RobotMap.SwervePositionController.X_KD);
-  private static PIDController yController = new PIDController(RobotMap.SwervePositionController.Y_KP, RobotMap.SwervePositionController.Y_KI, RobotMap.SwervePositionController.Y_KD);
+    public static final double X_KP = 0.0;
+    public static final double X_KI = 0.0;
+    public static final double X_KD = 0.0;
+    public static final double Y_KP = 0.0;
+    public static final double Y_KI = 0.0;
+    public static final double Y_KD = 0.0;
+    public static final double THETA_KP = 0.0;
+    public static final double THETA_KI = 0.0;
+    public static final double THETA_KD = 0.0;
+
+  private static PIDController xController = new PIDController(X_KP, X_KI, X_KD);
+  private static PIDController yController = new PIDController(Y_KP, Y_KI, Y_KD);
   private static ProfiledPIDController thetaController =
-      new ProfiledPIDController(RobotMap.SwervePositionController.THETA_KP,RobotMap.SwervePositionController.THETA_KI,RobotMap.SwervePositionController.THETA_KD,new Constraints(RobotMap.SwervePositionController.MAX_ANGLE_VELOCITY, RobotMap.SwervePositionController.MAX_ANGLE_ACCELERATION));
+      new ProfiledPIDController(THETA_KP,THETA_KI,THETA_KD,new Constraints(RobotMap.MAX_ANGLE_VELOCITY, RobotMap.MAX_ANGLE_ACCELERATION));
 
   private final Trajectory trajectory;
   private final BiFunction<Pose2d, Double, Rotation2d> refHeading;
