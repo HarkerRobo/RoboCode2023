@@ -77,14 +77,29 @@ public class SwerveModule implements Sendable{
   }
 
   private SwerveModuleState optimize(SwerveModuleState desiredState) {
-    var delta = desiredState.angle.rotateBy(Rotation2d.fromDegrees(getAngle()).unaryMinus());
-    if (Math.abs(delta.getDegrees()) > 90.0) {
-        return new SwerveModuleState(
-                -desiredState.speedMetersPerSecond,
-                desiredState.angle.rotateBy(Rotation2d.fromDegrees(180.0)));
-    } else {
-        return new SwerveModuleState(desiredState.speedMetersPerSecond, desiredState.angle);
-    }
+    var angle = desiredState.angle.getDegrees();
+    var speed = desiredState.speedMetersPerSecond;
+    // desiredState.angle.rotateBy(Rotation2d.fromDegrees(getAngle()).unaryMinus());
+    while(angle-getAngle()>180){
+			angle -= 360;
+			//delta = desiredState.angle.getDegrees() - getAngle();	
+		}
+
+		while(angle-getAngle()<-180){
+			angle += 360;
+			//delta = desiredState.angle.minus(getAngle());
+		}
+
+		if(angle-getAngle()>90){
+			angle -= 180;
+			speed *= -1;
+		}
+
+		else if(angle-getAngle()<-90){
+			angle += 180;
+			speed *= -1;
+		}
+    return new SwerveModuleState(speed, Rotation2d.fromDegrees(angle));
   }
 
   private void setAngle(double angle) {
