@@ -11,6 +11,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.util.SwerveModule;
@@ -27,7 +28,9 @@ public class Drivetrain extends SubsystemBase {
 
   private double prevHeading;
 
-  private static double PIGEON_kP = 0.007;
+  public static double PIGEON_kP = 0.007;
+
+  private static double MAX_ERROR_PITCH = 0;
 
   private Drivetrain() {
     swerveModules =
@@ -50,10 +53,13 @@ public class Drivetrain extends SubsystemBase {
     Pose2d initalPoseMeters = new Pose2d();
     
     poseEstimator = new SwerveDrivePoseEstimator(kinematics, Rotation2d.fromDegrees(getHeading()), getModulePositions(), initalPoseMeters);
-
-    }
+    
+    
+  }
 
   public double adjustPigeon(double omega) {
+    PIGEON_kP = SmartDashboard.getNumber("Pigeon kP", PIGEON_kP);
+    SmartDashboard.putNumber("Pigeon kP", PIGEON_kP);
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
         omega = -PIGEON_kP * (getHeading() - prevHeading);
     else prevHeading = getHeading();
@@ -63,6 +69,15 @@ public class Drivetrain extends SubsystemBase {
     
   public double getHeading() {
     return (RobotMap.IS_PIGEON_UP) ? -pigeon.getYaw() : pigeon.getYaw();
+  }
+
+  public double getPitch() {
+    return pigeon.getPitch();
+  }
+
+  public boolean checkPitch(double desired) 
+  {
+    return Math.abs(getPitch() - desired) < MAX_ERROR_PITCH;
   }
 
   public Rotation2d getRotation() {
@@ -100,6 +115,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     updatePose();
   }
+
   public static Drivetrain getInstance() {
     if (instance == null) instance = new Drivetrain();
     return instance;

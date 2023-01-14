@@ -102,6 +102,7 @@ public class AngledElevator extends SubsystemBase {
 
     @Override
     public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("Elevator");
         builder.addDoubleProperty("Position", this::getPosition, this::moveToPosition);
         builder.addDoubleProperty("Elevator kP", this::getkP, this::setkP);
         builder.addDoubleProperty("Elevator kG", this::getkG, this::setkG);
