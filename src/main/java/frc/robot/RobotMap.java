@@ -1,9 +1,16 @@
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import harkerrobolib.util.Conversions;
 
 public final class RobotMap {
+    public static final class Field {
+        public static final double fieldLength = Units.inchesToMeters(651.25);
+        public static final double fieldWidth = Units.inchesToMeters(315.5);
+        public static final double tapeWidth = Units.inchesToMeters(2.0);
+    }
+
     public static final Field2d FIELD = new Field2d();
 
     public static final String CAN_CHAIN = "BINGCHILLING";
@@ -11,6 +18,8 @@ public final class RobotMap {
     // Robot Constants
     public static final double MAX_DRIVING_SPEED = 4.0; // m/s
     public static final double MAX_TURNING_SPEED = 1.0; // rad/s
+    public static final double MAX_ANGLE_VELOCITY = Math.PI * MAX_TURNING_SPEED;
+    public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY / 2;
 
     // Robot Dimensions
     public static final double ROBOT_LENGTH = 0.0;
