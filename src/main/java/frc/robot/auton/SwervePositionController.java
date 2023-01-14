@@ -56,12 +56,12 @@ public class SwervePositionController extends CommandBase {
 
   @Override
   public void execute() {
-    Trajectory.State goal = trajectory.sample(timer.get());
+    Trajectory.State goal = Trajectories.apply(trajectory.sample(timer.get())); //
     double xFF = goal.velocityMetersPerSecond * goal.poseMeters.getRotation().getCos();
     double yFF = goal.velocityMetersPerSecond * goal.poseMeters.getRotation().getSin();
-    Rotation2d angleRef = refHeading.apply(Drivetrain.getInstance().getPoseEstimatorPose2d(), timer.get());
+    Rotation2d angleRef = Trajectories.apply(refHeading.apply(Drivetrain.getInstance().getPoseEstimatorPose2d(), timer.get()));
 
-    Pose2d currentPose = Drivetrain.getInstance().getPoseEstimatorPose2d();
+    Pose2d currentPose = Trajectories.apply(Drivetrain.getInstance().getPoseEstimatorPose2d());
     double clampAdd =1+Math.abs(angleRef.getRadians() - currentPose.getRotation().getRadians())*(2 / Math.PI);
     double thetaFF = MathUtil.clamp(thetaController.calculate(currentPose.getRotation().getRadians(), angleRef.getRadians()),-clampAdd,clampAdd);
     // poseError = poseRef.relativeTo(currentPose);
