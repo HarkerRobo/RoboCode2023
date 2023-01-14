@@ -89,30 +89,20 @@ public final class RobotMap {
     public static final int CLAW_REVERSE_ID = 0;
   }
 
-  public static final class Arm {
-    public static final int EXTENSION_ID = 0;
-    public static final int ANGLE_ID = 0;
+  public static final class AngledElevator {
+    public static final int MASTER_ID = 0;
+    public static final int FOLLOWER_ID = 0;
 
-    public static final boolean EXTENSION_INVERTED = true;
-    public static final boolean ANGLE_INVERTED = true;
+    public static final boolean MASTER_INVERTED = true;
+    public static final boolean FOLLOWER_INVERTED = true;
 
-    public static final double EXTENSION_CURRENT_PEAK = 0;
-    public static final double EXTENSION_CURRENT_CONTINOUS = 0;
-    public static final double EXTENSION_CURRENT_PEAK_DUR = 0;
-    public static final double ANGLE_CURRENT_PEAK = 0;
-    public static final double ANGLE_CURRENT_CONTINOUS = 0;
-    public static final double ANGLE_CURRENT_PEAK_DUR = 0;
+    public static final double MASTER_CURRENT_PEAK = 0;
+    public static final double MASTER_CURRENT_CONTINOUS = 0;
+    public static final double MASTER_CURRENT_PEAK_DUR = 0;
+    public static final double FOLLOWER_CURRENT_PEAK = 0;
+    public static final double FOLLOWER_CURRENT_CONTINOUS = 0;
+    public static final double FOLLOWER_CURRENT_PEAK_DUR = 0;
 
-    public static final double EXTENSION_WHEEL_DIAMETER = 1.044;
-    public static final double EXTENSION_GEAR_RATIO = 0;
-
-    public static final double ANGLE_WHEEL_DIAMETER = 0;
-    public static final double ANGLE_GEAR_RATIO = 0;
-
-    public static final double CONVERSION_POSITION =
-        Conversions.conversionConstant(Conversions.System.POSITION, EXTENSION_GEAR_RATIO, EXTENSION_WHEEL_DIAMETER);
-    public static final double CONVERSION_ANGLE =
-        Conversions.conversionConstant(Conversions.System.ANGLE, ANGLE_GEAR_RATIO, ANGLE_WHEEL_DIAMETER);
 
     // ground, middle, high, human player, low box, high box
     public static final double [] POSITIONS  = {0,0,0,0,0,0};
