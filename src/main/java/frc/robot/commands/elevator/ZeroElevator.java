@@ -20,3 +20,4 @@ public class ZeroElevator extends CommandBase{
         return AngledElevator.getInstance().extensionStop();
     }
 }
+}

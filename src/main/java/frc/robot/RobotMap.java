@@ -96,19 +96,20 @@ public final class RobotMap {
         public static final int CLAW_REVERSE_ID = 0;
     }
 
-    public static final class AngledElevator {
-        public static final int MASTER_ID = 0;
-        public static final int FOLLOWER_ID = 0;
+  public static final class AngledElevator {
+    public static final int MASTER_ID = 0;
+    public static final int FOLLOWER_ID = 0;
 
-        public static final boolean MASTER_INVERTED = true;
-        public static final boolean FOLLOWER_INVERTED = true;
+    public static final boolean MASTER_INVERTED = true;
+    public static final boolean FOLLOWER_INVERTED = true;
 
-        public static final double MASTER_CURRENT_PEAK = 0;
-        public static final double MASTER_CURRENT_CONTINOUS = 0;
-        public static final double MASTER_CURRENT_PEAK_DUR = 0;
-        public static final double FOLLOWER_CURRENT_PEAK = 0;
-        public static final double FOLLOWER_CURRENT_CONTINOUS = 0;
-        public static final double FOLLOWER_CURRENT_PEAK_DUR = 0;
+    public static final double MASTER_CURRENT_PEAK = 0;
+    public static final double MASTER_CURRENT_CONTINOUS = 0;
+    public static final double MASTER_CURRENT_PEAK_DUR = 0;
+    public static final double FOLLOWER_CURRENT_PEAK = 0;
+    public static final double FOLLOWER_CURRENT_CONTINOUS = 0;
+    public static final double FOLLOWER_CURRENT_PEAK_DUR = 0;
+
 
         // ground, middle, high, human player, low box, high box
         public static final double[] POSITIONS = { 0, 0, 0, 0, 0, 0 };
