@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.drivetrain.AlignPitch;
+import frc.robot.commands.drivetrain.AlignYaw;
 import frc.robot.commands.drivetrain.SwerveManual;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
@@ -28,6 +29,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(RobotMap.FIELD);
     SmartDashboard.putNumber("Pitch kP", AlignPitch.kP);
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
+    SmartDashboard.putNumber("Yaw kP", AlignYaw.kP);
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
   }
 

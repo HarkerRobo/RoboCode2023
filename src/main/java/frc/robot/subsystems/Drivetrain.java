@@ -1,36 +1,20 @@
 package frc.robot.subsystems;
 
-import java.nio.file.Path;
-import java.util.Map;
-
-import org.photonvision.PhotonCamera;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.Pigeon2;
-
-import edu.wpi.first.apriltag.AprilTag;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import frc.robot.util.CameraPoseEstimation;
@@ -48,17 +32,16 @@ public class Drivetrain extends SubsystemBase {
 
   private double prevHeading;
 
-  public static double PIGEON_kP = 0.007;
+  public static double PIGEON_kP = 0.007; // TODO
 
   private static double MAX_ERROR_PITCH = 0;
 
   private static double MAX_ERROR_YAW = 0;
 
+  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
+  private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
-  private static Matrix<N3,N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
-  private static Matrix<N3,N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
-  
-    private Drivetrain() {
+  private Drivetrain() {
     swerveModules =
         new SwerveModule[] {
           new SwerveModule(0), new SwerveModule(1), new SwerveModule(2), new SwerveModule(3)
@@ -75,22 +58,29 @@ public class Drivetrain extends SubsystemBase {
             new Translation2d(RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2));
-    
+
     Pose2d initalPoseMeters = new Pose2d();
-    
-    poseEstimator = new SwerveDrivePoseEstimator(kinematics, Rotation2d.fromDegrees(getHeading()), getModulePositions(), initalPoseMeters, stateStdDevs, visionStdDevs);
-    }
+
+    poseEstimator =
+        new SwerveDrivePoseEstimator(
+            kinematics,
+            Rotation2d.fromDegrees(getHeading()),
+            getModulePositions(),
+            initalPoseMeters,
+            stateStdDevs,
+            visionStdDevs);
+  }
 
   public double adjustPigeon(double omega) {
     PIGEON_kP = SmartDashboard.getNumber("Pigeon kP", PIGEON_kP);
     SmartDashboard.putNumber("Pigeon kP", PIGEON_kP);
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
-        omega = -PIGEON_kP * (getHeading() - prevHeading);
+      omega = -PIGEON_kP * (getHeading() - prevHeading);
     else prevHeading = getHeading();
 
     return omega;
   }
-    
+
   public double getHeading() {
     return (RobotMap.IS_PIGEON_UP) ? -pigeon.getYaw() : pigeon.getYaw();
   }
@@ -99,19 +89,25 @@ public class Drivetrain extends SubsystemBase {
     return pigeon.getPitch();
   }
 
-  public boolean checkPitch(double desired) 
-  {
+  public boolean checkPitch(double desired) {
     return Math.abs(getPitch() - desired) < MAX_ERROR_PITCH;
+  }
+
+  public boolean checkYaw(double desired) {
+    return Math.abs(getHeading() - desired) < MAX_ERROR_YAW;
   }
 
   public Rotation2d getRotation() {
     return Rotation2d.fromDegrees(getHeading());
   }
 
-  private SwerveModulePosition[] getModulePositions()
-  {
+  public void setPose(Pose2d pose) {
+    poseEstimator.resetPosition(getRotation(), getModulePositions(), pose);
+  }
+
+  private SwerveModulePosition[] getModulePositions() {
     return new SwerveModulePosition[] {
-      swerveModules[0].getSwerveModulePosition(), 
+      swerveModules[0].getSwerveModulePosition(),
       swerveModules[1].getSwerveModulePosition(),
       swerveModules[2].getSwerveModulePosition(),
       swerveModules[3].getSwerveModulePosition()
@@ -133,27 +129,22 @@ public class Drivetrain extends SubsystemBase {
   public Pose2d getPoseEstimatorPose2d() {
     return poseEstimator.getEstimatedPosition();
   }
-  public SwerveDriveKinematics getKinematics() {
-    return kinematics;
-  }
-
-  public boolean reachedYaw(double angle){
-    return Math.abs(angle - getHeading()) < MAX_ERROR_YAW;
-  }
 
   @Override
   public void periodic() {
     updatePose();
-    Pair<Pose2d, Double> cameraPose = CameraPoseEstimation.getInstance().getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
-    poseEstimator.addVisionMeasurement(cameraPose.getFirst(),cameraPose.getSecond());
-
+    Pair<Pose2d, Double> cameraPose =
+        CameraPoseEstimation.getInstance()
+            .getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+    poseEstimator.addVisionMeasurement(cameraPose.getFirst(), cameraPose.getSecond());
   }
 
   public static Drivetrain getInstance() {
     if (instance == null) instance = new Drivetrain();
     return instance;
   }
-  
 
-
+  public SwerveDriveKinematics getKinematics() {
+    return kinematics;
+  }
 }

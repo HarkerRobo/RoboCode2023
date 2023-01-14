@@ -2,21 +2,18 @@ package frc.robot.util;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.CANCoder;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.HSFalconBuilder;
 import harkerrobolib.wrappers.HSFalcon;
 
-public class SwerveModule implements Sendable{
+public class SwerveModule implements Sendable {
   private HSFalcon translation;
   private HSFalcon rotation;
 
@@ -29,7 +26,7 @@ public class SwerveModule implements Sendable{
   // PID Constants
   private static double ROTATION_kP = 0.0;
   private static double TRANSLATION_kS = 0.0;
-  private static double TRANSLATION_kV = 0.0; //TODO: tune
+  private static double TRANSLATION_kV = 0.0; // TODO: tune
   private static double TRANSLATION_kA = 0.0;
 
   private static double TRANSLATION_QELMS = 5;
@@ -46,7 +43,8 @@ public class SwerveModule implements Sendable{
                 RobotMap.SwerveModule.TRANS_MOTOR_CURRENT_PEAK_DUR)
             .build(RobotMap.SwerveModule.TRANSLATION_ID[id], RobotMap.CAN_CHAIN);
 
-    transLoop = new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
+    transLoop =
+        new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
 
     rotation =
         new HSFalconBuilder()
@@ -63,9 +61,9 @@ public class SwerveModule implements Sendable{
 
   private void initModule() {
     SendableRegistry.addLW(
-      translation, "Drivetrain/" + swerveIDToName(id) + " Module", "Drive Motor");
+        translation, "Drivetrain/" + swerveIDToName(id) + " Module", "Drive Motor");
     SendableRegistry.addLW(
-      rotation, "Drivetrain/" + swerveIDToName(id) + " Module", "Rotation Motor");
+        rotation, "Drivetrain/" + swerveIDToName(id) + " Module", "Rotation Motor");
     setkP(ROTATION_kP);
     setAbsolutePosition();
   }
@@ -80,25 +78,23 @@ public class SwerveModule implements Sendable{
     var angle = desiredState.angle.getDegrees();
     var speed = desiredState.speedMetersPerSecond;
     // desiredState.angle.rotateBy(Rotation2d.fromDegrees(getAngle()).unaryMinus());
-    while(angle-getAngle()>180){
-			angle -= 360;
-			//delta = desiredState.angle.getDegrees() - getAngle();	
-		}
+    while (angle - getAngle() > 180) {
+      angle -= 360;
+      // delta = desiredState.angle.getDegrees() - getAngle();
+    }
 
-		while(angle-getAngle()<-180){
-			angle += 360;
-			//delta = desiredState.angle.minus(getAngle());
-		}
+    while (angle - getAngle() < -180) {
+      angle += 360;
+      // delta = desiredState.angle.minus(getAngle());
+    }
 
-		if(angle-getAngle()>90){
-			angle -= 180;
-			speed *= -1;
-		}
-
-		else if(angle-getAngle()<-90){
-			angle += 180;
-			speed *= -1;
-		}
+    if (angle - getAngle() > 90) {
+      angle -= 180;
+      speed *= -1;
+    } else if (angle - getAngle() < -90) {
+      angle += 180;
+      speed *= -1;
+    }
     return new SwerveModuleState(speed, Rotation2d.fromDegrees(angle));
   }
 
@@ -109,7 +105,7 @@ public class SwerveModule implements Sendable{
   private void setDrive(double drive) {
     translation.setVoltage(transLoop.getVoltage(drive, getSpeed()));
   }
-  
+
   private void setkP(double kP) {
     ROTATION_kP = kP;
     rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
@@ -117,22 +113,29 @@ public class SwerveModule implements Sendable{
 
   private void setkS(double kS) {
     TRANSLATION_kS = kS;
-    transLoop = new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
+    transLoop =
+        new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
   }
 
   private void setkV(double kV) {
     TRANSLATION_kV = kV;
-    transLoop = new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
+    transLoop =
+        new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
   }
 
   private void setQelms(double error) {
     TRANSLATION_QELMS = error;
-    transLoop = new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
+    transLoop =
+        new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
   }
 
   private void setAbsolutePosition() {
     double pos = canCoder.getAbsolutePosition() - RobotMap.SwerveModule.CAN_CODER_OFFSETS[id];
     rotation.setSelectedSensorPosition(pos / RobotMap.SwerveModule.ROTATION_CONVERSION);
+    zeroTranslation();
+  }
+
+  public void zeroTranslation() {
     translation.setSelectedSensorPosition(0);
   }
 
@@ -157,13 +160,11 @@ public class SwerveModule implements Sendable{
     return output;
   }
 
-  public SwerveModulePosition getSwerveModulePosition()
-  {
+  public SwerveModulePosition getSwerveModulePosition() {
     return new SwerveModulePosition(getWheelPosition(), Rotation2d.fromDegrees(getAngle()));
   }
 
-  public SwerveModuleState getSwerveModuleState()
-  {
+  public SwerveModuleState getSwerveModuleState() {
     return new SwerveModuleState(getSpeed(), Rotation2d.fromDegrees(getAngle()));
   }
 
