@@ -1,5 +1,11 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.claw.CloseClaw;
+import frc.robot.commands.claw.OpenClaw;
+import frc.robot.commands.drivetrain.AlignPitch;
+import frc.robot.commands.drivetrain.AlignYaw;
+import frc.robot.commands.elevator.MoveToPosition;
 import harkerrobolib.joysticks.XboxGamepad;
 import harkerrobolib.util.Constants;
 
@@ -24,7 +30,31 @@ public class OI {
     return operator;
   }
 
-  private void initBindings() {}
+  private void initBindings() {
+    driver
+        .getDownDPadButton()
+        .whilePressed(
+            new SequentialCommandGroup(
+                new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]), new OpenClaw()));
+    driver
+        .getRightDPadButton()
+        .whilePressed(
+            new SequentialCommandGroup(
+                new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]), new OpenClaw()));
+    driver
+        .getUpDPadButton()
+        .whilePressed(
+            new SequentialCommandGroup(
+                new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]), new OpenClaw()));
+    driver
+        .getLeftDPadButton()
+        .whilePressed(
+            new SequentialCommandGroup(
+                new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]).alongWith(new OpenClaw()),
+                new CloseClaw()));
+    driver.getButtonTriggerLeft().whilePressed(new AlignYaw());
+    driver.getButtonTriggerRight().whilePressed(new AlignPitch());
+  }
 
   public static OI getInstance() {
     if (instance == null) instance = new OI();

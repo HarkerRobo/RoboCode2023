@@ -168,6 +168,7 @@ public class SwerveModule implements Sendable {
     return new SwerveModuleState(getSpeed(), Rotation2d.fromDegrees(getAngle()));
   }
 
+  @Override
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Swerve Module");
     builder.addDoubleProperty("Translation Speed", this::getSpeed, this::setDrive);

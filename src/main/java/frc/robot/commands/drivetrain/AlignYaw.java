@@ -21,7 +21,8 @@ public class AlignYaw extends CommandBase {
     Drivetrain.getInstance().setAngleAndDrive(chassis);
   }
 
-  public void end() {
+  @Override
+  public void end(boolean interrupted) {
     Drivetrain.getInstance().setAngleAndDrive(new ChassisSpeeds());
   }
 

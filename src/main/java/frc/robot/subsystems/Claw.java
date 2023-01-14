@@ -17,6 +17,7 @@ public class Claw extends SubsystemBase {
             PneumaticsModuleType.REVPH,
             RobotMap.Claw.CLAW_FOWARD_ID,
             RobotMap.Claw.CLAW_REVERSE_ID);
+    addChild("Claw", claw);
   }
 
   public void release() {

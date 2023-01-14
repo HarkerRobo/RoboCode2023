@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
-import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class SwervePositionController extends CommandBase {
@@ -36,14 +35,12 @@ public class SwervePositionController extends CommandBase {
           new Constraints(RobotMap.MAX_ANGLE_VELOCITY, RobotMap.MAX_ANGLE_ACCELERATION));
 
   private final Trajectory trajectory;
-  private final BiFunction<Pose2d, Double, Rotation2d> refHeading;
+  private final Supplier<Rotation2d> refHeading;
   private final Supplier<Rotation2d> startHeading;
   private final Timer timer = new Timer();
 
   public SwervePositionController(
-      Trajectory trajectory,
-      BiFunction<Pose2d, Double, Rotation2d> refHeading,
-      Supplier<Rotation2d> startHeading) {
+      Trajectory trajectory, Supplier<Rotation2d> refHeading, Supplier<Rotation2d> startHeading) {
     this.trajectory = trajectory;
     this.refHeading = refHeading;
     this.startHeading = startHeading;
@@ -51,25 +48,23 @@ public class SwervePositionController extends CommandBase {
     addRequirements(Drivetrain.getInstance());
   }
 
-  public SwervePositionController(
-      Trajectory trajectory, BiFunction<Pose2d, Double, Rotation2d> refHeading) {
+  public SwervePositionController(Trajectory trajectory, Supplier<Rotation2d> refHeading) {
     this(trajectory, refHeading, null);
   }
 
   @Override
   public void initialize() {
+    Drivetrain.getInstance().setPose(trajectory.getInitialPose());
     timer.reset();
     timer.start();
   }
 
   @Override
   public void execute() {
-    Trajectory.State goal = Trajectories.apply(trajectory.sample(timer.get())); //
+    Trajectory.State goal = Trajectories.apply(trajectory.sample(timer.get()));
     double xFF = goal.velocityMetersPerSecond * goal.poseMeters.getRotation().getCos();
     double yFF = goal.velocityMetersPerSecond * goal.poseMeters.getRotation().getSin();
-    Rotation2d angleRef =
-        Trajectories.apply(
-            refHeading.apply(Drivetrain.getInstance().getPoseEstimatorPose2d(), timer.get()));
+    Rotation2d angleRef = Trajectories.apply(refHeading.get());
 
     Pose2d currentPose = Trajectories.apply(Drivetrain.getInstance().getPoseEstimatorPose2d());
     double clampAdd =

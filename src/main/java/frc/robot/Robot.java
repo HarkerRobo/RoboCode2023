@@ -5,11 +5,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.auton.Autons;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
 import frc.robot.commands.drivetrain.SwerveManual;
+import frc.robot.commands.elevator.ElevatorManual;
+import frc.robot.subsystems.AngledElevator;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 
@@ -24,6 +29,8 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private SendableChooser<CommandBase> autonChooser;
+
   @Override
   public void robotInit() {
     SmartDashboard.putData(RobotMap.FIELD);
@@ -31,6 +38,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
     SmartDashboard.putNumber("Yaw kP", AlignYaw.kP);
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
+    CommandScheduler.getInstance()
+        .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
+    autonChooser = new SendableChooser<>();
+    autonChooser.setDefaultOption("Middle Path", Autons.middlePath);
+    autonChooser.addOption("Bottom Path", Autons.bottomPath);
+    autonChooser.addOption("Top Path", Autons.topPath);
   }
 
   @Override
@@ -38,10 +51,13 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putData(Drivetrain.getInstance());
     SmartDashboard.putData(Claw.getInstance());
+    SmartDashboard.putData(AngledElevator.getInstance());
   }
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+    autonChooser.getSelected().schedule();
+  }
 
   @Override
   public void autonomousPeriodic() {}

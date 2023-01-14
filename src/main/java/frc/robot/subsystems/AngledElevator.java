@@ -93,7 +93,7 @@ public class AngledElevator extends SubsystemBase {
   }
 
   public boolean extensionStop() {
-    return limitSwitch.get();
+    return !limitSwitch.get();
   }
 
   public static AngledElevator getInstance() {

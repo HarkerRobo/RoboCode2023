@@ -102,7 +102,17 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setPose(Pose2d pose) {
-    poseEstimator.resetPosition(getRotation(), getModulePositions(), pose);
+    swerveModules[0].zeroTranslation();
+    swerveModules[1].zeroTranslation();
+    swerveModules[2].zeroTranslation();
+    swerveModules[3].zeroTranslation();
+    setYaw(pose.getRotation().getDegrees());
+    poseEstimator.resetPosition(pose.getRotation(), getModulePositions(), pose);
+  }
+
+  private void setYaw(double yaw) {
+    pigeon.setAccumZAngle(0);
+    pigeon.setYaw((RobotMap.IS_PIGEON_UP) ? -yaw : yaw);
   }
 
   private SwerveModulePosition[] getModulePositions() {

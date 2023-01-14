@@ -7,7 +7,7 @@ public class MoveToPosition extends CommandBase {
 
   private double position;
 
-  public void MoveTo(double position) {
+  public MoveToPosition(double position) {
     this.position = position;
     addRequirements(AngledElevator.getInstance());
   }

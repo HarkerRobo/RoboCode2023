@@ -20,7 +20,7 @@ public class MotorVelocitySystem {
   private static final Vector<N1> MODEL_STD_DEV = VecBuilder.fill(0.1); // mps
   private static final Vector<N1> ENCODER_STD_DEV = VecBuilder.fill(0.01); // mps
 
-  private static final Vector<N1> QELMS = VecBuilder.fill(Constants.MAX_VOLTAGE);
+  private static final Vector<N1> RELMS = VecBuilder.fill(Constants.MAX_VOLTAGE);
   private double kS;
 
   public MotorVelocitySystem(double kS, double kV, double kA, double error) {
@@ -30,7 +30,7 @@ public class MotorVelocitySystem {
         new KalmanFilter<>(
             Nat.N1(), Nat.N1(), plant, MODEL_STD_DEV, ENCODER_STD_DEV, Constants.ROBOT_LOOP);
     controller =
-        new LinearQuadraticRegulator<>(plant, VecBuilder.fill(error), QELMS, Constants.ROBOT_LOOP);
+        new LinearQuadraticRegulator<>(plant, VecBuilder.fill(error), RELMS, Constants.ROBOT_LOOP);
     loop =
         new LinearSystemLoop<>(
             plant, controller, observer, Constants.MAX_VOLTAGE, Constants.ROBOT_LOOP);
@@ -49,7 +49,7 @@ public class MotorVelocitySystem {
     // Send the new calculated voltage to the motors.
     // voltage = duty cycle * battery voltage, so
     // duty cycle = voltage / battery voltage
-    double nextVoltage = loop.getU(0) + kS * Math.signum(desiredSpeed);
+    double nextVoltage = loop.getU(0) + kS * Math.signum(desiredSpeed - currSpeed);
     return nextVoltage;
   }
 }
