@@ -1,11 +1,13 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
 import frc.robot.commands.elevator.MoveToPosition;
+import frc.robot.subsystems.AngledElevator;
 import harkerrobolib.joysticks.XboxGamepad;
 import harkerrobolib.util.Constants;
 
@@ -54,6 +56,13 @@ public class OI {
                 new CloseClaw()));
     driver.getButtonTriggerLeft().whilePressed(new AlignYaw());
     driver.getButtonTriggerRight().whilePressed(new AlignPitch());
+    operator
+        .getButtonX()
+        .toggleOnTrue(
+            new InstantCommand(
+                () -> {
+                  AngledElevator.getInstance().addToPositions(5);
+                }));
   }
 
   public static OI getInstance() {

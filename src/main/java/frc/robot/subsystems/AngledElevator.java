@@ -67,6 +67,13 @@ public class AngledElevator extends SubsystemBase {
     kG = newkG;
   }
 
+  public void addToPositions(double value) {
+    RobotMap.AngledElevator.POSITIONS[0] += value;
+    RobotMap.AngledElevator.POSITIONS[1] += value;
+    RobotMap.AngledElevator.POSITIONS[2] += value;
+    RobotMap.AngledElevator.POSITIONS[3] += value;
+  }
+
   public boolean checkExtend(double desired) {
     return Math.abs(desired - getPosition()) < MAX_ERROR;
   }

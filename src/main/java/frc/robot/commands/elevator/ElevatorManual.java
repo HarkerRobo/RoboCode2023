@@ -4,7 +4,6 @@ import frc.robot.OI;
 import frc.robot.subsystems.AngledElevator;
 import harkerrobolib.commands.IndefiniteCommand;
 import harkerrobolib.util.Constants;
-import harkerrobolib.util.MathUtil;
 
 public class ElevatorManual extends IndefiniteCommand {
   public ElevatorManual() {
@@ -12,10 +11,16 @@ public class ElevatorManual extends IndefiniteCommand {
   }
 
   public void execute() {
-    AngledElevator.getInstance()
-        .setExtensionPower(
-            MathUtil.mapJoystickOutput(
-                OI.getInstance().getOperator().getRightTrigger(), Constants.TRIGGER_DEADBAND));
+    double rightTrigger = OI.getInstance().getDriver().getRightTrigger();
+    double leftTrigger = OI.getInstance().getDriver().getLeftTrigger();
+    if (rightTrigger > Constants.TRIGGER_DEADBAND)
+      AngledElevator.getInstance().setExtensionPower(rightTrigger);
+    else if (leftTrigger > Constants.TRIGGER_DEADBAND)
+      AngledElevator.getInstance().setExtensionPower(-leftTrigger);
+    // AngledElevator.getInstance()
+    //     .setExtensionPower(
+    //         MathUtil.mapJoystickOutput(
+    //             OI.getInstance().getOperator().getRightY(), Constants.JOYSTICK_DEADBAND));
   }
 
   @Override
