@@ -29,17 +29,17 @@ public final class RobotMap {
 
   public static final class SwerveModule {
     // IDs and Inverts
-    public static final int[] TRANSLATION_ID = {0, 0, 0, 0};
+    public static final int[] TRANSLATION_ID = {0, 0, 0, 0}; // TODO
 
-    public static final boolean[] TRANSLATION_INVERT = {false, false, false, false};
+    public static final boolean[] TRANSLATION_INVERT = {false, false, false, false}; // TODO
 
-    public static final int[] ROTATION_ID = {0, 0, 0, 0};
+    public static final int[] ROTATION_ID = {0, 0, 0, 0}; // TODO
 
-    public static final boolean[] ROTATION_INVERT = {false, false, false, false};
+    public static final boolean[] ROTATION_INVERT = {false, false, false, false}; // TODO
 
-    public static final int[] CAN_CODER_ID = {0, 0, 0, 0};
+    public static final int[] CAN_CODER_ID = {0, 0, 0, 0}; // TODO
 
-    public static final double[] CAN_CODER_OFFSETS = {0, 0, 0, 0};
+    public static final double[] CAN_CODER_OFFSETS = {0, 0, 0, 0}; // TODO
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
@@ -71,31 +71,31 @@ public final class RobotMap {
 
   public static final class Drivetrain {
     // Pigeon ID
-    public static final int PIGEON_ID = 0;
+    public static final int PIGEON_ID = 0; // TODO
 
     public static final double MIN_OUTPUT = 0.01;
   }
 
   public static final class Claw {
-    public static final int CLAW_FOWARD_ID = 0;
-    public static final int CLAW_REVERSE_ID = 0;
+    public static final int CLAW_FOWARD_ID = 0; // TODO
+    public static final int CLAW_REVERSE_ID = 0; // TODO
   }
 
   public static final class AngledElevator {
-    public static final int MASTER_ID = 0;
-    public static final int FOLLOWER_ID = 0;
+    public static final int MASTER_ID = 0; // TODO
+    public static final int FOLLOWER_ID = 0; // TODO
 
-    public static final boolean MASTER_INVERTED = true;
-    public static final boolean FOLLOWER_INVERTED = true;
+    public static final boolean MASTER_INVERTED = true; // TODO
+    public static final boolean FOLLOWER_INVERTED = true; // TODO
 
-    public static final double MASTER_CURRENT_PEAK = 0;
-    public static final double MASTER_CURRENT_CONTINOUS = 0;
-    public static final double MASTER_CURRENT_PEAK_DUR = 0;
-    public static final double FOLLOWER_CURRENT_PEAK = 0;
-    public static final double FOLLOWER_CURRENT_CONTINOUS = 0;
-    public static final double FOLLOWER_CURRENT_PEAK_DUR = 0;
+    public static final double MASTER_CURRENT_PEAK = 0; // TODO
+    public static final double MASTER_CURRENT_CONTINOUS = 0; // TODO
+    public static final double MASTER_CURRENT_PEAK_DUR = 0; // TODO
+    public static final double FOLLOWER_CURRENT_PEAK = 0; // TODO
+    public static final double FOLLOWER_CURRENT_CONTINOUS = 0; // TODO
+    public static final double FOLLOWER_CURRENT_PEAK_DUR = 0; // TODO
 
     // low, middle, high, human player
-    public static final double[] POSITIONS = {0, 0, 0, 0};
+    public static final double[] POSITIONS = {0, 0, 0, 0}; // TODO
   }
 }

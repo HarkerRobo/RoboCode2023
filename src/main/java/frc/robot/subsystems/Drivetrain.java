@@ -34,9 +34,9 @@ public class Drivetrain extends SubsystemBase {
 
   public static double PIGEON_kP = 0.007; // TODO
 
-  private static double MAX_ERROR_PITCH = 0;
+  private static double MAX_ERROR_PITCH = 0; // TODO
 
-  private static double MAX_ERROR_YAW = 0;
+  private static double MAX_ERROR_YAW = 0; // TODO
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);

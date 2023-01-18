@@ -24,10 +24,10 @@ public class SwerveModule implements Sendable {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  private static double ROTATION_kP = 0.0;
-  private static double TRANSLATION_kS = 0.0;
+  private static double ROTATION_kP = 0.0; // TODO
+  private static double TRANSLATION_kS = 0.0; // TODO
   private static double TRANSLATION_kV = 0.0; // TODO: tune
-  private static double TRANSLATION_kA = 0.0;
+  private static double TRANSLATION_kA = 0.0; // TODO
 
   private static double TRANSLATION_QELMS = 5;
 
