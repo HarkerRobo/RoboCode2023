@@ -22,7 +22,7 @@ public final class Trajectories {
   public static Trajectory chargePad =
       generateTrajectory(
           List.of(
-              new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)), // fix coords
+              new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)), //TODO
               new Pose2d(3.87, 2.57, Rotation2d.fromDegrees(0))),
           2.0,
           1.0,
