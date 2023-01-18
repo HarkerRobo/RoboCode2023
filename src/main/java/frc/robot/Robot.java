@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.auton.Autons;
+import frc.robot.auton.SwervePositionController;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
 import frc.robot.commands.drivetrain.SwerveManual;
@@ -56,6 +57,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    SmartDashboard.putNumber("X kP", SwervePositionController.X_kP);
+    SmartDashboard.putNumber("Y kP", SwervePositionController.Y_kP);
+    SmartDashboard.putNumber("Theta kP", SwervePositionController.THETA_kP);
     autonChooser.getSelected().schedule();
   }
 

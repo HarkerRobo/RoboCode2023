@@ -75,7 +75,7 @@ public class Drivetrain extends SubsystemBase {
     PIGEON_kP = SmartDashboard.getNumber("Pigeon kP", PIGEON_kP);
     SmartDashboard.putNumber("Pigeon kP", PIGEON_kP);
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
-      omega = -PIGEON_kP * (getHeading() - prevHeading);
+      omega = PIGEON_kP * (prevHeading - getHeading());
     else prevHeading = getHeading();
 
     return omega;

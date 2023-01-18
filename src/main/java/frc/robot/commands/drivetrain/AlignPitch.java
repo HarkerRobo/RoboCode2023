@@ -15,9 +15,10 @@ public class AlignPitch extends CommandBase {
   }
 
   public void execute() {
-    double error = SETPOINT - Drivetrain.getInstance().getPitch();
     kP = SmartDashboard.getNumber("Pitch kP", kP);
     SmartDashboard.putNumber("Pitch kP", kP);
+
+    double error = SETPOINT - Drivetrain.getInstance().getPitch();
     double forwardAmount = -kP * error;
     ChassisSpeeds speeds = new ChassisSpeeds(forwardAmount, 0, 0);
     Drivetrain.getInstance().setAngleAndDrive(speeds);
