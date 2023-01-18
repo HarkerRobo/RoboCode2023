@@ -7,8 +7,6 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public final class Trajectories {
   public static Trajectory chargePad =
       generateTrajectory(
           List.of(
-              new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)), //TODO
+              new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)), // TODO
               new Pose2d(3.87, 2.57, Rotation2d.fromDegrees(0))),
           2.0,
           1.0,
@@ -74,56 +72,44 @@ public final class Trajectories {
 
   /** Flips a translation to the correct side of the field based on the current alliance color. */
   public static Translation2d apply(Translation2d translation) {
-    if (shouldFlip()) {
-      return new Translation2d(RobotMap.Field.fieldLength - translation.getX(), translation.getY());
-    } else {
-      return translation;
-    }
+    return (RobotMap.Field.IS_FLIPPED)
+        ? new Translation2d(RobotMap.Field.fieldLength - translation.getX(), translation.getY())
+        : translation;
   }
 
   /** Flips a rotation based on the current alliance color. */
   public static Rotation2d apply(Rotation2d rotation) {
-    if (shouldFlip()) {
-      return new Rotation2d(-rotation.getCos(), rotation.getSin());
-    } else {
-      return rotation;
-    }
+    return (RobotMap.Field.IS_FLIPPED)
+        ? new Rotation2d(-rotation.getCos(), rotation.getSin())
+        : rotation;
   }
 
   /** Flips a pose to the correct side of the field based on the current alliance color. */
   public static Pose2d apply(Pose2d pose) {
-    if (shouldFlip()) {
-      return new Pose2d(
-          RobotMap.Field.fieldLength - pose.getX(),
-          pose.getY(),
-          new Rotation2d(-pose.getRotation().getCos(), pose.getRotation().getSin()));
-    } else {
-      return pose;
-    }
+    return (RobotMap.Field.IS_FLIPPED)
+        ? new Pose2d(
+            RobotMap.Field.fieldLength - pose.getX(),
+            pose.getY(),
+            new Rotation2d(-pose.getRotation().getCos(), pose.getRotation().getSin()))
+        : pose;
   }
 
   /**
    * Flips a trajectory state to the correct side of the field based on the current alliance color.
    */
   public static Trajectory.State apply(Trajectory.State state) {
-    if (shouldFlip()) {
-      return new Trajectory.State(
-          state.timeSeconds,
-          state.velocityMetersPerSecond,
-          state.accelerationMetersPerSecondSq,
-          new Pose2d(
-              RobotMap.Field.fieldLength - state.poseMeters.getX(),
-              state.poseMeters.getY(),
-              new Rotation2d(
-                  -state.poseMeters.getRotation().getCos(),
-                  state.poseMeters.getRotation().getSin())),
-          -state.curvatureRadPerMeter);
-    } else {
-      return state;
-    }
-  }
-
-  private static boolean shouldFlip() {
-    return DriverStation.getAlliance() == Alliance.Red;
+    return (RobotMap.Field.IS_FLIPPED)
+        ? new Trajectory.State(
+            state.timeSeconds,
+            state.velocityMetersPerSecond,
+            state.accelerationMetersPerSecondSq,
+            new Pose2d(
+                RobotMap.Field.fieldLength - state.poseMeters.getX(),
+                state.poseMeters.getY(),
+                new Rotation2d(
+                    -state.poseMeters.getRotation().getCos(),
+                    state.poseMeters.getRotation().getSin())),
+            -state.curvatureRadPerMeter)
+        : state;
   }
 }

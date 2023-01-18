@@ -17,10 +17,6 @@ public class ElevatorManual extends IndefiniteCommand {
       AngledElevator.getInstance().setExtensionPower(rightTrigger);
     else if (leftTrigger > Constants.TRIGGER_DEADBAND)
       AngledElevator.getInstance().setExtensionPower(-leftTrigger);
-    // AngledElevator.getInstance()
-    //     .setExtensionPower(
-    //         MathUtil.mapJoystickOutput(
-    //             OI.getInstance().getOperator().getRightY(), Constants.JOYSTICK_DEADBAND));
   }
 
   @Override

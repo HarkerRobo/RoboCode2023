@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    SmartDashboard.putData(RobotMap.FIELD);
+    SmartDashboard.putData(RobotMap.Field.FIELD);
     SmartDashboard.putNumber("Pitch kP", AlignPitch.kP);
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
     SmartDashboard.putNumber("Yaw kP", AlignYaw.kP);
