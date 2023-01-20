@@ -113,7 +113,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private void setYaw(double yaw) {
-    pigeon.setAccumZAngle(0);
     pigeon.setYaw((RobotMap.IS_PIGEON_UP) ? -yaw : yaw);
   }
 

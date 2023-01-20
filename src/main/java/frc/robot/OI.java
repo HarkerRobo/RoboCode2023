@@ -58,7 +58,7 @@ public class OI {
     driver.getButtonTriggerRight().whilePressed(new AlignPitch());
     operator
         .getButtonX()
-        .toggleOnTrue(
+        .onTrue(
             new InstantCommand(
                 () -> {
                   AngledElevator.getInstance().addToPositions(5);
