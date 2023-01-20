@@ -3,8 +3,7 @@ package frc.robot.auton;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotMap;
-import frc.robot.commands.claw.CloseClaw;
-import frc.robot.commands.claw.OpenClaw;
+import frc.robot.commands.claw.ClawWithTime;
 import frc.robot.commands.elevator.MoveToPosition;
 import frc.robot.commands.elevator.ZeroElevator;
 
@@ -12,9 +11,9 @@ public final class Autons {
   public static final SequentialCommandGroup topPath =
       new SequentialCommandGroup(
           new ZeroElevator(),
-          new CloseClaw(),
+          new ClawWithTime(RobotMap.Claw.SPEED).withTimeout(RobotMap.Claw.INTAKE_TIME),
           new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
-          new OpenClaw(),
+          new ClawWithTime(-RobotMap.Claw.SPEED).withTimeout(RobotMap.Claw.OUTTAKE_TIME),
           new MoveToPosition(0)
               .alongWith(
                   new SwervePositionController(
@@ -26,9 +25,9 @@ public final class Autons {
   public static final SequentialCommandGroup middlePath =
       new SequentialCommandGroup(
           new ZeroElevator(),
-          new CloseClaw(),
+          new ClawWithTime(RobotMap.Claw.SPEED).withTimeout(RobotMap.Claw.INTAKE_TIME),
           new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
-          new OpenClaw(),
+          new ClawWithTime(-RobotMap.Claw.SPEED).withTimeout(RobotMap.Claw.OUTTAKE_TIME),
           new MoveToPosition(0)
               .alongWith(
                   new SwervePositionController(
@@ -40,9 +39,9 @@ public final class Autons {
   public static final SequentialCommandGroup bottomPath =
       new SequentialCommandGroup(
           new ZeroElevator(),
-          new CloseClaw(),
+          new ClawWithTime(RobotMap.Claw.SPEED).withTimeout(RobotMap.Claw.INTAKE_TIME),
           new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
-          new OpenClaw(),
+          new ClawWithTime(-RobotMap.Claw.SPEED).withTimeout(RobotMap.Claw.OUTTAKE_TIME),
           new MoveToPosition(0)
               .alongWith(
                   new SwervePositionController(

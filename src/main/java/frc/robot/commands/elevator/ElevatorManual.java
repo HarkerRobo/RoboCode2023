@@ -11,8 +11,8 @@ public class ElevatorManual extends IndefiniteCommand {
   }
 
   public void execute() {
-    double rightTrigger = OI.getInstance().getDriver().getRightTrigger();
-    double leftTrigger = OI.getInstance().getDriver().getLeftTrigger();
+    double rightTrigger = OI.getInstance().getOperator().getRightTrigger();
+    double leftTrigger = OI.getInstance().getOperator().getLeftTrigger();
     if (rightTrigger > Constants.TRIGGER_DEADBAND)
       AngledElevator.getInstance().setExtensionPower(rightTrigger);
     else if (leftTrigger > Constants.TRIGGER_DEADBAND)

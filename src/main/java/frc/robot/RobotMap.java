@@ -77,8 +77,15 @@ public final class RobotMap {
   }
 
   public static final class Claw {
-    public static final int CLAW_FOWARD_ID = 0; // TODO
-    public static final int CLAW_REVERSE_ID = 0; // TODO
+    public static final int MASTER_ID = 0; // TODO
+    public static final boolean MASTER_INVERTED = true; // TODO
+    public static final double MASTER_CURRENT_PEAK = 0; // TODO
+    public static final double MASTER_CURRENT_CONTINOUS = 0; // TODO
+    public static final double MASTER_CURRENT_PEAK_DUR = 0; // TODO
+
+    public static final double SPEED = 0.7;
+    public static final double INTAKE_TIME = 0.3;
+    public static final double OUTTAKE_TIME = 0.5;
   }
 
   public static final class AngledElevator {

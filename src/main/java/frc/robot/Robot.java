@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.auton.Autons;
+import frc.robot.commands.claw.ClawManual;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
 import frc.robot.commands.drivetrain.SwerveManual;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
     SmartDashboard.putNumber("Yaw kP", AlignYaw.kP);
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
+    CommandScheduler.getInstance().setDefaultCommand(Claw.getInstance(), new ClawManual());
     CommandScheduler.getInstance()
         .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
     autonChooser = new SendableChooser<>();
