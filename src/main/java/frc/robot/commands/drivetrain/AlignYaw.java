@@ -9,7 +9,7 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignYaw extends CommandBase {
-  public static double kP = 0.0; // TODO
+  public static double kP = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
   public static final double kI = 0.0;
   public static final double kD = 0.0;
 

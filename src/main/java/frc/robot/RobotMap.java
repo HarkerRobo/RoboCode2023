@@ -17,6 +17,7 @@ public final class RobotMap {
     public static final boolean IS_FLIPPED = DriverStation.getAlliance() == Alliance.Red;
   }
 
+  public static final boolean IS_COMP = true; 
   public static final String CAN_CHAIN = "BINGCHILLING";
 
   // Robot Constants
@@ -31,19 +32,21 @@ public final class RobotMap {
 
   public static final boolean IS_PIGEON_UP = false; // TODO
 
+
   public static final class SwerveModule {
     // IDs and Inverts
-    public static final int[] TRANSLATION_ID = {0, 0, 0, 0}; // TODO
 
-    public static final boolean[] TRANSLATION_INVERT = {false, false, false, false}; // TODO
+    public static final int[] TRANSLATION_ID = (IS_COMP) ? new int[]{0, 0, 0, 0} : new int[]{0, 0, 0, 0}; // TODO
 
-    public static final int[] ROTATION_ID = {0, 0, 0, 0}; // TODO
+    public static final boolean[] TRANSLATION_INVERT = (IS_COMP) ? new boolean[]{false, false, false, false}: new boolean []{false, false, false, false}; // TODO
 
-    public static final boolean[] ROTATION_INVERT = {false, false, false, false}; // TODO
+    public static final int[] ROTATION_ID = (IS_COMP) ? new int[] {0, 0, 0, 0} : new int[] {0,0,0,0}; // TODO
 
-    public static final int[] CAN_CODER_ID = {0, 0, 0, 0}; // TODO
+    public static final boolean[] ROTATION_INVERT = (IS_COMP) ? new boolean[]{false, false, false, false} : new boolean[] {false, false, false, false}; // TODO
 
-    public static final double[] CAN_CODER_OFFSETS = {0, 0, 0, 0}; // TODO
+    public static final int[] CAN_CODER_ID = (IS_COMP) ? new int [] {0, 0, 0, 0}:new int [] {0,0,0,0}; // TODO
+
+    public static final double[] CAN_CODER_OFFSETS = (IS_COMP) ? new double[] {0, 0, 0, 0}:new double[] {0,0,0,0}; // TODO
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
@@ -75,22 +78,22 @@ public final class RobotMap {
 
   public static final class Drivetrain {
     // Pigeon ID
-    public static final int PIGEON_ID = 0; // TODO
+    public static final int PIGEON_ID = (IS_COMP) ? 0 : 0; // TODO
 
     public static final double MIN_OUTPUT = 0.01;
   }
 
   public static final class Claw {
-    public static final int CLAW_FOWARD_ID = 0; // TODO
-    public static final int CLAW_REVERSE_ID = 0; // TODO
+    public static final int CLAW_FOWARD_ID = (IS_COMP) ? 0 : 0; // TODO
+    public static final int CLAW_REVERSE_ID = (IS_COMP) ? 0:0; // TODO
   }
 
   public static final class AngledElevator {
-    public static final int MASTER_ID = 0; // TODO
-    public static final int FOLLOWER_ID = 0; // TODO
+    public static final int MASTER_ID = (IS_COMP) ? 0:0; // TODO
+    public static final int FOLLOWER_ID = (IS_COMP) ? 0:0; // TODO
 
-    public static final boolean MASTER_INVERTED = true; // TODO
-    public static final boolean FOLLOWER_INVERTED = true; // TODO
+    public static final boolean MASTER_INVERTED = (IS_COMP) ? true:true; // TODO
+    public static final boolean FOLLOWER_INVERTED = (IS_COMP) ? true:true; // TODO
 
     public static final double MASTER_CURRENT_PEAK = 0; // TODO
     public static final double MASTER_CURRENT_CONTINOUS = 0; // TODO

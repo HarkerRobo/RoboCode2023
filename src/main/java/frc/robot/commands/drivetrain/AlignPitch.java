@@ -3,10 +3,11 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignPitch extends CommandBase {
-  public static double kP = 0; // TODO
+  public static double kP = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
 
   public static final double SETPOINT = 0;
 

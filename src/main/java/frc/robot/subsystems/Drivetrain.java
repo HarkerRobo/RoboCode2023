@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.BasePigeon;
 import com.ctre.phoenix.sensors.Pigeon2;
+import com.ctre.phoenix.sensors.PigeonIMU;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.VecBuilder;
@@ -28,11 +31,10 @@ public class Drivetrain extends SubsystemBase {
   private SwerveDriveKinematics kinematics;
   private SwerveDrivePoseEstimator poseEstimator;
 
-  private Pigeon2 pigeon;
-
+  private BasePigeon pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = 0.007; // TODO
+  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.007 : 0.0; // TODO
 
   private static double MAX_ERROR_PITCH = 0; // TODO
 
@@ -49,7 +51,7 @@ public class Drivetrain extends SubsystemBase {
 
     addChild(SwerveModule.swerveIDToName(0) + " Module", swerveModules[0]);
 
-    pigeon = new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN);
+    pigeon = (RobotMap.IS_COMP) ? new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN) : new PigeonIMU(RobotMap.Drivetrain.PIGEON_ID);
     prevHeading = getHeading();
 
     kinematics =
