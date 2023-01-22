@@ -17,8 +17,8 @@ public final class RobotMap {
     public static final boolean IS_FLIPPED = DriverStation.getAlliance() == Alliance.Red;
   }
 
-  public static final boolean IS_COMP = true; 
-  public static final String CAN_CHAIN = "BINGCHILLING";
+  public static final boolean IS_COMP = false; 
+  public static final String CAN_CHAIN = "rio";
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s

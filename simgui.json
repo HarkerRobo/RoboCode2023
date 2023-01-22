@@ -1,0 +1,103 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "Talon FX[0]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/SmartDashboard/Claw": "Subsystem",
+      "/SmartDashboard/Drivetrain": "Subsystem",
+      "/SmartDashboard/Field": "Field2d"
+    },
+    "windows": {
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "transitory": {
+      "LiveWindow": {
+        "Drivetrain": {
+          "Back Left Module": {
+            "Drive Motor": {
+              "open": true
+            },
+            "Rotation Motor": {
+              "open": true
+            }
+          },
+          "Back Right Module": {
+            "Rotation Motor": {
+              "open": true
+            }
+          },
+          "Front Left Module": {
+            "open": true
+          },
+          "Front Right Module": {
+            "Drive Motor": {
+              "open": true
+            },
+            "Rotation Motor": {
+              "open": true
+            }
+          },
+          "open": true
+        },
+        "Ungrouped": {
+          "PIDController[1]": {
+            "open": true
+          },
+          "PIDController[2]": {
+            "open": true
+          },
+          "PIDController[3]": {
+            "open": true
+          },
+          "PIDController[4]": {
+            "open": true
+          }
+        },
+        "open": true
+      },
+      "SmartDashboard": {
+        "Claw": {
+          "open": true
+        },
+        "Drivetrain": {
+          "open": true
+        },
+        "Field": {
+          "open": true
+        },
+        "open": true
+      }
+    }
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "height": 338
+        }
+      ]
+    }
+  }
+}

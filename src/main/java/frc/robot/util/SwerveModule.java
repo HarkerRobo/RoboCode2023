@@ -5,15 +5,12 @@ import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.util.sendable.SendableRegistry;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.HSFalconBuilder;
 import harkerrobolib.wrappers.HSFalcon;
 
-public class SwerveModule implements Sendable {
+public class SwerveModule {
   private HSFalcon translation;
   private HSFalcon rotation;
 
@@ -24,12 +21,12 @@ public class SwerveModule implements Sendable {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  private static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
-  private static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
-  private static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO: tune
-  private static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
+  public static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO
+  public static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
+  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO: tune
+  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO
 
-  private static double TRANSLATION_QELMS = 5;
+  public static double TRANSLATION_QELMS = 5;
 
   public SwerveModule(int id) {
     this.id = id;
@@ -60,18 +57,14 @@ public class SwerveModule implements Sendable {
   }
 
   private void initModule() {
-    SendableRegistry.addLW(
-        translation, "Drivetrain/" + swerveIDToName(id) + " Module", "Drive Motor");
-    SendableRegistry.addLW(
-        rotation, "Drivetrain/" + swerveIDToName(id) + " Module", "Rotation Motor");
     setkP(ROTATION_kP);
     setAbsolutePosition();
   }
 
   public void setAngleAndDrive(SwerveModuleState state) {
     state = optimize(state);
-    setDrive(state.speedMetersPerSecond);
-    setAngle(state.angle.getDegrees());
+    translation.setVoltage(transLoop.getVoltage(state.speedMetersPerSecond, getSpeed()));
+    rotation.set(ControlMode.Position, state.angle.getDegrees() / RobotMap.SwerveModule.ROTATION_CONVERSION);
   }
 
   private SwerveModuleState optimize(SwerveModuleState desiredState) {
@@ -98,32 +91,24 @@ public class SwerveModule implements Sendable {
     return new SwerveModuleState(speed, Rotation2d.fromDegrees(angle));
   }
 
-  private void setAngle(double angle) {
-    rotation.set(ControlMode.Position, angle / RobotMap.SwerveModule.ROTATION_CONVERSION);
-  }
-
-  private void setDrive(double drive) {
-    translation.setVoltage(transLoop.getVoltage(drive, getSpeed()));
-  }
-
-  private void setkP(double kP) {
+  public void setkP(double kP) {
     ROTATION_kP = kP;
     rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
   }
 
-  private void setkS(double kS) {
+  public void setkS(double kS) {
     TRANSLATION_kS = kS;
     transLoop =
         new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
   }
 
-  private void setkV(double kV) {
+  public void setkV(double kV) {
     TRANSLATION_kV = kV;
     transLoop =
         new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
   }
 
-  private void setQelms(double error) {
+  public void setQelms(double error) {
     TRANSLATION_QELMS = error;
     transLoop =
         new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
@@ -168,17 +153,4 @@ public class SwerveModule implements Sendable {
     return new SwerveModuleState(getSpeed(), Rotation2d.fromDegrees(getAngle()));
   }
 
-  @Override
-  public void initSendable(SendableBuilder builder) {
-    builder.setSmartDashboardType("Swerve Module");
-    builder.addDoubleProperty("Translation Speed", this::getSpeed, this::setDrive);
-    builder.addDoubleProperty("Translation Position", this::getWheelPosition, null);
-    builder.addDoubleProperty("Translation Position", this::getWheelPosition, null);
-    builder.addDoubleProperty("Translation kS", () -> TRANSLATION_kS, this::setkS);
-    builder.addDoubleProperty("Translation kV", () -> TRANSLATION_kV, this::setkV);
-    builder.addDoubleProperty("Translation Error", () -> TRANSLATION_QELMS, this::setQelms);
-
-    builder.addDoubleProperty("Rotation Angle", this::getAngle, this::setAngle);
-    builder.addDoubleProperty("Rotation kP", () -> ROTATION_kP, this::setkP);
-  }
 }

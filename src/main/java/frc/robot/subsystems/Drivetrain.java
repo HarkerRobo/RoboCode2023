@@ -17,6 +17,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
@@ -48,8 +49,6 @@ public class Drivetrain extends SubsystemBase {
         new SwerveModule[] {
           new SwerveModule(0), new SwerveModule(1), new SwerveModule(2), new SwerveModule(3)
         };
-
-    addChild(SwerveModule.swerveIDToName(0) + " Module", swerveModules[0]);
 
     pigeon = (RobotMap.IS_COMP) ? new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN) : new PigeonIMU(RobotMap.Drivetrain.PIGEON_ID);
     prevHeading = getHeading();
@@ -157,5 +156,22 @@ public class Drivetrain extends SubsystemBase {
 
   public SwerveDriveKinematics getKinematics() {
     return kinematics;
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    builder.setSmartDashboardType("Drivetrain");
+    builder.addDoubleProperty("Translation kS", () -> SwerveModule.TRANSLATION_kS, swerveModules[0]::setkS);
+    builder.addDoubleProperty("Translation kV", () -> SwerveModule.TRANSLATION_kV, swerveModules[0]::setkV);
+    builder.addDoubleProperty("Translation Error", () -> SwerveModule.TRANSLATION_QELMS, swerveModules[0]::setQelms);
+
+    builder.addDoubleProperty("Rotation kP", () -> SwerveModule.ROTATION_kP, swerveModules[0]::setkP);
+
+    for (int i = 0; i < 4; i++) {
+      builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Translation Speed", swerveModules[i]::getSpeed, null);
+      builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Translation Position", swerveModules[i]::getWheelPosition, null);
+
+      builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Rotation Angle", swerveModules[i]::getAngle, null);
+    }
   }
 }
