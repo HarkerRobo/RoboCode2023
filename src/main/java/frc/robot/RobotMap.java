@@ -36,17 +36,18 @@ public final class RobotMap {
   public static final class SwerveModule {
     // IDs and Inverts
 
-    public static final int[] TRANSLATION_ID = (IS_COMP) ? new int[]{0, 0, 0, 0} : new int[]{0, 0, 0, 0}; // TODO
+    // fl, fr, bl, br
+    public static final int[] TRANSLATION_ID = (IS_COMP) ? new int[]{0, 0, 0, 0} : new int[]{27, 3, 5, 7}; // TODO
 
-    public static final boolean[] TRANSLATION_INVERT = (IS_COMP) ? new boolean[]{false, false, false, false}: new boolean []{false, false, false, false}; // TODO
+    public static final boolean[] TRANSLATION_INVERT = (IS_COMP) ? new boolean[]{false, false, false, false}: new boolean []{true, false, false, true}; // TODO
 
-    public static final int[] ROTATION_ID = (IS_COMP) ? new int[] {0, 0, 0, 0} : new int[] {0,0,0,0}; // TODO
+    public static final int[] ROTATION_ID = (IS_COMP) ? new int[] {0, 0, 0, 0} : new int[] {2, 4, 6, 8}; // TODO
 
     public static final boolean[] ROTATION_INVERT = (IS_COMP) ? new boolean[]{false, false, false, false} : new boolean[] {false, false, false, false}; // TODO
 
-    public static final int[] CAN_CODER_ID = (IS_COMP) ? new int [] {0, 0, 0, 0}:new int [] {0,0,0,0}; // TODO
+    public static final int[] CAN_CODER_ID = (IS_COMP) ? new int [] {0, 0, 0, 0}:new int [] {1, 2, 3, 4}; // TODO
 
-    public static final double[] CAN_CODER_OFFSETS = (IS_COMP) ? new double[] {0, 0, 0, 0}:new double[] {0,0,0,0}; // TODO
+    public static final double[] CAN_CODER_OFFSETS = (IS_COMP) ? new double[] {0, 0, 0, 0}:new double[] {135, 104.062, 110.391, 9.141}; // TODO
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
@@ -78,7 +79,7 @@ public final class RobotMap {
 
   public static final class Drivetrain {
     // Pigeon ID
-    public static final int PIGEON_ID = (IS_COMP) ? 0 : 0; // TODO
+    public static final int PIGEON_ID = (IS_COMP) ? 0 : 1; // TODO
 
     public static final double MIN_OUTPUT = 0.01;
   }

@@ -42,8 +42,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
     SmartDashboard.putNumber("Yaw kP", AlignYaw.kP);
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
-    CommandScheduler.getInstance()
-        .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
+    // CommandScheduler.getInstance()
+    //     .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
     autonChooser = new SendableChooser<>();
     autonChooser.setDefaultOption("Middle Path", Autons.middlePath);
     autonChooser.addOption("Bottom Path", Autons.bottomPath);
@@ -54,8 +54,8 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     SmartDashboard.putData(Drivetrain.getInstance());
-    SmartDashboard.putData(Claw.getInstance());
-    SmartDashboard.putData(AngledElevator.getInstance());
+    // SmartDashboard.putData(Claw.getInstance());
+    // SmartDashboard.putData(AngledElevator.getInstance());
   }
 
   @Override

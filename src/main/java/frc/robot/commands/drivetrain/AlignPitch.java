@@ -7,7 +7,7 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignPitch extends CommandBase {
-  public static double kP = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
+  public static double kP = (RobotMap.IS_COMP) ? 0.0 : 0.4; // TODO
 
   public static final double SETPOINT = 0;
 

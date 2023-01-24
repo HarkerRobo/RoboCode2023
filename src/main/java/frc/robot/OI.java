@@ -61,7 +61,7 @@ public class OI {
         .onTrue(
             new InstantCommand(
                 () -> {
-                  AngledElevator.getInstance().addToPositions(5);
+                  AngledElevator.getInstance().addToPositions(50);
                 }));
   }
 
