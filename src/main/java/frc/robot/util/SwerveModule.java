@@ -5,10 +5,6 @@ import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.util.sendable.SendableRegistry;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.HSFalconBuilder;
@@ -25,10 +21,10 @@ public class SwerveModule {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  public static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.3; // TODO
-  public static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0; // TODO
-  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.3; // TODO: tune
-  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.05; // TODO
+  public static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO
+  public static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
+  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO: tune
+  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO
 
   public static double TRANSLATION_QELMS = 5;
 
@@ -67,33 +63,8 @@ public class SwerveModule {
 
   public void setAngleAndDrive(SwerveModuleState state) {
     state = optimize(state);
-    setDrive(state.speedMetersPerSecond);
-    setAngle(state.angle.getDegrees());
-    
-  }
-
-  private void initSmartDashboard() {
-    SmartDashboard.putNumber("Translation Speed", getSpeed());
-    SmartDashboard.putNumber("Translation Position", getWheelPosition());
-
-    SmartDashboard.putNumber("Translation kS", TRANSLATION_kS);
-    TRANSLATION_kS = SmartDashboard.getNumber("Translation kS", TRANSLATION_kS);
-    setkS(TRANSLATION_kS);
-
-    SmartDashboard.putNumber("Translation kV", TRANSLATION_kV);
-    TRANSLATION_kV = SmartDashboard.getNumber("Translation kV", TRANSLATION_kV);
-    setkV(TRANSLATION_kV);
-
-    SmartDashboard.putNumber("Translation Error", TRANSLATION_QELMS);
-    TRANSLATION_QELMS = SmartDashboard.getNumber("Translation Qelms", TRANSLATION_QELMS);
-    setQelms(TRANSLATION_QELMS);
-
-    SmartDashboard.putNumber("Rotation Angle", getAngle());
-    SmartDashboard.putNumber("Rotation Angle", getAngle());
-
-    SmartDashboard.putNumber("Rotation kP", ROTATION_kP);
-    ROTATION_kP = SmartDashboard.getNumber("Rotation kP", ROTATION_kP);
-    setkP(ROTATION_kP);
+    translation.setVoltage(transLoop.getVoltage(state.speedMetersPerSecond, getSpeed()));
+    rotation.set(ControlMode.Position, state.angle.getDegrees() / RobotMap.SwerveModule.ROTATION_CONVERSION);
   }
 
   private SwerveModuleState optimize(SwerveModuleState desiredState) {
@@ -119,12 +90,7 @@ public class SwerveModule {
     }
     return new SwerveModuleState(speed, Rotation2d.fromDegrees(angle));
   }
-  public void setAngle(double angle){
-    rotation.set(ControlMode.Position,angle/RobotMap.SwerveModule.ROTATION_CONVERSION);
-  }
-  public void setDrive(double drive){
-    translation.setVoltage(transLoop.getVoltage(drive, getSpeed()));
-  }
+
   public void setkP(double kP) {
     ROTATION_kP = kP;
     rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
