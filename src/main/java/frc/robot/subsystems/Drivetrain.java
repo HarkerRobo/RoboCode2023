@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
   private SwerveDriveKinematics kinematics;
   private SwerveDrivePoseEstimator poseEstimator;
 
-  private BasePigeon pigeon;
+  private Pigeon2 pigeon;
   private double prevHeading;
 
   public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.007 : 0.007; // TODO
@@ -50,7 +50,7 @@ public class Drivetrain extends SubsystemBase {
           new SwerveModule(0), new SwerveModule(1), new SwerveModule(2), new SwerveModule(3)
         };
 
-    pigeon = (RobotMap.IS_COMP) ? new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN) : new PigeonIMU(RobotMap.Drivetrain.PIGEON_ID);
+    pigeon = new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN);
     prevHeading = getHeading();
 
     kinematics =
@@ -170,7 +170,6 @@ public class Drivetrain extends SubsystemBase {
     for (int i = 0; i < 4; i++) {
       builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Translation Speed", swerveModules[i]::getSpeed, null);
       builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Translation Position", swerveModules[i]::getWheelPosition, null);
-
       builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Rotation Angle", swerveModules[i]::getAngle, null);
     }
   }

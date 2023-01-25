@@ -9,6 +9,9 @@ import harkerrobolib.util.Constants;
 import harkerrobolib.util.MathUtil;
 
 public class SwerveManual extends IndefiniteCommand {
+
+  public static final double SPEED_MULTIPLIER = 0.75;
+
   public SwerveManual() {
     addRequirements(Drivetrain.getInstance());
   }
@@ -25,9 +28,9 @@ public class SwerveManual extends IndefiniteCommand {
             OI.getInstance().getDriver().getRightX(), Constants.JOYSTICK_DEADBAND);
 
     // Scaling Values
-    vx = scaleValues(vx, RobotMap.MAX_DRIVING_SPEED);
-    vy = scaleValues(vy, RobotMap.MAX_DRIVING_SPEED);
-    omega = scaleValues(omega, RobotMap.MAX_TURNING_SPEED);
+    vx = scaleValues(vx, RobotMap.MAX_DRIVING_SPEED) * SPEED_MULTIPLIER;
+    vy = scaleValues(vy, RobotMap.MAX_DRIVING_SPEED) * SPEED_MULTIPLIER;
+    omega = scaleValues(omega, RobotMap.MAX_DRIVING_SPEED) * SPEED_MULTIPLIER;
 
     // pigeon alignment
     omega = Drivetrain.getInstance().adjustPigeon(omega);
@@ -40,7 +43,7 @@ public class SwerveManual extends IndefiniteCommand {
     Drivetrain.getInstance()
         .setAngleAndDrive(
             ChassisSpeeds.fromFieldRelativeSpeeds(
-                vy, -vx, -omega, Drivetrain.getInstance().getRotation()));
+                vx, vy, -omega, Drivetrain.getInstance().getRotation()));
   }
 
   private double scaleValues(double value, double scaleFactor) {

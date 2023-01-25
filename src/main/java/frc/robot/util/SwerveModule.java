@@ -5,6 +5,7 @@ import com.ctre.phoenix.sensors.CANCoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.HSFalconBuilder;
@@ -21,12 +22,12 @@ public class SwerveModule {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  public static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO
-  public static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0.0; // TODO
-  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO: tune
-  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.1; // TODO
+  public static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.2; // TODO
+  public static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0.2; // TODO
+  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.4; // TODO: tune
+  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.05; // TODO
 
-  public static double TRANSLATION_QELMS = 5;
+  public static double TRANSLATION_QELMS = 2;
 
   public SwerveModule(int id) {
     this.id = id;
@@ -63,6 +64,9 @@ public class SwerveModule {
 
   public void setAngleAndDrive(SwerveModuleState state) {
     state = optimize(state);
+    if (id == 1) {
+      SmartDashboard.putNumber("Desired top right translation", state.speedMetersPerSecond);
+    }
     translation.setVoltage(transLoop.getVoltage(state.speedMetersPerSecond, getSpeed()));
     rotation.set(ControlMode.Position, state.angle.getDegrees() / RobotMap.SwerveModule.ROTATION_CONVERSION);
   }

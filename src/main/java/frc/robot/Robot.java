@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    RobotMap.Field.FIELD.setRobotPose(Drivetrain.getInstance().getPoseEstimatorPose2d());
     SmartDashboard.putData(Drivetrain.getInstance());
     // SmartDashboard.putData(Claw.getInstance());
     // SmartDashboard.putData(AngledElevator.getInstance());
