@@ -22,15 +22,14 @@ public final class RobotMap {
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
-  public static final double MAX_TURNING_SPEED = 1.0; // rad/s
-  public static final double MAX_ANGLE_VELOCITY = Math.PI * MAX_TURNING_SPEED;
+  public static final double MAX_ANGLE_VELOCITY = Math.PI;
   public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY / 2;
 
   // Robot Dimensions
   public static final double ROBOT_LENGTH = Units.inchesToMeters(30);
   public static final double ROBOT_WIDTH = Units.inchesToMeters(28);
 
-  public static final boolean IS_PIGEON_INVERTED = (IS_COMP) ? false : true; // TODO
+  public static final boolean IS_PIGEON_INVERTED = (IS_COMP) ? false : false; // TODO
 
   public static final class SwerveModule {
     // IDs and Inverts

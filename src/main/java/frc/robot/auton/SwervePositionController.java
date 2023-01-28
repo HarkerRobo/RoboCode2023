@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 
 public class SwervePositionController extends CommandBase {
   // TODO
-  public static double X_kP = (RobotMap.IS_COMP) ? 0.0 : 2.7;
+  public static double X_kP = (RobotMap.IS_COMP) ? 0.0 : 1.7;
   public static double X_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
   public static double X_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
 
@@ -103,14 +103,10 @@ public class SwervePositionController extends CommandBase {
         ChassisSpeeds.fromFieldRelativeSpeeds(
             xFF + xFeedback, yFF + yFeedback, thetaFF, currentPose.getRotation());
     Drivetrain.getInstance().setAngleAndDrive(adjustedSpeeds);
-    // Pose2d poseError = autonomusController.m_poseError;
-    // Rotation2d rotError = autonomusController.m_rotationError;
+
     SmartDashboard.putNumber("goal X", goal.poseMeters.getX());
     SmartDashboard.putNumber("goal Y", goal.poseMeters.getY());
     SmartDashboard.putNumber("goal theta", angleRef.getDegrees());
-    // SmartDashboard.putNumber("Traj-X-Error", Units.metersToInches(poseError.getX()));
-    // SmartDashboard.putNumber("Traj-Y-Error", Units.metersToInches(poseError.getY()));
-    // SmartDashboard.putNumber("Traj-Theta-Error", rotationError.getDegrees());
   }
 
   @Override

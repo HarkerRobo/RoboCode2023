@@ -30,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.007 : 0.007; // TODO
+  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.01 : 0.01; // TODO
 
   private static double MAX_ERROR_PITCH = 3; // TODO
 
@@ -47,7 +47,7 @@ public class Drivetrain extends SubsystemBase {
 
     pigeon = new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN);
     pigeon.setYaw(0);
-    prevHeading = getHeading();
+    prevHeading = 0;
 
     kinematics =
         new SwerveDriveKinematics(
@@ -109,6 +109,7 @@ public class Drivetrain extends SubsystemBase {
 
   private void setYaw(double yaw) {
     pigeon.setYaw((RobotMap.IS_PIGEON_INVERTED) ? yaw : -yaw);
+    prevHeading = (RobotMap.IS_PIGEON_INVERTED) ? yaw : -yaw;
   }
 
   private SwerveModulePosition[] getModulePositions() {
