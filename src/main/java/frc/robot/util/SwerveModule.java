@@ -27,7 +27,7 @@ public class SwerveModule {
   public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.5; // TODO: tune
   public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.221; // TODO
 
-  public static double TRANSLATION_QELMS = 3;
+  public static double TRANSLATION_QELMS = 5;
 
   public SwerveModule(int id) {
     this.id = id;

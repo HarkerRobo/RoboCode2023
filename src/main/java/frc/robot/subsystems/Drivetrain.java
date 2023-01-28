@@ -46,8 +46,7 @@ public class Drivetrain extends SubsystemBase {
         };
 
     pigeon = new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN);
-    pigeon.setYaw(0);
-    prevHeading = 0;
+    initPigeon();
 
     kinematics =
         new SwerveDriveKinematics(
@@ -68,18 +67,25 @@ public class Drivetrain extends SubsystemBase {
             visionStdDevs);
   }
 
+  private void initPigeon() {
+    pigeon.configFactoryDefault();
+    pigeon.setYaw(0);
+    prevHeading = 0;
+  }
+
   public double adjustPigeon(double omega) {
     PIGEON_kP = SmartDashboard.getNumber("Pigeon kP", PIGEON_kP);
     SmartDashboard.putNumber("Pigeon kP", PIGEON_kP);
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
-      omega = PIGEON_kP * (prevHeading - getHeading());
+      omega = -PIGEON_kP * (prevHeading - getHeading());
     else prevHeading = getHeading();
 
     return omega;
   }
 
   public double getHeading() {
-    return (RobotMap.IS_PIGEON_INVERTED) ? pigeon.getYaw() : -pigeon.getYaw();
+    SmartDashboard.putNumber("pigeon heading", pigeon.getYaw());
+    return ((RobotMap.Drivetrain.IS_PIGEON_INVERTED) ? pigeon.getYaw() : -pigeon.getYaw());
   }
 
   public double getPitch() {
@@ -107,9 +113,9 @@ public class Drivetrain extends SubsystemBase {
     poseEstimator.resetPosition(pose.getRotation(), getModulePositions(), pose);
   }
 
-  private void setYaw(double yaw) {
-    pigeon.setYaw((RobotMap.IS_PIGEON_INVERTED) ? yaw : -yaw);
-    prevHeading = (RobotMap.IS_PIGEON_INVERTED) ? yaw : -yaw;
+  public void setYaw(double yaw) {
+    pigeon.setYaw((RobotMap.Drivetrain.IS_PIGEON_INVERTED) ? yaw : -yaw);
+    prevHeading = RobotMap.Drivetrain.IS_PIGEON_INVERTED ? yaw : -yaw;
   }
 
   private SwerveModulePosition[] getModulePositions() {

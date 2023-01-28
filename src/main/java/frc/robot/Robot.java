@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -43,8 +45,8 @@ public class Robot extends TimedRobot {
     //     .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
     autonChooser = new SendableChooser<>();
     autonChooser.setDefaultOption("Middle Path", Autons.middlePath);
-    autonChooser.addOption("Bottom Path", Autons.bottomPath);
-    autonChooser.addOption("Top Path", Autons.topPath);
+    // autonChooser.addOption("Bottom Path", Autons.bottomPath);
+    // autonChooser.addOption("Top Path", Autons.topPath);
     SmartDashboard.putData("Auton Chooser", autonChooser);
   }
 
@@ -65,12 +67,15 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Y kP", SwervePositionController.Y_kP);
     SmartDashboard.putNumber("Theta kP", SwervePositionController.THETA_kP);
     // autonChooser.getSelected().schedule();
+    Drivetrain.getInstance().setPose(new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)));
     Autons.moveBack.schedule();
     // Autons.moveLeft.schedule();
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    CommandScheduler.getInstance().run();
+  }
 
   @Override
   public void teleopInit() {}

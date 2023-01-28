@@ -14,7 +14,7 @@ public final class RobotMap {
 
     public static final Field2d FIELD = new Field2d();
 
-    public static final boolean IS_FLIPPED = DriverStation.getAlliance() == Alliance.Red;
+    public static final boolean IS_FLIPPED = false;
   }
 
   public static final boolean IS_COMP = false;
@@ -28,8 +28,6 @@ public final class RobotMap {
   // Robot Dimensions
   public static final double ROBOT_LENGTH = Units.inchesToMeters(30);
   public static final double ROBOT_WIDTH = Units.inchesToMeters(28);
-
-  public static final boolean IS_PIGEON_INVERTED = (IS_COMP) ? false : false; // TODO
 
   public static final class SwerveModule {
     // IDs and Inverts
@@ -90,6 +88,8 @@ public final class RobotMap {
   public static final class Drivetrain {
     // Pigeon ID
     public static final int PIGEON_ID = (IS_COMP) ? 0 : 1; // TODO
+
+    public static final boolean IS_PIGEON_INVERTED = (IS_COMP) ? false : true; // TODO
 
     public static final double MIN_OUTPUT = 0.00001;
   }

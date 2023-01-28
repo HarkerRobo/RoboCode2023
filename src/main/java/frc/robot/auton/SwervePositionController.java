@@ -17,15 +17,15 @@ import java.util.function.Supplier;
 
 public class SwervePositionController extends CommandBase {
   // TODO
-  public static double X_kP = (RobotMap.IS_COMP) ? 0.0 : 1.7;
+  public static double X_kP = (RobotMap.IS_COMP) ? 0.0 : 3.5;
   public static double X_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
   public static double X_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
 
-  public static double Y_kP = (RobotMap.IS_COMP) ? 0.0 : 4.5;
+  public static double Y_kP = (RobotMap.IS_COMP) ? 0.0 : 3.4;
   public static double Y_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
   public static double Y_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
 
-  public static double THETA_kP = (RobotMap.IS_COMP) ? 0.0 : 3.5;
+  public static double THETA_kP = (RobotMap.IS_COMP) ? 0.0 : 2.5;
   public static double THETA_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
   public static double THETA_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
 
@@ -92,7 +92,7 @@ public class SwervePositionController extends CommandBase {
             -clampAdd,
             clampAdd);
     // poseError = poseRef.relativeTo(currentPose);
-    // Rotation2d rotationError = angleRef.minus(currentPose.getRotation());
+    Rotation2d rotationError = angleRef.minus(currentPose.getRotation());
 
     // Calculate feedback velocities (based on position error).
     double xFeedback = xController.calculate(currentPose.getX(), goal.poseMeters.getX());
