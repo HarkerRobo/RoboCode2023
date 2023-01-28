@@ -16,9 +16,6 @@ import frc.robot.auton.SwervePositionController;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
 import frc.robot.commands.drivetrain.SwerveManual;
-import frc.robot.commands.elevator.ElevatorManual;
-import frc.robot.subsystems.AngledElevator;
-import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -48,6 +45,7 @@ public class Robot extends TimedRobot {
     autonChooser.setDefaultOption("Middle Path", Autons.middlePath);
     autonChooser.addOption("Bottom Path", Autons.bottomPath);
     autonChooser.addOption("Top Path", Autons.topPath);
+    SmartDashboard.putData("Auton Chooser", autonChooser);
   }
 
   @Override
@@ -57,6 +55,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(Drivetrain.getInstance());
     // SmartDashboard.putData(Claw.getInstance());
     // SmartDashboard.putData(AngledElevator.getInstance());
+    SmartDashboard.updateValues();
+    NetworkTableInstance.getDefault().flush();
   }
 
   @Override
@@ -64,7 +64,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("X kP", SwervePositionController.X_kP);
     SmartDashboard.putNumber("Y kP", SwervePositionController.Y_kP);
     SmartDashboard.putNumber("Theta kP", SwervePositionController.THETA_kP);
-    autonChooser.getSelected().schedule();
+    // autonChooser.getSelected().schedule();
+    Autons.moveBack.schedule();
+    // Autons.moveLeft.schedule();
   }
 
   @Override

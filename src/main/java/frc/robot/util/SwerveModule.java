@@ -24,10 +24,10 @@ public class SwerveModule {
   // PID Constants
   public static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.2; // TODO
   public static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0.2; // TODO
-  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.4; // TODO: tune
-  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.05; // TODO
+  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.5; // TODO: tune
+  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.221; // TODO
 
-  public static double TRANSLATION_QELMS = 2;
+  public static double TRANSLATION_QELMS = 3;
 
   public SwerveModule(int id) {
     this.id = id;
@@ -68,7 +68,8 @@ public class SwerveModule {
       SmartDashboard.putNumber("Desired top right translation", state.speedMetersPerSecond);
     }
     translation.setVoltage(transLoop.getVoltage(state.speedMetersPerSecond, getSpeed()));
-    rotation.set(ControlMode.Position, state.angle.getDegrees() / RobotMap.SwerveModule.ROTATION_CONVERSION);
+    rotation.set(
+        ControlMode.Position, state.angle.getDegrees() / RobotMap.SwerveModule.ROTATION_CONVERSION);
   }
 
   private SwerveModuleState optimize(SwerveModuleState desiredState) {
@@ -156,5 +157,4 @@ public class SwerveModule {
   public SwerveModuleState getSwerveModuleState() {
     return new SwerveModuleState(getSpeed(), Rotation2d.fromDegrees(getAngle()));
   }
-
 }

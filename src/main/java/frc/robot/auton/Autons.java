@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotMap;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.OpenClaw;
-import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.elevator.MoveToPosition;
 import frc.robot.commands.elevator.ZeroElevator;
 
@@ -24,17 +23,29 @@ public final class Autons {
                       () -> Rotation2d.fromDegrees(180))));
   public static final SequentialCommandGroup middlePath =
       new SequentialCommandGroup(
-        //   new ZeroElevator(),
-        //   new CloseClaw(),
-        //   new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
-        //   new OpenClaw(),
-        //   new MoveToPosition(0)
-        //       .alongWith(
-                  new SwervePositionController(
-                      Trajectories.chargePad,
-                      () -> Rotation2d.fromDegrees(0),
-                      () -> Rotation2d.fromDegrees(180)));
-        //   new AlignPitch());
+          //   new ZeroElevator(),
+          //   new CloseClaw(),
+          //   new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
+          //   new OpenClaw(),
+          //   new MoveToPosition(0)
+          //       .alongWith(
+          new SwervePositionController(
+              Trajectories.chargePad,
+              () -> Rotation2d.fromDegrees(0),
+              () -> Rotation2d.fromDegrees(180)));
+  //   new AlignPitch());
+  public static final SwervePositionController moveBack =
+      new SwervePositionController(
+          Trajectories.moveBack,
+          () -> Rotation2d.fromDegrees(180),
+          () -> Rotation2d.fromDegrees(180));
+
+  public static final SwervePositionController moveLeft =
+      new SwervePositionController(
+          Trajectories.moveLeft,
+          () -> Rotation2d.fromDegrees(180),
+          () -> Rotation2d.fromDegrees(180));
+          
   public static final SequentialCommandGroup bottomPath =
       new SequentialCommandGroup(
           new ZeroElevator(),

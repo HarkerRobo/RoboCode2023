@@ -22,8 +22,28 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)), // TODO
               new Pose2d(3.87, 2.57, Rotation2d.fromDegrees(0))),
-          2.0,
           1.0,
+          0.5,
+          0.0,
+          0.0);
+
+  public static Trajectory moveBack =
+      generateTrajectory(
+          List.of(
+              new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)), // TODO
+              new Pose2d(3.87, 3.27, Rotation2d.fromDegrees(180))),
+          1.0,
+          0.5,
+          0.0,
+          0.0);
+
+  public static Trajectory moveLeft =
+      generateTrajectory(
+          List.of(
+              new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)), // TODO
+              new Pose2d(1.81, 4.27, Rotation2d.fromDegrees(180))),
+          1.0,
+          0.5,
           0.0,
           0.0);
 

@@ -1,11 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.sensors.BasePigeon;
 import com.ctre.phoenix.sensors.Pigeon2;
-import com.ctre.phoenix.sensors.PigeonIMU;
-
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.Pair;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -21,7 +17,6 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
-import frc.robot.util.CameraPoseEstimation;
 import frc.robot.util.SwerveModule;
 
 public class Drivetrain extends SubsystemBase {
@@ -51,6 +46,7 @@ public class Drivetrain extends SubsystemBase {
         };
 
     pigeon = new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN);
+    pigeon.setYaw(0);
     prevHeading = getHeading();
 
     kinematics =
@@ -83,7 +79,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getHeading() {
-    return (RobotMap.IS_PIGEON_UP) ? -pigeon.getYaw() : pigeon.getYaw();
+    return (RobotMap.IS_PIGEON_INVERTED) ? pigeon.getYaw() : -pigeon.getYaw();
   }
 
   public double getPitch() {
@@ -112,7 +108,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   private void setYaw(double yaw) {
-    pigeon.setYaw((RobotMap.IS_PIGEON_UP) ? -yaw : yaw);
+    pigeon.setYaw((RobotMap.IS_PIGEON_INVERTED) ? yaw : -yaw);
   }
 
   private SwerveModulePosition[] getModulePositions() {
@@ -161,16 +157,25 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Drivetrain");
-    builder.addDoubleProperty("Translation kS", () -> SwerveModule.TRANSLATION_kS, swerveModules[0]::setkS);
-    builder.addDoubleProperty("Translation kV", () -> SwerveModule.TRANSLATION_kV, swerveModules[0]::setkV);
-    builder.addDoubleProperty("Translation Error", () -> SwerveModule.TRANSLATION_QELMS, swerveModules[0]::setQelms);
+    builder.addDoubleProperty(
+        "Translation kS", () -> SwerveModule.TRANSLATION_kS, swerveModules[0]::setkS);
+    builder.addDoubleProperty(
+        "Translation kV", () -> SwerveModule.TRANSLATION_kV, swerveModules[0]::setkV);
+    builder.addDoubleProperty(
+        "Translation Error", () -> SwerveModule.TRANSLATION_QELMS, swerveModules[0]::setQelms);
 
-    builder.addDoubleProperty("Rotation kP", () -> SwerveModule.ROTATION_kP, swerveModules[0]::setkP);
+    builder.addDoubleProperty(
+        "Rotation kP", () -> SwerveModule.ROTATION_kP, swerveModules[0]::setkP);
 
     for (int i = 0; i < 4; i++) {
-      builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Translation Speed", swerveModules[i]::getSpeed, null);
-      builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Translation Position", swerveModules[i]::getWheelPosition, null);
-      builder.addDoubleProperty(SwerveModule.swerveIDToName(i) + " Rotation Angle", swerveModules[i]::getAngle, null);
+      builder.addDoubleProperty(
+          SwerveModule.swerveIDToName(i) + " Translation Speed", swerveModules[i]::getSpeed, null);
+      builder.addDoubleProperty(
+          SwerveModule.swerveIDToName(i) + " Translation Position",
+          swerveModules[i]::getWheelPosition,
+          null);
+      builder.addDoubleProperty(
+          SwerveModule.swerveIDToName(i) + " Rotation Angle", swerveModules[i]::getAngle, null);
     }
   }
 }

@@ -20,7 +20,7 @@ public class SwervePositionController extends CommandBase {
   public static double X_kP = (RobotMap.IS_COMP) ? 0.0 : 2.7;
   public static double X_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
   public static double X_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
-  
+
   public static double Y_kP = (RobotMap.IS_COMP) ? 0.0 : 4.5;
   public static double Y_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
   public static double Y_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
@@ -48,7 +48,7 @@ public class SwervePositionController extends CommandBase {
     this.trajectory = trajectory;
     this.refHeading = refHeading;
     this.startHeading = startHeading;
-    thetaController.enableContinuousInput(0, 2 * Math.PI);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
     addRequirements(Drivetrain.getInstance());
   }
 
@@ -105,7 +105,9 @@ public class SwervePositionController extends CommandBase {
     Drivetrain.getInstance().setAngleAndDrive(adjustedSpeeds);
     // Pose2d poseError = autonomusController.m_poseError;
     // Rotation2d rotError = autonomusController.m_rotationError;
-
+    SmartDashboard.putNumber("goal X", goal.poseMeters.getX());
+    SmartDashboard.putNumber("goal Y", goal.poseMeters.getY());
+    SmartDashboard.putNumber("goal theta", angleRef.getDegrees());
     // SmartDashboard.putNumber("Traj-X-Error", Units.metersToInches(poseError.getX()));
     // SmartDashboard.putNumber("Traj-Y-Error", Units.metersToInches(poseError.getY()));
     // SmartDashboard.putNumber("Traj-Theta-Error", rotationError.getDegrees());
