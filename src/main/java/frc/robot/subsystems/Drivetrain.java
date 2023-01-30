@@ -30,11 +30,11 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.01 : 0.01; // TODO
+  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.01 : 0.17; // TODO
 
   private static double MAX_ERROR_PITCH = 3; // TODO
 
-  private static double MAX_ERROR_YAW = 5; // TODO
+  private static double MAX_ERROR_YAW = 1; // TODO
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
 
   public double getHeading() {
     SmartDashboard.putNumber("pigeon heading", pigeon.getYaw());
-    return ((RobotMap.Drivetrain.IS_PIGEON_INVERTED) ? pigeon.getYaw() : -pigeon.getYaw());
+    return ((RobotMap.Drivetrain.IS_HEADING_INVERTED) ? pigeon.getYaw() : -pigeon.getYaw());
   }
 
   public double getPitch() {
@@ -93,11 +93,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public boolean checkPitch(double desired) {
-    return Math.abs(getPitch() - desired) < MAX_ERROR_PITCH;
+    return Math.abs(desired - getPitch()) < MAX_ERROR_PITCH;
   }
 
   public boolean checkYaw(double desired) {
-    return Math.abs(getHeading() - desired) < MAX_ERROR_YAW;
+    return Math.abs(desired - getHeading()) < MAX_ERROR_YAW;
   }
 
   public Rotation2d getRotation() {
@@ -114,8 +114,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setYaw(double yaw) {
-    pigeon.setYaw((RobotMap.Drivetrain.IS_PIGEON_INVERTED) ? yaw : -yaw);
-    prevHeading = RobotMap.Drivetrain.IS_PIGEON_INVERTED ? yaw : -yaw;
+    pigeon.setYaw(-yaw);
+    setPreviousHeading(-yaw);
+  }
+
+  public void setPreviousHeading(double prev)
+  {
+    prevHeading = prev;
   }
 
   private SwerveModulePosition[] getModulePositions() {

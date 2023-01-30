@@ -7,6 +7,8 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 import java.util.ArrayList;
@@ -21,38 +23,38 @@ public final class Trajectories {
       generateTrajectory(
           List.of(
               new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)),
-              new Pose2d(3.87, 2.57, Rotation2d.fromDegrees(0))),
+              new Pose2d(3.87, 2.57, Rotation2d.fromDegrees(180))),
           1.0,
           0.5,
           0.0,
           0.0);
 
-  public static Trajectory moveBack =
-      generateTrajectory(
-          List.of(
-              new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)),
-              new Pose2d(3.87, 3.27, Rotation2d.fromDegrees(180))),
-          1.0,
-          0.5,
-          0.0,
-          0.0);
+  //   public static Trajectory moveBack =
+  //       generateTrajectory(
+  //           List.of(
+  //               new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)),
+  //               new Pose2d(3.87, 3.27, Rotation2d.fromDegrees(180))),
+  //           2,
+  //           1,
+  //           0.0,
+  //           0.0);
 
-  public static Trajectory moveLeft =
-      generateTrajectory(
-          List.of(
-              new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)),
-              new Pose2d(1.81, 4.27, Rotation2d.fromDegrees(180))),
-          1.0,
-          0.5,
-          0.0,
-          0.0);
+  //   public static Trajectory moveLeft =
+  //       generateTrajectory(
+  //           List.of(
+  //               new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)),
+  //               new Pose2d(1.81, 4.27, Rotation2d.fromDegrees(180))),
+  //           2.0,
+  //           1,
+  //           0.0,
+  //           0.0);
 
   public static Trajectory topPath =
       generateTrajectory(
           List.of(
               new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180)),
               new Pose2d(4.65, 4.71, Rotation2d.fromDegrees(180)),
-              new Pose2d(7.42, 4.62, Rotation2d.fromDegrees(0))),
+              new Pose2d(7.42, 4.62, Rotation2d.fromDegrees(180))),
           2,
           1,
           0,
@@ -63,7 +65,7 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180)),
               new Pose2d(6.79, 0.94, Rotation2d.fromDegrees(180)),
-              new Pose2d(7.57, 4.62, Rotation2d.fromDegrees(0))),
+              new Pose2d(7.57, 4.62, Rotation2d.fromDegrees(180))),
           2.0,
           1.0,
           0.0,
@@ -92,21 +94,19 @@ public final class Trajectories {
 
   /** Flips a translation to the correct side of the field based on the current alliance color. */
   public static Translation2d apply(Translation2d translation) {
-    return (RobotMap.Field.IS_FLIPPED)
+    return (isFlipped())
         ? new Translation2d(RobotMap.Field.fieldLength - translation.getX(), translation.getY())
         : translation;
   }
 
   /** Flips a rotation based on the current alliance color. */
   public static Rotation2d apply(Rotation2d rotation) {
-    return (RobotMap.Field.IS_FLIPPED)
-        ? new Rotation2d(-rotation.getCos(), rotation.getSin())
-        : rotation;
+    return (isFlipped()) ? new Rotation2d(-rotation.getCos(), rotation.getSin()) : rotation;
   }
 
   /** Flips a pose to the correct side of the field based on the current alliance color. */
   public static Pose2d apply(Pose2d pose) {
-    return (RobotMap.Field.IS_FLIPPED)
+    return (isFlipped())
         ? new Pose2d(
             RobotMap.Field.fieldLength - pose.getX(),
             pose.getY(),
@@ -118,7 +118,7 @@ public final class Trajectories {
    * Flips a trajectory state to the correct side of the field based on the current alliance color.
    */
   public static Trajectory.State apply(Trajectory.State state) {
-    return (RobotMap.Field.IS_FLIPPED)
+    return (isFlipped())
         ? new Trajectory.State(
             state.timeSeconds,
             state.velocityMetersPerSecond,
@@ -131,5 +131,9 @@ public final class Trajectories {
                     state.poseMeters.getRotation().getSin())),
             -state.curvatureRadPerMeter)
         : state;
+  }
+
+  private static boolean isFlipped() {
+    return DriverStation.getAlliance() == Alliance.Red;
   }
 }

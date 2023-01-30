@@ -1,8 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import harkerrobolib.util.Conversions;
 
@@ -13,8 +11,6 @@ public final class RobotMap {
     public static final double tapeWidth = Units.inchesToMeters(2.0);
 
     public static final Field2d FIELD = new Field2d();
-
-    public static final boolean IS_FLIPPED = false;
   }
 
   public static final boolean IS_COMP = false;
@@ -89,7 +85,7 @@ public final class RobotMap {
     // Pigeon ID
     public static final int PIGEON_ID = (IS_COMP) ? 0 : 1; // TODO
 
-    public static final boolean IS_PIGEON_INVERTED = (IS_COMP) ? false : true; // TODO
+    public static final boolean IS_HEADING_INVERTED = (IS_COMP) ? false : true; // TODO
 
     public static final double MIN_OUTPUT = 0.00001;
   }

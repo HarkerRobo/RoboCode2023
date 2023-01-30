@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -55,10 +53,10 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     RobotMap.Field.FIELD.setRobotPose(Drivetrain.getInstance().getPoseEstimatorPose2d());
     SmartDashboard.putData(Drivetrain.getInstance());
-    // SmartDashboard.putData(Claw.getInstance());
-    // SmartDashboard.putData(AngledElevator.getInstance());
     SmartDashboard.updateValues();
     NetworkTableInstance.getDefault().flush();
+    // SmartDashboard.putData(Claw.getInstance());
+    // SmartDashboard.putData(AngledElevator.getInstance());
   }
 
   @Override
@@ -66,16 +64,13 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("X kP", SwervePositionController.X_kP);
     SmartDashboard.putNumber("Y kP", SwervePositionController.Y_kP);
     SmartDashboard.putNumber("Theta kP", SwervePositionController.THETA_kP);
-    // autonChooser.getSelected().schedule();
-    Drivetrain.getInstance().setPose(new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)));
-    Autons.moveBack.schedule();
+    autonChooser.getSelected().schedule();
+    // Autons.moveBack.schedule();
     // Autons.moveLeft.schedule();
   }
 
   @Override
-  public void autonomousPeriodic() {
-    CommandScheduler.getInstance().run();
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {}

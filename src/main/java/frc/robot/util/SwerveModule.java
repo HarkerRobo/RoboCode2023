@@ -60,6 +60,7 @@ public class SwerveModule {
   private void initModule() {
     setkP(ROTATION_kP);
     setAbsolutePosition();
+    translation.enableVoltageCompensation(false);
   }
 
   public void setAngleAndDrive(SwerveModuleState state) {

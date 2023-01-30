@@ -9,9 +9,9 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignYaw extends CommandBase {
-  public static double kP = (RobotMap.IS_COMP) ? 0.0 : 0.7; // TODO
-  public static final double kI = 0.0;
-  public static final double kD = 0.0;
+  public static double kP = (RobotMap.IS_COMP) ? 0.0 : 0.4; // TODO
+  public static final double kI = 0.001 ;
+  public static final double kD = 0.1;
 
   private static ProfiledPIDController thetaController =
       new ProfiledPIDController(
@@ -24,6 +24,7 @@ public class AlignYaw extends CommandBase {
 
   public AlignYaw() {
     addRequirements(Drivetrain.getInstance());
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
   }
 
   public void execute() {
@@ -39,6 +40,7 @@ public class AlignYaw extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    Drivetrain.getInstance().setPreviousHeading(Drivetrain.getInstance().getHeading());
     Drivetrain.getInstance().setAngleAndDrive(new ChassisSpeeds());
   }
 
