@@ -42,10 +42,9 @@ public class Robot extends TimedRobot {
     // CommandScheduler.getInstance()
     //     .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
     autonChooser = new SendableChooser<>();
-    // autonChooser.setDefaultOption("Middle Path", Autons.middlePath);
-    // autonChooser.setDefaultOption("Bottom Path", Autons.bottomPath);
-    // autonChooser.addOption("Bottom Path", Autons.bottomPath);
-    autonChooser.setDefaultOption("Top Path", Autons.topPath);
+    autonChooser.setDefaultOption("Middle Path", Autons.middlePath);
+    autonChooser.setDefaultOption("Bottom Path", Autons.bottomPath);
+    autonChooser.addOption("Top Path", Autons.topPath);
     SmartDashboard.putData("Auton Chooser", autonChooser);
   }
 
@@ -65,10 +64,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("X kP", SwervePositionController.X_kP);
     SmartDashboard.putNumber("Y kP", SwervePositionController.Y_kP);
     SmartDashboard.putNumber("Theta kP", SwervePositionController.THETA_kP);
-    // autonChooser.getSelected().schedule();
-    // Autons.moveBack.schedule();
-    // Autons.moveLeft.schedule();
-    Autons.bottomPath.schedule();
+    autonChooser.getSelected().schedule();
   }
 
   @Override

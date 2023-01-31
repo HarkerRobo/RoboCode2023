@@ -77,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
     PIGEON_kP = SmartDashboard.getNumber("Pigeon kP", PIGEON_kP);
     SmartDashboard.putNumber("Pigeon kP", PIGEON_kP);
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
-      omega = -PIGEON_kP * (prevHeading - getHeading());
+      omega = PIGEON_kP * (prevHeading - getHeading());
     else prevHeading = getHeading();
 
     return omega;
@@ -114,12 +114,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setYaw(double yaw) {
-    pigeon.setYaw(-yaw);
-    setPreviousHeading(-yaw);
+    pigeon.setYaw(yaw);
+    setPreviousHeading(yaw);
   }
 
-  public void setPreviousHeading(double prev)
-  {
+  public void setPreviousHeading(double prev) {
     prevHeading = prev;
   }
 
