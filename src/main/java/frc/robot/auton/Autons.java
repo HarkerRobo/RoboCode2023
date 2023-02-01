@@ -44,6 +44,30 @@ public final class Autons {
   //           Trajectories.moveLeft,
   //           () -> Rotation2d.fromDegrees(180),
   //           () -> Rotation2d.fromDegrees(180));
+  public static final SequentialCommandGroup topPathAndPush =
+  new SequentialCommandGroup(
+      //           new ZeroElevator(),
+      //           new CloseClaw(),
+      //           new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
+      //           new OpenClaw(),
+      //           new MoveToPosition(0)
+      //               .alongWith(
+        new SwervePositionController(
+            Trajectories.topPath1,
+            () -> Rotation2d.fromDegrees(180),
+            () -> Rotation2d.fromDegrees(180)),
+        new SwervePositionController(
+            Trajectories.topPath2,
+            () -> Rotation2d.fromDegrees(180),
+            () -> Rotation2d.fromDegrees(215)),
+        new SwervePositionController(
+            Trajectories.topPath3,
+            () -> Rotation2d.fromDegrees(215),
+            () -> Rotation2d.fromDegrees(180)),
+      new SwervePositionController(
+          Trajectories.topPath4,
+          () -> Rotation2d.fromDegrees(180),
+          () -> Rotation2d.fromDegrees(180)));
 
   public static final SequentialCommandGroup bottomPath =
       new SequentialCommandGroup(

@@ -56,8 +56,8 @@ public final class Trajectories {
           new Pose2d(1.8074331741883827, 4.954680282241921, Rotation2d.fromDegrees(180.0)),
           new Pose2d(4.017564780892274, 4.845985285190911, Rotation2d.fromDegrees(180.0))
         ),
-      2,
-      1,
+      2.0,
+      1.0,
       0,
       0);
   
@@ -65,21 +65,21 @@ public final class Trajectories {
       generateTrajectory(
         List.of(
           new Pose2d(4.017564780892274, 4.845985285190911, Rotation2d.fromDegrees(180.0)),
-          new Pose2d(7.654318223890685, 5.14489652708119, Rotation2d.fromDegrees(-145))
+          new Pose2d(7.654318223890685, 5.14489652708119, Rotation2d.fromDegrees(215.0))
         ),
-        0,
-        0,
+        2.0,
+        1.0,
         0,
         0);
 
   public static Trajectory topPath3 =
       generateTrajectory(
         List.of(
-          new Pose2d(7.654318223890685, 5.14489652708119, Rotation2d.fromDegrees(-145)),
+          new Pose2d(7.654318223890685, 5.14489652708119, Rotation2d.fromDegrees(215.0)),
           new Pose2d(4.026622697313192, 4.8369273687699925, Rotation2d.fromDegrees(180.0))
         ),
-        0,
-        0,
+        2.0,
+        1.0,
         0,
         0);
   
@@ -89,8 +89,8 @@ public final class Trajectories {
           new Pose2d(4.026622697313192, 4.8369273687699925, Rotation2d.fromDegrees(180.0)),
           new Pose2d(1.802904215977924, 4.334213007409066, Rotation2d.fromDegrees(180.0))
         ),
-        0,
-        0,
+        2.0,
+        1.0,
         0,
         0);
 
@@ -100,8 +100,8 @@ public final class Trajectories {
               new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180)),
               new Pose2d(4.65, 4.71, Rotation2d.fromDegrees(180)),
               new Pose2d(7.42, 4.62, Rotation2d.fromDegrees(180))),
-          2,
-          1,
+          2.0,
+          1.0,
           0,
           0);
 
