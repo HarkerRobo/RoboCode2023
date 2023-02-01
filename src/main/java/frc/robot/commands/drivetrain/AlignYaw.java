@@ -10,8 +10,8 @@ import frc.robot.subsystems.Drivetrain;
 
 public class AlignYaw extends CommandBase {
   public static double kP = (RobotMap.IS_COMP) ? 0.0 : 0.4; // TODO
-  public static final double kI = 0.001;
-  public static final double kD = 0.1;
+  public static final double kI = 0.0;
+  public static final double kD = 0.0;
 
   private static ProfiledPIDController thetaController =
       new ProfiledPIDController(

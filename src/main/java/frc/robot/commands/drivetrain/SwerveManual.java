@@ -10,7 +10,7 @@ import harkerrobolib.util.MathUtil;
 
 public class SwerveManual extends IndefiniteCommand {
 
-  public static final double SPEED_MULTIPLIER = 1;
+  public static final double SPEED_MULTIPLIER = 0.6;
 
   public SwerveManual() {
     addRequirements(Drivetrain.getInstance());

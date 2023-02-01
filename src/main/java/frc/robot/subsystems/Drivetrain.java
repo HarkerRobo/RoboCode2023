@@ -30,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.01 : 0.17; // TODO
+  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.01 : 0.12; // TODO
 
   private static double MAX_ERROR_PITCH = 3; // TODO
 
@@ -77,7 +77,7 @@ public class Drivetrain extends SubsystemBase {
     PIGEON_kP = SmartDashboard.getNumber("Pigeon kP", PIGEON_kP);
     SmartDashboard.putNumber("Pigeon kP", PIGEON_kP);
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
-      omega = PIGEON_kP * (prevHeading - getHeading());
+      omega = -PIGEON_kP * (prevHeading - getHeading());
     else prevHeading = getHeading();
 
     return omega;
@@ -168,15 +168,14 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Drivetrain");
+    builder.setActuator(true);
+    builder.setSafeState(()->setAngleAndDrive(new ChassisSpeeds()));
     builder.addDoubleProperty(
         "Translation kS", () -> SwerveModule.TRANSLATION_kS, swerveModules[0]::setkS);
     builder.addDoubleProperty(
         "Translation kV", () -> SwerveModule.TRANSLATION_kV, swerveModules[0]::setkV);
     builder.addDoubleProperty(
         "Translation Error", () -> SwerveModule.TRANSLATION_QELMS, swerveModules[0]::setQelms);
-
-    builder.addDoubleProperty(
-        "Rotation kP", () -> SwerveModule.ROTATION_kP, swerveModules[0]::setkP);
 
     for (int i = 0; i < 4; i++) {
       builder.addDoubleProperty(

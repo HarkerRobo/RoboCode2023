@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     //     .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
     autonChooser = new SendableChooser<>();
     autonChooser.setDefaultOption("Middle Path", Autons.middlePath);
-    autonChooser.setDefaultOption("Bottom Path", Autons.bottomPath);
+    autonChooser.addOption("Bottom Path", Autons.bottomPath);
     autonChooser.addOption("Top Path", Autons.topPath);
     SmartDashboard.putData("Auton Chooser", autonChooser);
   }
@@ -53,8 +53,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     RobotMap.Field.FIELD.setRobotPose(Drivetrain.getInstance().getPoseEstimatorPose2d());
     SmartDashboard.putData(Drivetrain.getInstance());
-    SmartDashboard.updateValues();
-    NetworkTableInstance.getDefault().flush();
+    NetworkTableInstance.getDefault().flushLocal();
     // SmartDashboard.putData(Claw.getInstance());
     // SmartDashboard.putData(AngledElevator.getInstance());
   }

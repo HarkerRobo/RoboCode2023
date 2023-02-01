@@ -9,6 +9,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180)),
               new Pose2d(4.65, 4.71, Rotation2d.fromDegrees(180)),
-              new Pose2d(7.42, 4.62, Rotation2d.fromDegrees(0))),
+              new Pose2d(7.42, 4.62, Rotation2d.fromDegrees(180))),
           2,
           1,
           0,
@@ -65,11 +66,17 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180)),
               new Pose2d(6.79, 0.94, Rotation2d.fromDegrees(180)),
-              new Pose2d(7.57, 4.62, Rotation2d.fromDegrees(0))),
+              new Pose2d(7.57, 4.62, Rotation2d.fromDegrees(180))), // reversed when switch to trajectories of 2 poses
+          2.0,
           1.0,
-          0.5,
           0.0,
           0.0);
+  
+  public static Trajectory topPath1;
+
+  public static Trajectory topPath2;
+  
+  public static Trajectory topPath3;
 
   public static Trajectory generateTrajectory(
       List<Pose2d> points,
@@ -134,6 +141,7 @@ public final class Trajectories {
   }
 
   private static boolean isFlipped() {
+    SmartDashboard.putBoolean("Alliance Red", DriverStation.getAlliance() == Alliance.Red);
     return DriverStation.getAlliance() == Alliance.Red;
   }
 }

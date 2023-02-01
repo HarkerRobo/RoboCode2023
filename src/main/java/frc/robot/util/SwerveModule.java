@@ -22,12 +22,12 @@ public class SwerveModule {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  public static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.2; // TODO
-  public static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0.2; // TODO
-  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 0.5; // TODO: tune
-  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.221; // TODO
+  public static double ROTATION_kP = (RobotMap.IS_COMP) ? 0.0 : 0.2;
+  public static double TRANSLATION_kS = (RobotMap.IS_COMP) ? 0.0 : 0.15; // TODO
+  public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 1.3223; // TODO: tune
+  public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.2702; // TODO
 
-  public static double TRANSLATION_QELMS = 5;
+  public static double TRANSLATION_QELMS = 3;
 
   public SwerveModule(int id) {
     this.id = id;
@@ -58,9 +58,11 @@ public class SwerveModule {
   }
 
   private void initModule() {
-    setkP(ROTATION_kP);
+    rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
     setAbsolutePosition();
     translation.enableVoltageCompensation(false);
+    // translation.config_kP(Constants.SLOT_INDEX, 0.1);
+    translation.configVelocityMeasurementWindow(32);
   }
 
   public void setAngleAndDrive(SwerveModuleState state) {
@@ -95,11 +97,6 @@ public class SwerveModule {
       speed *= -1;
     }
     return new SwerveModuleState(speed, Rotation2d.fromDegrees(angle));
-  }
-
-  public void setkP(double kP) {
-    ROTATION_kP = kP;
-    rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
   }
 
   public void setkS(double kS) {
