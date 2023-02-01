@@ -50,6 +50,50 @@ public final class Trajectories {
   //           0.0,
   //           0.0);
 
+  public static Trajectory topPath1 = 
+      generateTrajectory(
+        List.of(
+          new Pose2d(1.8074331741883827, 4.954680282241921, Rotation2d.fromDegrees(180.0)),
+          new Pose2d(4.017564780892274, 4.845985285190911, Rotation2d.fromDegrees(180.0))
+        ),
+      2,
+      1,
+      0,
+      0);
+  
+  public static Trajectory topPath2 =
+      generateTrajectory(
+        List.of(
+          new Pose2d(4.017564780892274, 4.845985285190911, Rotation2d.fromDegrees(180.0)),
+          new Pose2d(7.654318223890685, 5.14489652708119, Rotation2d.fromDegrees(-145))
+        ),
+        0,
+        0,
+        0,
+        0);
+
+  public static Trajectory topPath3 =
+      generateTrajectory(
+        List.of(
+          new Pose2d(7.654318223890685, 5.14489652708119, Rotation2d.fromDegrees(-145)),
+          new Pose2d(4.026622697313192, 4.8369273687699925, Rotation2d.fromDegrees(180.0))
+        ),
+        0,
+        0,
+        0,
+        0);
+  
+  public static Trajectory topPath4 =
+      generateTrajectory(
+        List.of(
+          new Pose2d(4.026622697313192, 4.8369273687699925, Rotation2d.fromDegrees(180.0)),
+          new Pose2d(1.802904215977924, 4.334213007409066, Rotation2d.fromDegrees(180.0))
+        ),
+        0,
+        0,
+        0,
+        0);
+
   public static Trajectory topPath =
       generateTrajectory(
           List.of(
@@ -71,12 +115,6 @@ public final class Trajectories {
           1.0,
           0.0,
           0.0);
-  
-  public static Trajectory topPath1;
-
-  public static Trajectory topPath2;
-  
-  public static Trajectory topPath3;
 
   public static Trajectory generateTrajectory(
       List<Pose2d> points,
