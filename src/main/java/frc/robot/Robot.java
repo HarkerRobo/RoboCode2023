@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
     autonChooser.addOption("Bottom Path", Autons.bottomPath);
     autonChooser.addOption("Top Path", Autons.topPath);
     autonChooser.addOption("Top Path And Push", Autons.topPathAndPush);
+    autonChooser.addOption("Bottom Path And Push", Autons.bottomPathAndPush);
     SmartDashboard.putData("Auton Chooser", autonChooser);
   }
 
