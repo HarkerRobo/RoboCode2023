@@ -174,8 +174,6 @@ public class Drivetrain extends SubsystemBase {
         "Translation kS", () -> SwerveModule.TRANSLATION_kS, swerveModules[0]::setkS);
     builder.addDoubleProperty(
         "Translation kV", () -> SwerveModule.TRANSLATION_kV, swerveModules[0]::setkV);
-    builder.addDoubleProperty(
-        "Translation Error", () -> SwerveModule.TRANSLATION_QELMS, swerveModules[0]::setQelms);
 
     for (int i = 0; i < 4; i++) {
       builder.addDoubleProperty(

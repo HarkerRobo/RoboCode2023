@@ -27,7 +27,7 @@ public class SwerveModule {
   public static double TRANSLATION_kV = (RobotMap.IS_COMP) ? 0.0 : 1.3223; // TODO: tune
   public static double TRANSLATION_kA = (RobotMap.IS_COMP) ? 0.0 : 0.2702; // TODO
 
-  public static double TRANSLATION_QELMS = 3;
+  public static final double TRANSLATION_QELMS = 3;
 
   public SwerveModule(int id) {
     this.id = id;
@@ -107,12 +107,6 @@ public class SwerveModule {
 
   public void setkV(double kV) {
     TRANSLATION_kV = kV;
-    transLoop =
-        new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
-  }
-
-  public void setQelms(double error) {
-    TRANSLATION_QELMS = error;
     transLoop =
         new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
   }
