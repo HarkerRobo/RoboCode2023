@@ -40,6 +40,10 @@ public class SwerveManual extends IndefiniteCommand {
       vy = 0;
     }
 
+    // if (OI.getInstance().getDriver().getRightBumperState()) {
+    //   omega = -Drivetrain.getInstance().alignYaw(0);
+    //   Drivetrain.getInstance().setPreviousHeading(Drivetrain.getInstance().getHeading());
+    // }
     Drivetrain.getInstance()
         .setAngleAndDrive(
             ChassisSpeeds.fromFieldRelativeSpeeds(

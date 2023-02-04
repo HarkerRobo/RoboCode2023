@@ -1,24 +1,21 @@
 package frc.robot.commands.drivetrain;
 
-import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignYaw extends CommandBase {
-  public static double kP = (RobotMap.IS_COMP) ? 0.0 : 0.4; // TODO
+  public static final double kP = 4.5; // TODO
   public static final double kI = 0.0;
   public static final double kD = 0.0;
 
-  private static ProfiledPIDController thetaController =
-      new ProfiledPIDController(
+  private static PIDController thetaController =
+      new PIDController(
           kP,
           kI,
-          kD,
-          new Constraints(RobotMap.MAX_ANGLE_VELOCITY, RobotMap.MAX_ANGLE_ACCELERATION));
+          kD);
 
   public static final double SETPOINT = 0;
 
@@ -28,12 +25,16 @@ public class AlignYaw extends CommandBase {
   }
 
   public void execute() {
-    kP = SmartDashboard.getNumber("Yaw kP", kP);
-    SmartDashboard.putNumber("Yaw kP", kP);
-
-    double error = SETPOINT - Drivetrain.getInstance().getHeading();
-    thetaController.setP(kP);
-    double rotAmt = thetaController.calculate(error);
+    double clampAdd =
+    3
+        + Math.abs(Math.toRadians(SETPOINT) - Math.toRadians(Drivetrain.getInstance().getHeading()))
+            * (2 / Math.PI);
+double rotAmt =
+    MathUtil.clamp(
+        thetaController.calculate(
+            Math.toRadians(Drivetrain.getInstance().getHeading()), Math.toRadians(SETPOINT)),
+        -clampAdd,
+        clampAdd);
     ChassisSpeeds chassis = new ChassisSpeeds(0, 0, rotAmt);
     Drivetrain.getInstance().setAngleAndDrive(chassis);
   }

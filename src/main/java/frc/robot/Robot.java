@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -37,7 +39,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(RobotMap.Field.FIELD);
     SmartDashboard.putNumber("Pitch kP", AlignPitch.kP);
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
-    SmartDashboard.putNumber("Yaw kP", AlignYaw.kP);
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
     // CommandScheduler.getInstance()
     //     .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
@@ -65,6 +66,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("X kP", SwervePositionController.X_kP);
     SmartDashboard.putNumber("Y kP", SwervePositionController.Y_kP);
     SmartDashboard.putNumber("Theta kP", SwervePositionController.THETA_kP);
+    Drivetrain.getInstance().setPose(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180)));
+
     autonChooser.getSelected().schedule();
   }
 

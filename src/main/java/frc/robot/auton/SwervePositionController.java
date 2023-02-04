@@ -58,7 +58,6 @@ public class SwervePositionController extends CommandBase {
 
   @Override
   public void initialize() {
-    Drivetrain.getInstance().setPose(Trajectories.apply(trajectory.getInitialPose()));
     timer.reset();
     timer.start();
   }

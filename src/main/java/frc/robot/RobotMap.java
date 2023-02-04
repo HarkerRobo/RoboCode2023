@@ -87,7 +87,7 @@ public final class RobotMap {
 
     public static final boolean IS_HEADING_INVERTED = (IS_COMP) ? false : true; // TODO
 
-    public static final double MIN_OUTPUT = 0.00001;
+    public static final double MIN_OUTPUT = 0.01;
   }
 
   public static final class Claw {

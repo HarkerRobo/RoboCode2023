@@ -54,12 +54,12 @@ public final class Autons {
       //               .alongWith(
         new SwervePositionController(
             Trajectories.topPathAndPush1,
-            () -> Rotation2d.fromDegrees(180),
-            () -> Rotation2d.fromDegrees(215)),
+            () -> Rotation2d.fromDegrees(215),
+            () -> Rotation2d.fromDegrees(180)),
         new SwervePositionController(
                 Trajectories.topPathAndPush2,
-                () -> Rotation2d.fromDegrees(215),
-                () -> Rotation2d.fromDegrees(180)));
+                () -> Rotation2d.fromDegrees(180),
+                () -> Rotation2d.fromDegrees(215)));
     public static final SequentialCommandGroup bottomPathAndPush =
         new SequentialCommandGroup(
             //           new ZeroElevator(),
@@ -70,12 +70,12 @@ public final class Autons {
             //               .alongWith(
             new SwervePositionController(
                 Trajectories.bottomPathAndPush1,
-                () -> Rotation2d.fromDegrees(180),
-                () -> Rotation2d.fromDegrees(219)),
+                () -> Rotation2d.fromDegrees(219),
+                () -> Rotation2d.fromDegrees(180)),
             new SwervePositionController(
                     Trajectories.bottomPathAndPush2,
-                    () -> Rotation2d.fromDegrees(219),
-                    () -> Rotation2d.fromDegrees(180)));
+                    () -> Rotation2d.fromDegrees(180),
+                    () -> Rotation2d.fromDegrees(219)));
 
   public static final SequentialCommandGroup bottomPath =
       new SequentialCommandGroup(
