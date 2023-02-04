@@ -11,12 +11,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.auton.Autons;
 import frc.robot.auton.SwervePositionController;
 import frc.robot.commands.drivetrain.AlignPitch;
-import frc.robot.commands.drivetrain.AlignYaw;
 import frc.robot.commands.drivetrain.SwerveManual;
 import frc.robot.subsystems.Drivetrain;
 
@@ -31,7 +29,7 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private SendableChooser<CommandBase> autonChooser;
+  private SendableChooser<String> autonChooser;
 
   @Override
   public void robotInit() {
@@ -42,12 +40,12 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
     // CommandScheduler.getInstance()
     //     .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
-    autonChooser = new SendableChooser<>();
-    autonChooser.setDefaultOption("Middle Path", Autons.middlePath);
-    autonChooser.addOption("Bottom Path", Autons.bottomPath);
-    autonChooser.addOption("Top Path", Autons.topPath);
-    autonChooser.addOption("Top Path And Push", Autons.topPathAndPush);
-    autonChooser.addOption("Bottom Path And Push", Autons.bottomPathAndPush);
+    autonChooser = new SendableChooser<String>();
+    autonChooser.setDefaultOption("Middle Path", "Middle Path");
+    autonChooser.addOption("Bottom Path", "Bottom Path");
+    autonChooser.addOption("Top Path", "Top Path");
+    autonChooser.addOption("Top Path And Push", "Top Path And Push");
+    autonChooser.addOption("Bottom Path And Push", "Bottom Path And Push");
     SmartDashboard.putData("Auton Chooser", autonChooser);
   }
 
@@ -66,27 +64,26 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("X kP", SwervePositionController.X_kP);
     SmartDashboard.putNumber("Y kP", SwervePositionController.Y_kP);
     SmartDashboard.putNumber("Theta kP", SwervePositionController.THETA_kP);
-    switch (SmartDashboard.getString("Auton Chooser", null)) {
-      case ("Middle Path"):
-        Drivetrain.getInstance().setPose(new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)));
-        Autons.middlePath.schedule();
-        break;
-      case ("Top Path"):
+    switch (autonChooser.getSelected()) {
+      case "Top Path":
         Drivetrain.getInstance().setPose(new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180)));
         Autons.topPath.schedule();
         break;
-      case ("Bottom Path"):
+      case "Bottom Path":
         Drivetrain.getInstance().setPose(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180)));
         Autons.bottomPath.schedule();
         break;
-      case ("Top Path And Push"):
+      case "Top Path And Push":
         Drivetrain.getInstance().setPose(new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180)));
         Autons.topPathAndPush.schedule();
         break;
-      case ("Bottom Path And Push"):
+      case "Bottom Path And Push":
         Drivetrain.getInstance().setPose(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180)));
         Autons.bottomPathAndPush.schedule();
         break;
+      default:
+        Drivetrain.getInstance().setPose(new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)));
+        Autons.middlePath.schedule();
     }
   }
 

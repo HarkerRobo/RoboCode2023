@@ -15,9 +15,11 @@ public final class RobotMap {
 
   public static final boolean IS_COMP = false;
   public static final String CAN_CHAIN = "rio";
+  public static final double DEG_TO_RAD = Math.PI / 180.0;
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
+  public static final double MAX_DRIVING_ACCELERATION = 2.0;
   public static final double MAX_ANGLE_VELOCITY = Math.PI;
   public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY / 2;
 
@@ -85,7 +87,7 @@ public final class RobotMap {
     // Pigeon ID
     public static final int PIGEON_ID = (IS_COMP) ? 0 : 1; // TODO
 
-    public static final boolean IS_HEADING_INVERTED = (IS_COMP) ? false : true; // TODO
+    public static final boolean IS_HEADING_INVERTED = (IS_COMP) ? true : true; // TODO
 
     public static final double MIN_OUTPUT = 0.01;
   }

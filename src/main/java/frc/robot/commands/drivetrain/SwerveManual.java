@@ -12,18 +12,23 @@ public class SwerveManual extends IndefiniteCommand {
 
   public static final double SPEED_MULTIPLIER = 0.6;
 
+  private double vx, vy, prevvx, prevvy, omega;
+
   public SwerveManual() {
     addRequirements(Drivetrain.getInstance());
+    prevvx = prevvy = vx = vy = omega = 0;
   }
 
   public void execute() {
-    double vx =
+    prevvx = vx;
+    prevvy = vy;
+    vx =
         MathUtil.mapJoystickOutput(
             OI.getInstance().getDriver().getLeftY(), Constants.JOYSTICK_DEADBAND);
-    double vy =
+    vy =
         MathUtil.mapJoystickOutput(
             -OI.getInstance().getDriver().getLeftX(), Constants.JOYSTICK_DEADBAND);
-    double omega =
+    omega =
         MathUtil.mapJoystickOutput(
             OI.getInstance().getDriver().getRightX(), Constants.JOYSTICK_DEADBAND);
 
@@ -35,7 +40,12 @@ public class SwerveManual extends IndefiniteCommand {
     // pigeon alignment
     omega = Drivetrain.getInstance().adjustPigeon(omega);
 
-    if (isRobotStill(vx, vy)) {
+    // limit acceleration
+    vx = limitAcceleration(vx, prevvx);
+    vy = limitAcceleration(vy, prevvy);
+
+    if (isRobotStill()) {
+      omega = RobotMap.Drivetrain.MIN_OUTPUT;
       vx = 0;
       vy = 0;
     }
@@ -50,12 +60,23 @@ public class SwerveManual extends IndefiniteCommand {
                 vx, vy, -omega, Drivetrain.getInstance().getRotation()));
   }
 
+  private double limitAcceleration(double value, double prevValue) {
+    if (Math.abs(value - prevValue) / Constants.ROBOT_LOOP > RobotMap.MAX_DRIVING_ACCELERATION) {
+      value =
+          prevValue
+              + Math.signum(value - prevValue)
+                  * RobotMap.MAX_DRIVING_ACCELERATION
+                  * Constants.ROBOT_LOOP;
+    }
+    return value;
+  }
+
   private double scaleValues(double value, double scaleFactor) {
     return value * scaleFactor;
   }
 
-  private boolean isRobotStill(double x, double y) {
-    return Math.sqrt(x * x + y * y) < RobotMap.Drivetrain.MIN_OUTPUT;
+  private boolean isRobotStill() {
+    return Math.sqrt(vx * vx + vy * vy) < RobotMap.Drivetrain.MIN_OUTPUT;
   }
 
   public void end(boolean interrupted) {

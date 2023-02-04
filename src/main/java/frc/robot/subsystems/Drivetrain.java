@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -31,11 +30,11 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.01 : 0.12; // TODO
+  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.01 : 0.2; // TODO
 
   private static double MAX_ERROR_PITCH = 3; // TODO
 
-  private static double MAX_ERROR_YAW = 0.1; // TODO
+  private static double MAX_ERROR_YAW = 1;
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
@@ -170,7 +169,7 @@ public class Drivetrain extends SubsystemBase {
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Drivetrain");
     builder.setActuator(true);
-    builder.setSafeState(()->setAngleAndDrive(new ChassisSpeeds()));
+    builder.setSafeState(() -> setAngleAndDrive(new ChassisSpeeds()));
     builder.addDoubleProperty(
         "Translation kS", () -> SwerveModule.TRANSLATION_kS, swerveModules[0]::setkS);
     builder.addDoubleProperty(
