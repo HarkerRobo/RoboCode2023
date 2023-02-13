@@ -25,14 +25,14 @@ public class AlignYaw extends CommandBase {
     double clampAdd =
         1
             + Math.abs(
-                    SETPOINT * RobotMap.DEG_TO_RAD
-                        - Drivetrain.getInstance().getHeading() * RobotMap.DEG_TO_RAD)
+                    Math.toRadians(SETPOINT)
+                        - Math.toRadians(Drivetrain.getInstance().getHeading()))
                 * (2 / Math.PI);
     double rotAmt =
         MathUtil.clamp(
             thetaController.calculate(
-                Drivetrain.getInstance().getHeading() * RobotMap.DEG_TO_RAD,
-                SETPOINT * RobotMap.DEG_TO_RAD),
+                Math.toRadians(Drivetrain.getInstance().getHeading()),
+                Math.toRadians(SETPOINT)),
             -clampAdd,
             clampAdd);
     ChassisSpeeds chassis = new ChassisSpeeds(0, 0, rotAmt);

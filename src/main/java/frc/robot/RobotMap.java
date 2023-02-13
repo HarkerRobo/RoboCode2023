@@ -15,7 +15,6 @@ public final class RobotMap {
 
   public static final boolean IS_COMP = false;
   public static final String CAN_CHAIN = "rio";
-  public static final double DEG_TO_RAD = Math.PI / 180.0;
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
