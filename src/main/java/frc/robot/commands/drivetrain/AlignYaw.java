@@ -44,6 +44,7 @@ public class AlignYaw extends CommandBase {
     Drivetrain.getInstance().setAngleAndDrive(new ChassisSpeeds());
   }
 
+  @Override
   public boolean isFinished() {
     return thetaController.atSetpoint();
   }

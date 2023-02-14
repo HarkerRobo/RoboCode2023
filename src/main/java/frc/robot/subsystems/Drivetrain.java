@@ -30,11 +30,11 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = 0.2; // TODO
+  public static double PIGEON_kP = 0.132; // TODO
 
   public static double MAX_ERROR_PITCH = 3; // TODO
 
-  public static double MAX_ERROR_YAW = 1;
+  public static double MAX_ERROR_YAW = 0.001;
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
@@ -94,10 +94,6 @@ public class Drivetrain extends SubsystemBase {
 
   public boolean checkPitch(double desired) {
     return Math.abs(desired - getPitch()) < MAX_ERROR_PITCH;
-  }
-
-  public boolean checkYaw(double desired) {
-    return Math.abs(desired - getHeading()) < MAX_ERROR_YAW;
   }
 
   public Rotation2d getRotation() {
