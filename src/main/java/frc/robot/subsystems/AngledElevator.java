@@ -16,8 +16,8 @@ public class AngledElevator extends SubsystemBase {
   private HSFalcon master;
   private HSFalcon follower;
 
-  private static double kP = (RobotMap.IS_COMP) ? 0 : 0; // TODO
-  private static double kG = (RobotMap.IS_COMP) ? 0 : 0; // kS + kG //TODO
+  private static double kP = 0; // TODO
+  private static double kG = 0; // kS + kG //TODO
 
   private static double MAX_ERROR = 0; // TODO
 

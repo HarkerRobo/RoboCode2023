@@ -4,7 +4,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignYaw extends CommandBase {
@@ -31,8 +30,7 @@ public class AlignYaw extends CommandBase {
     double rotAmt =
         MathUtil.clamp(
             thetaController.calculate(
-                Math.toRadians(Drivetrain.getInstance().getHeading()),
-                Math.toRadians(SETPOINT)),
+                Math.toRadians(Drivetrain.getInstance().getHeading()), Math.toRadians(SETPOINT)),
             -clampAdd,
             clampAdd);
     ChassisSpeeds chassis = new ChassisSpeeds(0, 0, rotAmt);

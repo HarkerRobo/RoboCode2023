@@ -17,17 +17,17 @@ import java.util.function.Supplier;
 
 public class SwervePositionController extends CommandBase {
   // TODO
-  public static double X_kP = (RobotMap.IS_COMP) ? 0.0 : 4.2;
-  public static double X_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
-  public static double X_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
+  public static double X_kP = 4.2;
+  public static double X_kI = 0.0;
+  public static double X_kD = 0.0;
 
-  public static double Y_kP = (RobotMap.IS_COMP) ? 0.0 : 2.5;
-  public static double Y_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
-  public static double Y_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
+  public static double Y_kP = 2.5;
+  public static double Y_kI = 0.0;
+  public static double Y_kD = 0.0;
 
-  public static double THETA_kP = (RobotMap.IS_COMP) ? 0.0 : 1.5;
-  public static double THETA_kI = (RobotMap.IS_COMP) ? 0.0 : 0.0;
-  public static double THETA_kD = (RobotMap.IS_COMP) ? 0.0 : 0.0;
+  public static double THETA_kP = 1.5;
+  public static double THETA_kI = 0.0;
+  public static double THETA_kD = 0.0;
 
   private static PIDController xController = new PIDController(X_kP, X_kI, X_kD);
   private static PIDController yController = new PIDController(Y_kP, Y_kI, Y_kD);

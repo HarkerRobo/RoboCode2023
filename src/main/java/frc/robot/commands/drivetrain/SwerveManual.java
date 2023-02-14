@@ -35,25 +35,23 @@ public class SwerveManual extends IndefiniteCommand {
     // Scaling Values
     vx = scaleValues(vx, RobotMap.MAX_DRIVING_SPEED) * SPEED_MULTIPLIER;
     vy = scaleValues(vy, RobotMap.MAX_DRIVING_SPEED) * SPEED_MULTIPLIER;
-    omega = scaleValues(omega, RobotMap.MAX_DRIVING_SPEED) * SPEED_MULTIPLIER;
+    omega = scaleValues(omega, RobotMap.MAX_ANGLE_VELOCITY) * SPEED_MULTIPLIER;
 
     // pigeon alignment
     omega = Drivetrain.getInstance().adjustPigeon(omega);
 
-    // limit acceleration
-    vx = limitAcceleration(vx, prevvx);
+    // limit accelerationevvx);
     vy = limitAcceleration(vy, prevvy);
+    vx = limitAcceleration(vx, prevvx);
 
     if (isRobotStill()) {
-      omega = RobotMap.Drivetrain.MIN_OUTPUT;
       vx = 0;
       vy = 0;
     }
+    if (Math.abs(omega) < RobotMap.Drivetrain.MIN_OUTPUT) {
+      omega = 0;
+    }
 
-    // if (OI.getInstance().getDriver().getRightBumperState()) {
-    //   omega = -Drivetrain.getInstance().alignYaw(0);
-    //   Drivetrain.getInstance().setPreviousHeading(Drivetrain.getInstance().getHeading());
-    // }
     Drivetrain.getInstance()
         .setAngleAndDrive(
             ChassisSpeeds.fromFieldRelativeSpeeds(

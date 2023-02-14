@@ -30,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = (RobotMap.IS_COMP) ? 0.01 : 0.2; // TODO
+  public static double PIGEON_kP = 0.2; // TODO
 
   private static double MAX_ERROR_PITCH = 3; // TODO
 
@@ -69,8 +69,8 @@ public class Drivetrain extends SubsystemBase {
 
   private void initPigeon() {
     pigeon.configFactoryDefault();
+    pigeon.configMountPoseYaw(90);
     pigeon.setYaw(0);
-    prevHeading = 0;
   }
 
   public double adjustPigeon(double omega) {
@@ -85,7 +85,7 @@ public class Drivetrain extends SubsystemBase {
 
   public double getHeading() {
     SmartDashboard.putNumber("pigeon heading", pigeon.getYaw());
-    return ((RobotMap.Drivetrain.IS_HEADING_INVERTED) ? pigeon.getYaw() : -pigeon.getYaw());
+    return pigeon.getYaw();
   }
 
   public double getPitch() {

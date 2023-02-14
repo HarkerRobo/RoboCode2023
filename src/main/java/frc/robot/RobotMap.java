@@ -13,12 +13,11 @@ public final class RobotMap {
     public static final Field2d FIELD = new Field2d();
   }
 
-  public static final boolean IS_COMP = false;
   public static final String CAN_CHAIN = "rio";
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
-  public static final double MAX_DRIVING_ACCELERATION = 2.0;
+  public static final double MAX_DRIVING_ACCELERATION = 20.0;
   public static final double MAX_ANGLE_VELOCITY = Math.PI;
   public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY / 2;
 
@@ -30,29 +29,17 @@ public final class RobotMap {
     // IDs and Inverts
 
     // fl, fr, bl, br
-    public static final int[] TRANSLATION_ID =
-        (IS_COMP) ? new int[] {0, 0, 0, 0} : new int[] {6, 3, 5, 8}; // TODO
+    public static final int[] TRANSLATION_ID = {1, 2, 3, 4};
 
-    public static final boolean[] TRANSLATION_INVERT =
-        (IS_COMP)
-            ? new boolean[] {false, false, false, false}
-            : new boolean[] {true, true, true, true}; // TODO
+    public static final boolean[] TRANSLATION_INVERT = {false, false, false, false}; // TODO
 
-    public static final int[] ROTATION_ID =
-        (IS_COMP) ? new int[] {0, 0, 0, 0} : new int[] {1, 2, 7, 4}; // TODO
+    public static final int[] ROTATION_ID = {5, 6, 7, 8};
 
-    public static final boolean[] ROTATION_INVERT =
-        (IS_COMP)
-            ? new boolean[] {false, false, false, false}
-            : new boolean[] {false, false, false, false}; // TODO
+    public static final boolean[] ROTATION_INVERT = {false, false, false, false};
 
-    public static final int[] CAN_CODER_ID =
-        (IS_COMP) ? new int[] {0, 0, 0, 0} : new int[] {9, 10, 11, 12}; // TODO
+    public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
-    public static final double[] CAN_CODER_OFFSETS =
-        (IS_COMP)
-            ? new double[] {0, 0, 0, 0}
-            : new double[] {88.242, 107.051, 66.006, 8.35}; // TODO
+    public static final double[] CAN_CODER_OFFSETS = {8.438, 60.645, 84.551, 248.818};
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
@@ -84,24 +71,22 @@ public final class RobotMap {
 
   public static final class Drivetrain {
     // Pigeon ID
-    public static final int PIGEON_ID = (IS_COMP) ? 0 : 1; // TODO
-
-    public static final boolean IS_HEADING_INVERTED = (IS_COMP) ? true : true; // TODO
+    public static final int PIGEON_ID = 1;
 
     public static final double MIN_OUTPUT = 0.01;
   }
 
   public static final class Claw {
-    public static final int CLAW_FOWARD_ID = (IS_COMP) ? 0 : 0; // TODO
-    public static final int CLAW_REVERSE_ID = (IS_COMP) ? 0 : 0; // TODO
+    public static final int CLAW_FOWARD_ID = 0; // TODO
+    public static final int CLAW_REVERSE_ID = 0; // TODO
   }
 
   public static final class AngledElevator {
-    public static final int MASTER_ID = (IS_COMP) ? 0 : 0; // TODO
-    public static final int FOLLOWER_ID = (IS_COMP) ? 0 : 0; // TODO
+    public static final int MASTER_ID = 0; // TODO
+    public static final int FOLLOWER_ID = 0; // TODO
 
-    public static final boolean MASTER_INVERTED = (IS_COMP) ? true : true; // TODO
-    public static final boolean FOLLOWER_INVERTED = (IS_COMP) ? true : true; // TODO
+    public static final boolean MASTER_INVERTED = false; // TODO
+    public static final boolean FOLLOWER_INVERTED = false; // TODO
 
     public static final double MASTER_CURRENT_PEAK = 0; // TODO
     public static final double MASTER_CURRENT_CONTINOUS = 0; // TODO
