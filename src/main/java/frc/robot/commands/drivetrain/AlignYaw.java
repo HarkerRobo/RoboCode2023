@@ -18,6 +18,7 @@ public class AlignYaw extends CommandBase {
   public AlignYaw() {
     addRequirements(Drivetrain.getInstance());
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    thetaController.setTolerance(Drivetrain.MAX_ERROR_YAW);
   }
 
   public void execute() {
@@ -44,6 +45,6 @@ public class AlignYaw extends CommandBase {
   }
 
   public boolean isFinished() {
-    return Drivetrain.getInstance().checkYaw(SETPOINT);
+    return thetaController.atSetpoint();
   }
 }
