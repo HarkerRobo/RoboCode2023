@@ -22,7 +22,7 @@ public class SwerveModule {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  public static double ROTATION_kP = 0.4;
+  public static double ROTATION_kP = 0.6;
   public static double TRANSLATION_kS = 0.15; // TODO
   public static double TRANSLATION_kV = 1.3223; // TODO: tune
   public static double TRANSLATION_kA = 0.2702; // TODO
@@ -61,8 +61,9 @@ public class SwerveModule {
     rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
     setAbsolutePosition();
     translation.enableVoltageCompensation(false);
-    // translation.config_kP(Constants.SLOT_INDEX, 0.1);
     translation.configVelocityMeasurementWindow(32);
+    canCoder.configFactoryDefault();
+    canCoder.clearStickyFaults();
   }
 
   public void setAngleAndDrive(SwerveModuleState state) {

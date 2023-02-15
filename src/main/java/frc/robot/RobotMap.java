@@ -17,7 +17,7 @@ public final class RobotMap {
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
-  public static final double MAX_DRIVING_ACCELERATION = 20.0;
+  public static final double MAX_DRIVING_ACCELERATION = 15.0;
   public static final double MAX_ANGLE_VELOCITY = Math.PI;
   public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY / 2;
 
@@ -39,7 +39,7 @@ public final class RobotMap {
 
     public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
-    public static final double[] CAN_CODER_OFFSETS = {93.516, 64.775, 84.551, 261.914};
+    public static final double[] CAN_CODER_OFFSETS = {172.529, 64.775, 84.551, 245.914};
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;

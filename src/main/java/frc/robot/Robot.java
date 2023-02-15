@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.auton.Autons;
 import frc.robot.auton.SwervePositionController;
+import frc.robot.auton.Trajectories;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.SwerveManual;
 import frc.robot.subsystems.Drivetrain;
@@ -66,23 +67,23 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Theta kP", SwervePositionController.THETA_kP);
     switch (autonChooser.getSelected()) {
       case "Top Path":
-        Drivetrain.getInstance().setPose(new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180)));
+        Drivetrain.getInstance().setPose(Trajectories.apply(new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180))));
         Autons.topPath.schedule();
         break;
       case "Bottom Path":
-        Drivetrain.getInstance().setPose(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180)));
+        Drivetrain.getInstance().setPose(Trajectories.apply(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180))));
         Autons.bottomPath.schedule();
         break;
       case "Top Path And Push":
-        Drivetrain.getInstance().setPose(new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180)));
+        Drivetrain.getInstance().setPose(Trajectories.apply(new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180))));
         Autons.topPathAndPush.schedule();
         break;
       case "Bottom Path And Push":
-        Drivetrain.getInstance().setPose(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180)));
+        Drivetrain.getInstance().setPose(Trajectories.apply(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180))));
         Autons.bottomPathAndPush.schedule();
         break;
       default:
-        Drivetrain.getInstance().setPose(new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180)));
+        Drivetrain.getInstance().setPose(Trajectories.apply(new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180))));
         Autons.middlePath.schedule();
     }
   }
