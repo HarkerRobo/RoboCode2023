@@ -34,7 +34,7 @@ public class Drivetrain extends SubsystemBase {
 
   public static double MAX_ERROR_PITCH = 3; // TODO
 
-  public static double MAX_ERROR_YAW = 0.001;
+  public static double MAX_ERROR_YAW = Math.toRadians(0.1);
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
