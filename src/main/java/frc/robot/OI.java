@@ -7,6 +7,7 @@ import frc.robot.commands.claw.OpenClaw;
 // import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
+import frc.robot.commands.elevator.ZeroElevator;
 import frc.robot.subsystems.Drivetrain;
 // import frc.robot.commands.elevator.MoveToPosition;
 import harkerrobolib.joysticks.XboxGamepad;
@@ -60,6 +61,7 @@ public class OI {
     driver.getButtonStart().onTrue(new InstantCommand(() -> Drivetrain.getInstance().setYaw(0)));
     driver.getButtonX().onTrue(new OpenClaw());
     driver.getButtonB().onTrue(new CloseClaw());
+    driver.getButtonA().onTrue(new ZeroElevator());
     // operator
     //     .getButtonX()
     //     .onTrue(

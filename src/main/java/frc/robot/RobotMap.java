@@ -38,7 +38,7 @@ public final class RobotMap {
 
     public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
-    public static final double[] CAN_CODER_OFFSETS = {200.215, 64.775, 84.551, 245.914};
+    public static final double[] CAN_CODER_OFFSETS = {200.215, 64.775, 84.551, 274.395};
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
@@ -81,8 +81,9 @@ public final class RobotMap {
   }
 
   public static final class AngledElevator {
-    public static final int MASTER_ID = 14; // TODO
-    public static final int FOLLOWER_ID = 15; // TODO
+    public static final int MASTER_ID = 15;
+    public static final int FOLLOWER_ID = 14;
+    public static final int LIMIT_SWTICH_ID = 0;
 
     public static final boolean MASTER_INVERTED = false; // TODO
     public static final boolean FOLLOWER_INVERTED = false; // TODO

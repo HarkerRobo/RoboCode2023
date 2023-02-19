@@ -44,7 +44,8 @@ public class AngledElevator extends SubsystemBase {
                 RobotMap.AngledElevator.FOLLOWER_CURRENT_CONTINOUS,
                 RobotMap.AngledElevator.FOLLOWER_CURRENT_PEAK_DUR)
             .build(RobotMap.AngledElevator.FOLLOWER_ID, RobotMap.CAN_CHAIN);
-    initMotors();
+    limitSwitch = new DigitalInput(RobotMap.AngledElevator.LIMIT_SWTICH_ID);
+    initElevator();
   }
 
   public void moveToPosition(double height) {
@@ -53,7 +54,7 @@ public class AngledElevator extends SubsystemBase {
     master.set(ControlMode.MotionMagic, height, DemandType.ArbitraryFeedForward, percentOutput);
   }
 
-  private void initMotors() {
+  private void initElevator() {
     addChild("Master Motor", master);
     addChild("Follower Motor", follower);
     addChild("Limit Switch", limitSwitch);

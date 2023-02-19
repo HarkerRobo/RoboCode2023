@@ -54,7 +54,7 @@ public class SwerveModule {
                 RobotMap.SwerveModule.ROTATION_MOTOR_CURRENT_CONTINUOUS,
                 RobotMap.SwerveModule.ROTATION_MOTOR_CURRENT_PEAK_DUR)
             .build(RobotMap.SwerveModule.ROTATION_ID[id], RobotMap.CAN_CHAIN);
-    canCoder = new CANCoder(RobotMap.SwerveModule.CAN_CODER_ID[id], RobotMap.CAN_CHAIN);
+    canCoder = new CANCoder(RobotMap.SwerveModule.CAN_CODER_ID[id]);
 
     initModule();
   }
