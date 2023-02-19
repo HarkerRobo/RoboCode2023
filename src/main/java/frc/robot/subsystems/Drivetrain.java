@@ -34,8 +34,6 @@ public class Drivetrain extends SubsystemBase {
 
   public static double MAX_ERROR_PITCH = 3; // TODO
 
-  public static double MAX_ERROR_YAW = Math.toRadians(0.1);
-
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
@@ -45,7 +43,7 @@ public class Drivetrain extends SubsystemBase {
           new SwerveModule(0), new SwerveModule(1), new SwerveModule(2), new SwerveModule(3)
         };
 
-    pigeon = new Pigeon2(RobotMap.Drivetrain.PIGEON_ID, RobotMap.CAN_CHAIN);
+    pigeon = new Pigeon2(RobotMap.Drivetrain.PIGEON_ID);
     initPigeon();
 
     kinematics =

@@ -1,14 +1,14 @@
-// package frc.robot.commands.claw;
+package frc.robot.commands.claw;
 
-// import edu.wpi.first.wpilibj2.command.InstantCommand;
-// import frc.robot.subsystems.Claw;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Claw;
 
-// public class OpenClaw extends InstantCommand {
-//   public OpenClaw() {
-//     addRequirements(Claw.getInstance());
-//   }
+public class OpenClaw extends InstantCommand {
+  public OpenClaw() {
+    addRequirements(Claw.getInstance());
+  }
 
-//   public void initialize() {
-//     Claw.getInstance().release();
-//   }
-// }
+  public void initialize() {
+    Claw.getInstance().release();
+  }
+}

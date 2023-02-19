@@ -2,6 +2,8 @@ package frc.robot.util;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -22,7 +24,7 @@ public class SwerveModule {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  public static double ROTATION_kP = 0.6;
+  public static double ROTATION_kP = 0.15;
   public static double TRANSLATION_kS = 0.15; // TODO
   public static double TRANSLATION_kV = 1.3223; // TODO: tune
   public static double TRANSLATION_kA = 0.2702; // TODO
@@ -64,6 +66,7 @@ public class SwerveModule {
     translation.configVelocityMeasurementWindow(32);
     canCoder.configFactoryDefault();
     canCoder.clearStickyFaults();
+    canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
   }
 
   public void setAngleAndDrive(SwerveModuleState state) {

@@ -1,6 +1,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.commands.claw.CloseClaw;
+import frc.robot.commands.claw.OpenClaw;
 // import frc.robot.commands.claw.CloseClaw;
 // import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.drivetrain.AlignPitch;
@@ -56,6 +58,8 @@ public class OI {
     driver.getRightBumper().whileTrue(new AlignYaw());
     driver.getLeftBumper().whileTrue(new AlignPitch());
     driver.getButtonStart().onTrue(new InstantCommand(() -> Drivetrain.getInstance().setYaw(0)));
+    driver.getButtonX().onTrue(new OpenClaw());
+    driver.getButtonB().onTrue(new CloseClaw());
     // operator
     //     .getButtonX()
     //     .onTrue(

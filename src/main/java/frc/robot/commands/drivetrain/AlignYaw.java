@@ -15,6 +15,7 @@ public class AlignYaw extends CommandBase {
 
   private static PIDController thetaController = new PIDController(kP, kI, kD);
 
+  public static final double MAX_ERROR_YAW = Math.toRadians(0.1);
   public static final Rotation2d SETPOINT = Rotation2d.fromDegrees(180);
 
   public AlignYaw() {
@@ -25,7 +26,7 @@ public class AlignYaw extends CommandBase {
   @Override
   public void initialize() {
     thetaController.setSetpoint(Trajectories.apply(SETPOINT).getRadians());
-    thetaController.setTolerance(Drivetrain.MAX_ERROR_YAW);
+    thetaController.setTolerance(MAX_ERROR_YAW);
   }
 
   public void execute() {

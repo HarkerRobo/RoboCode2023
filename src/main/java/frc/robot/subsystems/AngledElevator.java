@@ -23,6 +23,9 @@ public class AngledElevator extends SubsystemBase {
 
   private DigitalInput limitSwitch;
 
+  private static double CRUISE_VELOCITY = 0; //TODO
+  private static double CRUISE_ACCELERATION = 0; //TODO
+
   private AngledElevator() {
     master =
         new HSFalconBuilder()
@@ -54,8 +57,11 @@ public class AngledElevator extends SubsystemBase {
     addChild("Master Motor", master);
     addChild("Follower Motor", follower);
     addChild("Limit Switch", limitSwitch);
+    // master.configForwardSoftLimitThreshold(MAX_ERROR);
     follower.follow(master);
     setkP(kP);
+    master.configMotionCruiseVelocity(CRUISE_VELOCITY);
+    master.configMotionAcceleration(CRUISE_ACCELERATION);
   }
 
   private void setkP(double newkP) {

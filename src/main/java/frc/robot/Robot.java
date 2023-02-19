@@ -17,6 +17,9 @@ import frc.robot.auton.SwervePositionController;
 import frc.robot.auton.Trajectories;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.SwerveManual;
+import frc.robot.commands.elevator.ElevatorManual;
+import frc.robot.subsystems.AngledElevator;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -39,8 +42,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Pitch kP", AlignPitch.kP);
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
-    // CommandScheduler.getInstance()
-    //     .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
+    CommandScheduler.getInstance()
+        .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
     autonChooser = new SendableChooser<String>();
     autonChooser.setDefaultOption("Middle Path", "Middle Path");
     autonChooser.addOption("Bottom Path", "Bottom Path");
@@ -56,8 +59,8 @@ public class Robot extends TimedRobot {
     RobotMap.Field.FIELD.setRobotPose(Drivetrain.getInstance().getPoseEstimatorPose2d());
     SmartDashboard.putData(Drivetrain.getInstance());
     NetworkTableInstance.getDefault().flushLocal();
-    // SmartDashboard.putData(Claw.getInstance());
-    // SmartDashboard.putData(AngledElevator.getInstance());
+    SmartDashboard.putData(Claw.getInstance());
+    SmartDashboard.putData(AngledElevator.getInstance());
   }
 
   @Override

@@ -8,7 +8,6 @@ public final class RobotMap {
   public static final class Field {
     public static final double fieldLength = Units.inchesToMeters(651.25);
     public static final double fieldWidth = Units.inchesToMeters(315.5);
-    public static final double tapeWidth = Units.inchesToMeters(2.0);
 
     public static final Field2d FIELD = new Field2d();
   }
@@ -39,7 +38,7 @@ public final class RobotMap {
 
     public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
-    public static final double[] CAN_CODER_OFFSETS = {172.529, 64.775, 84.551, 245.914};
+    public static final double[] CAN_CODER_OFFSETS = {200.215, 64.775, 84.551, 245.914};
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
@@ -73,27 +72,27 @@ public final class RobotMap {
     // Pigeon ID
     public static final int PIGEON_ID = 1;
 
-    public static final double MIN_OUTPUT = 0.01;
+    public static final double MIN_OUTPUT = 0.001;
   }
 
   public static final class Claw {
     public static final int CLAW_FOWARD_ID = 0; // TODO
-    public static final int CLAW_REVERSE_ID = 0; // TODO
+    public static final int CLAW_REVERSE_ID = 1; // TODO
   }
 
   public static final class AngledElevator {
-    public static final int MASTER_ID = 0; // TODO
-    public static final int FOLLOWER_ID = 0; // TODO
+    public static final int MASTER_ID = 14; // TODO
+    public static final int FOLLOWER_ID = 15; // TODO
 
     public static final boolean MASTER_INVERTED = false; // TODO
     public static final boolean FOLLOWER_INVERTED = false; // TODO
 
-    public static final double MASTER_CURRENT_PEAK = 0; // TODO
-    public static final double MASTER_CURRENT_CONTINOUS = 0; // TODO
-    public static final double MASTER_CURRENT_PEAK_DUR = 0; // TODO
-    public static final double FOLLOWER_CURRENT_PEAK = 0; // TODO
-    public static final double FOLLOWER_CURRENT_CONTINOUS = 0; // TODO
-    public static final double FOLLOWER_CURRENT_PEAK_DUR = 0; // TODO
+    public static final double MASTER_CURRENT_PEAK = 30; // TODO
+    public static final double MASTER_CURRENT_CONTINOUS = 25; // TODO
+    public static final double MASTER_CURRENT_PEAK_DUR = 0.1; // TODO
+    public static final double FOLLOWER_CURRENT_PEAK = 25; // TODO
+    public static final double FOLLOWER_CURRENT_CONTINOUS = 20; // TODO
+    public static final double FOLLOWER_CURRENT_PEAK_DUR = 0.1; // TODO
 
     // low, middle, high, human player
     public static final double[] POSITIONS = {0, 0, 0, 0}; // TODO
