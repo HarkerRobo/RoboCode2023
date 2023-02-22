@@ -25,9 +25,9 @@ public class SwerveModule {
 
   // PID Constants
   public static double ROTATION_kP = 0.15;
-  public static double TRANSLATION_kS = 0.15; // TODO
-  public static double TRANSLATION_kV = 1.3223; // TODO: tune
-  public static double TRANSLATION_kA = 0.2702; // TODO
+  public static double TRANSLATION_kS = 0.02569;
+  public static double TRANSLATION_kV = 2.84584;
+  public static double TRANSLATION_kA = 0.21522;
 
   public static final double TRANSLATION_QELMS = 3;
 
@@ -71,9 +71,6 @@ public class SwerveModule {
 
   public void setAngleAndDrive(SwerveModuleState state) {
     state = optimize(state);
-    if (id == 1) {
-      SmartDashboard.putNumber("Desired top right translation", state.speedMetersPerSecond);
-    }
     translation.setVoltage(transLoop.getVoltage(state.speedMetersPerSecond, getSpeed()));
     rotation.set(
         ControlMode.Position, state.angle.getDegrees() / RobotMap.SwerveModule.ROTATION_CONVERSION);

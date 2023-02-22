@@ -5,7 +5,7 @@ import frc.robot.subsystems.AngledElevator;
 
 public class ZeroElevator extends CommandBase {
 
-  public static final double ZERO_SPEED = -0.3;
+  public static final double ZERO_SPEED = -0.17;
 
   public ZeroElevator() {
     addRequirements(AngledElevator.getInstance());
@@ -20,6 +20,7 @@ public class ZeroElevator extends CommandBase {
     AngledElevator.getInstance().resetEncoders();
   }
 
+  @Override
   public boolean isFinished() {
     return AngledElevator.getInstance().extensionStop();
   }

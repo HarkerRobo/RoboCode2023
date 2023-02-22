@@ -38,9 +38,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     LiveWindow.setEnabled(true);
+    LiveWindow.enableAllTelemetry();
     SmartDashboard.putData(RobotMap.Field.FIELD);
     SmartDashboard.putNumber("Pitch kP", AlignPitch.kP);
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
+    SmartDashboard.putNumber("Elevator kP", AngledElevator.getInstance().getkP());
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
     CommandScheduler.getInstance()
         .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
@@ -59,6 +61,7 @@ public class Robot extends TimedRobot {
     RobotMap.Field.FIELD.setRobotPose(Drivetrain.getInstance().getPoseEstimatorPose2d());
     SmartDashboard.putData(Drivetrain.getInstance());
     NetworkTableInstance.getDefault().flushLocal();
+    NetworkTableInstance.getDefault().flush();
     SmartDashboard.putData(Claw.getInstance());
     SmartDashboard.putData(AngledElevator.getInstance());
   }

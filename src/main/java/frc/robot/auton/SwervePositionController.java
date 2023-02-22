@@ -25,7 +25,7 @@ public class SwervePositionController extends CommandBase {
   public static double Y_kI = 0.0;
   public static double Y_kD = 0.0;
 
-  public static double THETA_kP = 1.5;
+  public static double THETA_kP = 3.5;
   public static double THETA_kI = 0.0;
   public static double THETA_kD = 0.0;
 

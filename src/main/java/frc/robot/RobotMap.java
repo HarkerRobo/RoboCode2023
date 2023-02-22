@@ -81,21 +81,24 @@ public final class RobotMap {
   }
 
   public static final class AngledElevator {
-    public static final int MASTER_ID = 15;
-    public static final int FOLLOWER_ID = 14;
+    public static final int MASTER_ID = 15; // left
+    public static final int FOLLOWER_ID = 14; // right
     public static final int LIMIT_SWTICH_ID = 0;
 
     public static final boolean MASTER_INVERTED = false; // TODO
     public static final boolean FOLLOWER_INVERTED = false; // TODO
 
-    public static final double MASTER_CURRENT_PEAK = 30; // TODO
-    public static final double MASTER_CURRENT_CONTINOUS = 25; // TODO
+    public static final double MASTER_CURRENT_PEAK = 35; // TODO
+    public static final double MASTER_CURRENT_CONTINOUS = 30; // TODO
     public static final double MASTER_CURRENT_PEAK_DUR = 0.1; // TODO
-    public static final double FOLLOWER_CURRENT_PEAK = 25; // TODO
-    public static final double FOLLOWER_CURRENT_CONTINOUS = 20; // TODO
+    public static final double FOLLOWER_CURRENT_PEAK = 35; // TODO
+    public static final double FOLLOWER_CURRENT_CONTINOUS = 30; // TODO
     public static final double FOLLOWER_CURRENT_PEAK_DUR = 0.1; // TODO
 
+    public static final double FORWARD_LIMIT = 38000;
+    public static final double REVERSE_LIMIT = 0;
+
     // low, middle, high, human player
-    public static final double[] POSITIONS = {0, 0, 0, 0}; // TODO
+    public static final double[] POSITIONS = {12018, 24576, 37895, 25740}; // TODO
   }
 }

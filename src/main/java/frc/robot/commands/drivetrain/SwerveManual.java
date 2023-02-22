@@ -10,7 +10,7 @@ import harkerrobolib.util.MathUtil;
 
 public class SwerveManual extends IndefiniteCommand {
 
-  public static final double SPEED_MULTIPLIER = 0.8;
+  public static final double SPEED_MULTIPLIER = 0.7;
 
   private double vx, vy, prevvx, prevvy, omega;
 

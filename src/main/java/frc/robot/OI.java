@@ -1,15 +1,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.OpenClaw;
-// import frc.robot.commands.claw.CloseClaw;
-// import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
+import frc.robot.commands.elevator.MoveToPosition;
 import frc.robot.commands.elevator.ZeroElevator;
 import frc.robot.subsystems.Drivetrain;
-// import frc.robot.commands.elevator.MoveToPosition;
 import harkerrobolib.joysticks.XboxGamepad;
 import harkerrobolib.util.Constants;
 
@@ -34,34 +33,19 @@ public class OI {
   }
 
   private void initBindings() {
-    // driver
-    //     .getDownDPadButton()
-    //     .whileTrue(
-    // new SequentialCommandGroup(
-    //             new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]), new OpenClaw()));
-    // driver
-    //     .getRightDPadButton()
-    //     .whileTrue(
-    //         new SequentialCommandGroup(
-    //             new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]), new OpenClaw()));
-    // driver
-    //     .getUpDPadButton()
-    //     .whileTrue(
-    //         new SequentialCommandGroup(
-    //             new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]), new OpenClaw()));
-    // driver
-    //     .getLeftDPadButton()
-    //     .whileTrue(
-    //         new SequentialCommandGroup(
-    //             new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]).alongWith(new
-    // OpenClaw()),
-    //             new CloseClaw()));
+    driver.getRightDPadButton().onTrue(new OpenClaw());
+    driver.getLeftDPadButton().onTrue(new CloseClaw());
+    driver.getButtonY().onTrue(new SequentialCommandGroup(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]), new OpenClaw()));
+    driver.getButtonX().onTrue(new SequentialCommandGroup(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]).alongWith(new OpenClaw()), new CloseClaw()));
+    driver.getButtonA().onTrue(new SequentialCommandGroup(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]), new OpenClaw()));
+    driver.getButtonB().onTrue(new SequentialCommandGroup(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]), new OpenClaw()));
     driver.getRightBumper().whileTrue(new AlignYaw());
     driver.getLeftBumper().whileTrue(new AlignPitch());
+
     driver.getButtonStart().onTrue(new InstantCommand(() -> Drivetrain.getInstance().setYaw(0)));
-    driver.getButtonX().onTrue(new OpenClaw());
-    driver.getButtonB().onTrue(new CloseClaw());
-    driver.getButtonA().onTrue(new ZeroElevator());
+    driver.getButtonSelect().onTrue(new ZeroElevator());
+
+
     // operator
     //     .getButtonX()
     //     .onTrue(

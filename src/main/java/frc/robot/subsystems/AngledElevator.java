@@ -2,8 +2,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod;
+
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
@@ -16,62 +19,56 @@ public class AngledElevator extends SubsystemBase {
   private HSFalcon master;
   private HSFalcon follower;
 
-  private static double kP = 0; // TODO
-  private static double kG = 0; // kS + kG //TODO
+  private static final double kP = 0.105;
+  private static final double kG = 0.1;
 
-  private static double MAX_ERROR = 0; // TODO
+  private static final double MAX_ERROR = 500;
 
   private DigitalInput limitSwitch;
 
-  private static double CRUISE_VELOCITY = 0; //TODO
-  private static double CRUISE_ACCELERATION = 0; //TODO
+  private static final double CRUISE_VELOCITY = 4965;
+  private static final double CRUISE_ACCELERATION = 3065; //TODO
 
   private AngledElevator() {
     master =
         new HSFalconBuilder()
             .invert(RobotMap.AngledElevator.MASTER_INVERTED)
-            .supplyLimit(
-                RobotMap.AngledElevator.MASTER_CURRENT_PEAK,
-                RobotMap.AngledElevator.MASTER_CURRENT_CONTINOUS,
-                RobotMap.AngledElevator.MASTER_CURRENT_PEAK_DUR)
+            // .statorLimit(
+            //     RobotMap.AngledElevator.MASTER_CURRENT_PEAK,
+            //     RobotMap.AngledElevator.MASTER_CURRENT_CONTINOUS,
+            //     RobotMap.AngledElevator.MASTER_CURRENT_PEAK_DUR)
             .build(RobotMap.AngledElevator.MASTER_ID, RobotMap.CAN_CHAIN);
 
     follower =
         new HSFalconBuilder()
             .invert(RobotMap.AngledElevator.FOLLOWER_INVERTED)
-            .supplyLimit(
-                RobotMap.AngledElevator.FOLLOWER_CURRENT_PEAK,
-                RobotMap.AngledElevator.FOLLOWER_CURRENT_CONTINOUS,
-                RobotMap.AngledElevator.FOLLOWER_CURRENT_PEAK_DUR)
+            // .statorLimit(
+            //     RobotMap.AngledElevator.FOLLOWER_CURRENT_PEAK,
+            //     RobotMap.AngledElevator.FOLLOWER_CURRENT_CONTINOUS,
+            //     RobotMap.AngledElevator.FOLLOWER_CURRENT_PEAK_DUR)
             .build(RobotMap.AngledElevator.FOLLOWER_ID, RobotMap.CAN_CHAIN);
     limitSwitch = new DigitalInput(RobotMap.AngledElevator.LIMIT_SWTICH_ID);
     initElevator();
   }
 
   public void moveToPosition(double height) {
-    double signError = Math.signum(height - getPosition());
-    double percentOutput = signError * (kG) / Constants.MAX_VOLTAGE;
-    master.set(ControlMode.MotionMagic, height, DemandType.ArbitraryFeedForward, percentOutput);
+    master.set(ControlMode.MotionMagic, height, DemandType.ArbitraryFeedForward, kG);
   }
 
   private void initElevator() {
     addChild("Master Motor", master);
     addChild("Follower Motor", follower);
     addChild("Limit Switch", limitSwitch);
-    // master.configForwardSoftLimitThreshold(MAX_ERROR);
     follower.follow(master);
-    setkP(kP);
+    master.config_kP(Constants.SLOT_INDEX, kP);
+    master.configForwardSoftLimitThreshold(RobotMap.AngledElevator.FORWARD_LIMIT);
+    master.configReverseSoftLimitThreshold(RobotMap.AngledElevator.REVERSE_LIMIT);
+    master.configReverseSoftLimitEnable(true);
+    master.configForwardSoftLimitEnable(true);
+    master.overrideSoftLimitsEnable(true);
     master.configMotionCruiseVelocity(CRUISE_VELOCITY);
     master.configMotionAcceleration(CRUISE_ACCELERATION);
-  }
-
-  private void setkP(double newkP) {
-    kP = newkP;
-    master.config_kP(Constants.SLOT_INDEX, kP);
-  }
-
-  private void setkG(double newkG) {
-    kG = newkG;
+    master.configAllowableClosedloopError(Constants.SLOT_INDEX, MAX_ERROR);
   }
 
   public void addToPositions(double value) {
@@ -82,7 +79,7 @@ public class AngledElevator extends SubsystemBase {
   }
 
   public boolean checkExtend(double desired) {
-    return Math.abs(desired - getPosition()) < MAX_ERROR;
+    return Math.abs(desired - master.getSelectedSensorPosition()) < MAX_ERROR;
   }
 
   public double getPosition() {
@@ -93,11 +90,8 @@ public class AngledElevator extends SubsystemBase {
     return kP;
   }
 
-  public double getkG() {
-    return kG;
-  }
-
   public void setExtensionPower(double power) {
+    if (power == 0) master.neutralOutput();
     master.set(ControlMode.PercentOutput, power);
   }
 
@@ -120,8 +114,8 @@ public class AngledElevator extends SubsystemBase {
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.setSmartDashboardType("Elevator");
+    builder.setActuator(true);
+    builder.setSafeState(() -> setExtensionPower(0));
     builder.addDoubleProperty("Position", this::getPosition, this::moveToPosition);
-    builder.addDoubleProperty("Elevator kP", this::getkP, this::setkP);
-    builder.addDoubleProperty("Elevator kG", this::getkG, this::setkG);
   }
 }

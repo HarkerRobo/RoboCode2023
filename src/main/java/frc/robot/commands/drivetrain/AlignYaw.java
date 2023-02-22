@@ -15,7 +15,7 @@ public class AlignYaw extends CommandBase {
 
   private static PIDController thetaController = new PIDController(kP, kI, kD);
 
-  public static final double MAX_ERROR_YAW = Math.toRadians(0.1);
+  public static final double MAX_ERROR_YAW = Math.toRadians(0.06);
   public static final Rotation2d SETPOINT = Rotation2d.fromDegrees(180);
 
   public AlignYaw() {

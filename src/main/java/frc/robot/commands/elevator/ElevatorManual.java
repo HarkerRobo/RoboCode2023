@@ -3,20 +3,19 @@ package frc.robot.commands.elevator;
 import frc.robot.OI;
 import frc.robot.subsystems.AngledElevator;
 import harkerrobolib.commands.IndefiniteCommand;
-import harkerrobolib.util.Constants;
 
 public class ElevatorManual extends IndefiniteCommand {
+  public static final double PERCENT_OUTPUT = 0.3;
+
   public ElevatorManual() {
     addRequirements(AngledElevator.getInstance());
   }
 
   public void execute() {
-    double rightTrigger = OI.getInstance().getDriver().getRightTrigger();
-    double leftTrigger = OI.getInstance().getDriver().getLeftTrigger();
-    if (rightTrigger > Constants.TRIGGER_DEADBAND)
-      AngledElevator.getInstance().setExtensionPower(rightTrigger);
-    else if (leftTrigger > Constants.TRIGGER_DEADBAND)
-      AngledElevator.getInstance().setExtensionPower(-leftTrigger);
+    if (OI.getInstance().getDriver().getUpDPadButton().getAsBoolean())
+      AngledElevator.getInstance().setExtensionPower(PERCENT_OUTPUT);
+    else if (OI.getInstance().getDriver().getDownDPadButton().getAsBoolean())
+      AngledElevator.getInstance().setExtensionPower(-PERCENT_OUTPUT);
   }
 
   @Override
