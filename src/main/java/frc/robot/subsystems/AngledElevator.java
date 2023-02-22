@@ -20,14 +20,14 @@ public class AngledElevator extends SubsystemBase {
   private HSFalcon follower;
 
   private static final double kP = 0.105;
-  private static final double kG = 0.1;
+  private static final double kG = 0.0;
 
-  private static final double MAX_ERROR = 500;
+  private static final double MAX_ERROR = 800;
 
   private DigitalInput limitSwitch;
 
-  private static final double CRUISE_VELOCITY = 4965;
-  private static final double CRUISE_ACCELERATION = 3065; //TODO
+  private static final double CRUISE_VELOCITY = 7447.5;
+  private static final double CRUISE_ACCELERATION = 4965; //TODO
 
   private AngledElevator() {
     master =
