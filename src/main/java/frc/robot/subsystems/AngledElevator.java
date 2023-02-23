@@ -20,14 +20,14 @@ public class AngledElevator extends SubsystemBase {
   private HSFalcon follower;
 
   private static final double kP = 0.105;
-  private static final double kG = 0.0;
+  private static final double kG = 0.052;
 
   private static final double MAX_ERROR = 800;
 
   private DigitalInput limitSwitch;
 
-  private static final double CRUISE_VELOCITY = 7447.5;
-  private static final double CRUISE_ACCELERATION = 4965; //TODO
+  private static final double CRUISE_VELOCITY = 7447;
+  private static final double CRUISE_ACCELERATION = 7447;
 
   private AngledElevator() {
     master =
@@ -68,6 +68,7 @@ public class AngledElevator extends SubsystemBase {
     master.overrideSoftLimitsEnable(true);
     master.configMotionCruiseVelocity(CRUISE_VELOCITY);
     master.configMotionAcceleration(CRUISE_ACCELERATION);
+    master.configClosedloopRamp(0.01);
     master.configAllowableClosedloopError(Constants.SLOT_INDEX, MAX_ERROR);
   }
 
@@ -90,9 +91,15 @@ public class AngledElevator extends SubsystemBase {
     return kP;
   }
 
+  public void setExtensionPower(double power, boolean zero) {
+    if (!zero)
+     master.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, kG);
+    else
+     master.neutralOutput();
+  }
+
   public void setExtensionPower(double power) {
-    if (power == 0) master.neutralOutput();
-    master.set(ControlMode.PercentOutput, power);
+    setExtensionPower(power, false);
   }
 
   public void resetEncoders() {

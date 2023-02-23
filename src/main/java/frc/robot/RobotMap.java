@@ -99,6 +99,6 @@ public final class RobotMap {
     public static final double REVERSE_LIMIT = 0;
 
     // low, middle, high, human player
-    public static final double[] POSITIONS = {12018, 24576, 37895, 25740}; // TODO
+    public static final double[] POSITIONS = {12018, 24576, 37895, 26540}; // TODO
   }
 }

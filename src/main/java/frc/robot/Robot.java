@@ -64,6 +64,7 @@ public class Robot extends TimedRobot {
     NetworkTableInstance.getDefault().flush();
     SmartDashboard.putData(Claw.getInstance());
     SmartDashboard.putData(AngledElevator.getInstance());
+    SmartDashboard.putNumber("Elevator Percent Output", ElevatorManual.PERCENT_OUTPUT);
   }
 
   @Override
