@@ -42,7 +42,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(RobotMap.Field.FIELD);
     SmartDashboard.putNumber("Pitch kP", AlignPitch.kP);
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
-    SmartDashboard.putNumber("Elevator kP", AngledElevator.getInstance().getkP());
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
     CommandScheduler.getInstance()
         .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
@@ -64,7 +63,6 @@ public class Robot extends TimedRobot {
     NetworkTableInstance.getDefault().flush();
     SmartDashboard.putData(Claw.getInstance());
     SmartDashboard.putData(AngledElevator.getInstance());
-    SmartDashboard.putNumber("Elevator Percent Output", ElevatorManual.PERCENT_OUTPUT);
   }
 
   @Override

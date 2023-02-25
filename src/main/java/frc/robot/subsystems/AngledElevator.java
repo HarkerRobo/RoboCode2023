@@ -19,10 +19,10 @@ public class AngledElevator extends SubsystemBase {
   private HSFalcon master;
   private HSFalcon follower;
 
-  private static final double kP = 0.105;
-  private static final double kG = 0.052;
+  private static final double kP = 0.135;
+  private static final double kG = 0.0469;
 
-  private static final double MAX_ERROR = 800;
+  private static final double MAX_ERROR = 100;
 
   private DigitalInput limitSwitch;
 
@@ -52,7 +52,11 @@ public class AngledElevator extends SubsystemBase {
   }
 
   public void moveToPosition(double height) {
-    master.set(ControlMode.MotionMagic, height, DemandType.ArbitraryFeedForward, kG);
+    master.set(ControlMode.MotionMagic, height);
+  }
+
+  public void resetPosition() {
+    master.set(ControlMode.Position, getPosition(), DemandType.ArbitraryFeedForward, kG);
   }
 
   private void initElevator() {
@@ -69,7 +73,6 @@ public class AngledElevator extends SubsystemBase {
     master.configMotionCruiseVelocity(CRUISE_VELOCITY);
     master.configMotionAcceleration(CRUISE_ACCELERATION);
     master.configClosedloopRamp(0.01);
-    master.configAllowableClosedloopError(Constants.SLOT_INDEX, MAX_ERROR);
   }
 
   public void addToPositions(double value) {
@@ -91,15 +94,8 @@ public class AngledElevator extends SubsystemBase {
     return kP;
   }
 
-  public void setExtensionPower(double power, boolean zero) {
-    if (!zero)
-     master.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, kG);
-    else
-     master.neutralOutput();
-  }
-
   public void setExtensionPower(double power) {
-    setExtensionPower(power, false);
+    master.neutralOutput();
   }
 
   public void resetEncoders() {

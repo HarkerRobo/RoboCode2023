@@ -38,7 +38,7 @@ public final class RobotMap {
 
     public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
-    public static final double[] CAN_CODER_OFFSETS = {200.215, 64.775, 84.551, 274.395};
+    public static final double[] CAN_CODER_OFFSETS = {200.215, 61.699, 84.551, 252.773};
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
