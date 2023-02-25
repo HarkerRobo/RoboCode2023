@@ -20,7 +20,7 @@ public class AngledElevator extends SubsystemBase {
   private HSFalcon follower;
 
   private static final double kP = 0.135;
-  private static final double kG = 0.0469;
+  private static final double kG = 0.04687;
 
   private static final double MAX_ERROR = 100;
 
