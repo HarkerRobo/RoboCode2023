@@ -6,7 +6,7 @@ import frc.robot.subsystems.AngledElevator;
 import harkerrobolib.commands.IndefiniteCommand;
 
 public class ElevatorManual extends IndefiniteCommand {
-  public static double PERCENT_OUTPUT = 0.3;
+  public static double PERCENT_OUTPUT = 0.5;
 
   public ElevatorManual() {
     addRequirements(AngledElevator.getInstance());
@@ -14,12 +14,11 @@ public class ElevatorManual extends IndefiniteCommand {
 
   public void execute() {
     PERCENT_OUTPUT = SmartDashboard.getNumber("Elevator Percent Output", PERCENT_OUTPUT);
-    if (OI.getInstance().getDriver().getUpDPadButton().getAsBoolean())
+    if (OI.getInstance().getDriver().getUpDPadButtonState())
       AngledElevator.getInstance().setExtensionPower(PERCENT_OUTPUT);
-    else if (OI.getInstance().getDriver().getDownDPadButton().getAsBoolean())
+    else if (OI.getInstance().getDriver().getDownDPadButtonState())
       AngledElevator.getInstance().setExtensionPower(-PERCENT_OUTPUT);
-    else
-      AngledElevator.getInstance().resetPosition();
+    else AngledElevator.getInstance().resetPosition();
   }
 
   @Override

@@ -3,11 +3,9 @@ package frc.robot.util;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.HSFalconBuilder;
@@ -66,7 +64,8 @@ public class SwerveModule {
     translation.configVelocityMeasurementWindow(32);
     canCoder.configFactoryDefault();
     canCoder.clearStickyFaults();
-    canCoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
+    canCoder.configSensorInitializationStrategy(
+        SensorInitializationStrategy.BootToAbsolutePosition);
   }
 
   public void setAngleAndDrive(SwerveModuleState state) {

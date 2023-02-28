@@ -2,11 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.sensors.SensorVelocityMeasPeriod;
-
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
@@ -56,7 +53,7 @@ public class AngledElevator extends SubsystemBase {
   }
 
   public void resetPosition() {
-    master.set(ControlMode.Position, getPosition(), DemandType.ArbitraryFeedForward, kG);
+    master.set(ControlMode.Position, getPosition());
   }
 
   private void initElevator() {
