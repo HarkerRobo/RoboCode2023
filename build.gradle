@@ -56,7 +56,7 @@ dependencies {
     implementation wpi.java.deps.wpilib()
     implementation wpi.java.vendor.java()
 
-    implementation 'com.github.HarkerRobo:HarkerRoboLib:8c20a39'
+    implementation 'com.github.HarkerRobo:HarkerRoboLib:8c20a39d87588522ba6197caf0bf223a7a88267c'
 
     roborioDebug wpi.java.deps.wpilibJniDebug(wpi.platforms.roborio)
     roborioDebug wpi.java.vendor.jniDebug(wpi.platforms.roborio)

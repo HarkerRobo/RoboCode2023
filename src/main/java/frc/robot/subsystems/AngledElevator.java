@@ -92,7 +92,8 @@ public class AngledElevator extends SubsystemBase {
   }
 
   public void setExtensionPower(double power) {
-    master.neutralOutput();
+    if (power == 0) master.neutralOutput();
+    else master.set(ControlMode.PercentOutput, power, DemandType.ArbitraryFeedForward, kG);
   }
 
   public void resetEncoders() {
