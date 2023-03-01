@@ -76,8 +76,8 @@ public final class RobotMap {
   }
 
   public static final class Claw {
-    public static final int CLAW_FOWARD_ID = 0; // TODO
-    public static final int CLAW_REVERSE_ID = 1; // TODO
+    public static final int CLAW_FOWARD_ID = 1;
+    public static final int CLAW_REVERSE_ID = 0;
   }
 
   public static final class AngledElevator {
@@ -99,6 +99,6 @@ public final class RobotMap {
     public static final double REVERSE_LIMIT = 0;
 
     // low, middle, high, human player
-    public static final double[] POSITIONS = {12018, 24576, 37895, 26540}; // TODO
+    public static final double[] POSITIONS = {12018, 24600, 37895, 26540}; // TODO
   }
 }

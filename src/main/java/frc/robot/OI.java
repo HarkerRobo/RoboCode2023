@@ -38,27 +38,21 @@ public class OI {
     driver
         .getButtonY()
         .whileTrue(
-            new SequentialCommandGroup(
-                new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]), new OpenClaw(), new ZeroElevator()));
+            new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]));
     driver
         .getButtonX()
         .whileTrue(
-            new SequentialCommandGroup(
-                new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]).alongWith(new OpenClaw()),
-                new CloseClaw(), new ZeroElevator()));
+            new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]));
     driver
         .getButtonA()
         .whileTrue(
-            new SequentialCommandGroup(
-                new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]), new OpenClaw(), new ZeroElevator()));
+            new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
     driver
         .getButtonB()
         .whileTrue(
-            new SequentialCommandGroup(
-                new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]), new OpenClaw(), new ZeroElevator()));
-    driver.getRightBumper().whileTrue(new AlignYaw());
+            new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]));
+    operator.getRightBumper().whileTrue(new AlignYaw());
     driver.getLeftBumper().whileTrue(new AlignPitch());
-
     driver.getButtonStart().onTrue(new InstantCommand(() -> Drivetrain.getInstance().setYaw(0)));
     driver.getButtonSelect().onTrue(new ZeroElevator());
 

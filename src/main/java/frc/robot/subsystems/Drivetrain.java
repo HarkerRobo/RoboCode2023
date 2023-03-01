@@ -34,7 +34,7 @@ public class Drivetrain extends SubsystemBase {
 
   public static final double MAX_ERROR_PITCH = 0.1; // TODO
 
-  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.005, 0.01);
+  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.05, 0.05, 0.05);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
   private Drivetrain() {
@@ -68,6 +68,7 @@ public class Drivetrain extends SubsystemBase {
   private void initPigeon() {
     pigeon.configFactoryDefault();
     pigeon.configMountPoseYaw(90);
+    pigeon.configMountPosePitch(0);
     pigeon.setYaw(0);
   }
 
@@ -168,6 +169,7 @@ public class Drivetrain extends SubsystemBase {
         "Translation kS", () -> SwerveModule.TRANSLATION_kS, swerveModules[0]::setkS);
     builder.addDoubleProperty(
         "Translation kV", () -> SwerveModule.TRANSLATION_kV, swerveModules[0]::setkV);
+    builder.addDoubleProperty("Pitch Value", () -> getPitch(), null);
 
     for (int i = 0; i < 4; i++) {
       builder.addDoubleProperty(

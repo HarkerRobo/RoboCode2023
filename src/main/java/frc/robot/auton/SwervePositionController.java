@@ -17,15 +17,15 @@ import java.util.function.Supplier;
 
 public class SwervePositionController extends CommandBase {
   // TODO
-  public static double X_kP = 4.2;
+  public static double X_kP = 3.5;
   public static double X_kI = 0.0;
   public static double X_kD = 0.0;
 
-  public static double Y_kP = 2.5;
+  public static double Y_kP = 3.0;
   public static double Y_kI = 0.0;
   public static double Y_kD = 0.0;
 
-  public static double THETA_kP = 3.5;
+  public static double THETA_kP = 2.5;
   public static double THETA_kI = 0.0;
   public static double THETA_kD = 0.0;
 

@@ -73,27 +73,27 @@ public class Robot extends TimedRobot {
     switch (autonChooser.getSelected()) {
       case "Top Path":
         Drivetrain.getInstance()
-            .setPose(Trajectories.apply(new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180))));
+            .setPose(Trajectories.apply(new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180))));
         Autons.topPath.schedule();
         break;
       case "Bottom Path":
         Drivetrain.getInstance()
-            .setPose(Trajectories.apply(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180))));
+            .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
         Autons.bottomPath.schedule();
         break;
       case "Top Path And Push":
         Drivetrain.getInstance()
-            .setPose(Trajectories.apply(new Pose2d(1.81, 4.95, Rotation2d.fromDegrees(180))));
+            .setPose(Trajectories.apply(new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180))));
         Autons.topPathAndPush.schedule();
         break;
       case "Bottom Path And Push":
         Drivetrain.getInstance()
-            .setPose(Trajectories.apply(new Pose2d(1.81, 0.42, Rotation2d.fromDegrees(180))));
+            .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
         Autons.bottomPathAndPush.schedule();
         break;
       default:
         Drivetrain.getInstance()
-            .setPose(Trajectories.apply(new Pose2d(1.81, 3.27, Rotation2d.fromDegrees(180))));
+            .setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));
         Autons.middlePath.schedule();
     }
   }

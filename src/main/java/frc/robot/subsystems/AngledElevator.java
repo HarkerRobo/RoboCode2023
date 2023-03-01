@@ -53,7 +53,7 @@ public class AngledElevator extends SubsystemBase {
   }
 
   public void resetPosition() {
-    master.set(ControlMode.Position, getPosition());
+    master.set(ControlMode.Position, getPosition(), DemandType.ArbitraryFeedForward, kG);
   }
 
   private void initElevator() {
