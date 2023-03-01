@@ -42,12 +42,12 @@ public final class Autons {
           new ZeroElevator(),
           new SwervePositionController(
               Trajectories.topPathAndPush1,
-              () -> Rotation2d.fromDegrees(196.85),
+              () -> Rotation2d.fromDegrees(212.64),
               () -> Rotation2d.fromDegrees(180)),
           new SwervePositionController(
               Trajectories.topPathAndPush2,
               () -> Rotation2d.fromDegrees(180),
-              () -> Rotation2d.fromDegrees(196.85)));
+              () -> Rotation2d.fromDegrees(212.64)));
 
   public static final SequentialCommandGroup bottomPathAndPush =
       new SequentialCommandGroup(
@@ -58,12 +58,12 @@ public final class Autons {
           new ZeroElevator(),
           new SwervePositionController(
               Trajectories.bottomPathAndPush1,
-              () -> Rotation2d.fromDegrees(195.83),
+              () -> Rotation2d.fromDegrees(133.54),
               () -> Rotation2d.fromDegrees(180)),
           new SwervePositionController(
               Trajectories.bottomPathAndPush2,
               () -> Rotation2d.fromDegrees(180),
-              () -> Rotation2d.fromDegrees(195.83)));
+              () -> Rotation2d.fromDegrees(133.54)));
 
   public static final SequentialCommandGroup bottomPath =
       new SequentialCommandGroup(
@@ -72,8 +72,8 @@ public final class Autons {
           new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
           new OpenClaw(),
           new MoveToPosition(0));
-        //   new SwervePositionController(
-        //       Trajectories.bottomPath,
-        //       () -> Rotation2d.fromDegrees(180),
-        //       () -> Rotation2d.fromDegrees(180)));
+  //   new SwervePositionController(
+  //       Trajectories.bottomPath,
+  //       () -> Rotation2d.fromDegrees(180),
+  //       () -> Rotation2d.fromDegrees(180)));
 }

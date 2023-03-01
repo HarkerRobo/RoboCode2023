@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignPitch extends CommandBase {
-  public static double kP = 0.7; // TODO
+  public static double kP = 0.3; // TODO
   public static final double kI = 0.0;
   public static final double kD = 0.0;
 

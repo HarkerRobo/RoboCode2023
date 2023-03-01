@@ -24,6 +24,7 @@ public class MoveToPosition extends CommandBase {
   }
 
   public boolean isFinished() {
-    return AngledElevator.getInstance().checkExtend(position) || Timer.getFPGATimestamp() - time > 5.5;
+    return AngledElevator.getInstance().checkExtend(position)
+        || Timer.getFPGATimestamp() - time > 5.5;
   }
 }

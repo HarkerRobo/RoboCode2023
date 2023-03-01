@@ -1,7 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.AngledElevator;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.drivetrain.AlignPitch;
@@ -35,34 +35,22 @@ public class OI {
   private void initBindings() {
     driver.getRightDPadButton().onTrue(new OpenClaw());
     driver.getLeftDPadButton().onTrue(new CloseClaw());
-    driver
-        .getButtonY()
-        .whileTrue(
-            new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]));
-    driver
-        .getButtonX()
-        .whileTrue(
-            new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]));
-    driver
-        .getButtonA()
-        .whileTrue(
-            new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
-    driver
-        .getButtonB()
-        .whileTrue(
-            new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]));
-    operator.getRightBumper().whileTrue(new AlignYaw());
+    driver.getButtonY().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]));
+    driver.getButtonX().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]));
+    driver.getButtonA().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
+    driver.getButtonB().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]));
+    driver.getRightBumper().whileTrue(new AlignYaw());
     driver.getLeftBumper().whileTrue(new AlignPitch());
     driver.getButtonStart().onTrue(new InstantCommand(() -> Drivetrain.getInstance().setYaw(0)));
     driver.getButtonSelect().onTrue(new ZeroElevator());
 
-    // operator
-    //     .getButtonX()
-    //     .onTrue(
-    //         new InstantCommand(
-    //             () -> {
-    //               AngledElevator.getInstance().addToPositions(50);
-    //             }));
+    operator
+        .getButtonX()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  AngledElevator.getInstance().addToPositions(50);
+                }));
   }
 
   public static OI getInstance() {

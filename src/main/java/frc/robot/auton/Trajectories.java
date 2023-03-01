@@ -9,7 +9,6 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 import java.util.ArrayList;
@@ -35,8 +34,7 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180.0)),
               new Pose2d(4.94, 5.01, Rotation2d.fromDegrees(180.0)),
-              new Pose2d(7.52, 5.58, Rotation2d.fromDegrees(212.64)),
-              new Pose2d(7.79, 4.66, Rotation2d.fromDegrees(180.0))),
+              new Pose2d(7.52, 5.58, Rotation2d.fromDegrees(212.64))),
           2.0,
           1.5,
           0,
@@ -45,6 +43,7 @@ public final class Trajectories {
   public static Trajectory topPathAndPush2 =
       generateTrajectory(
           List.of(
+              new Pose2d(7.52, 5.58, Rotation2d.fromDegrees(212.64)),
               new Pose2d(7.79, 4.66, Rotation2d.fromDegrees(180.0)),
               new Pose2d(4.57, 4.62, Rotation2d.fromDegrees(180.0)),
               new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180.0))),
@@ -69,8 +68,7 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180.0)),
               new Pose2d(4.13, 0.70, Rotation2d.fromDegrees(180.0)),
-              new Pose2d(7.49, 2.03, Rotation2d.fromDegrees(133.54)),
-              new Pose2d(7.87, 0.91, Rotation2d.fromDegrees(180.0))),
+              new Pose2d(7.49, 2.03, Rotation2d.fromDegrees(133.54))),
           2.0,
           1.5,
           0.0,
@@ -78,6 +76,7 @@ public final class Trajectories {
   public static Trajectory bottomPathAndPush2 =
       generateTrajectory(
           List.of(
+              new Pose2d(7.49, 2.03, Rotation2d.fromDegrees(133.54)),
               new Pose2d(7.87, 0.91, Rotation2d.fromDegrees(180.0)),
               new Pose2d(4.14, 0.71, Rotation2d.fromDegrees(180.0)),
               new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180.0))),
