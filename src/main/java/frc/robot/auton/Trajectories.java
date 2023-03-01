@@ -35,8 +35,8 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180.0)),
               new Pose2d(4.94, 5.01, Rotation2d.fromDegrees(180.0)),
-              new Pose2d(7.24, 5.68, Rotation2d.fromDegrees(180.0)),
-              new Pose2d(7.68, 4.86, Rotation2d.fromDegrees(196.85))),
+              new Pose2d(7.52, 5.58, Rotation2d.fromDegrees(212.64)),
+              new Pose2d(7.79, 4.66, Rotation2d.fromDegrees(180.0))),
           2.0,
           1.5,
           0,
@@ -45,7 +45,7 @@ public final class Trajectories {
   public static Trajectory topPathAndPush2 =
       generateTrajectory(
           List.of(
-              new Pose2d(7.68, 4.86, Rotation2d.fromDegrees(196.85)),
+              new Pose2d(7.79, 4.66, Rotation2d.fromDegrees(180.0)),
               new Pose2d(4.57, 4.62, Rotation2d.fromDegrees(180.0)),
               new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180.0))),
           2.0,
@@ -69,8 +69,8 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180.0)),
               new Pose2d(4.13, 0.70, Rotation2d.fromDegrees(180.0)),
-              new Pose2d(6.59, 1.82, Rotation2d.fromDegrees(180)),
-              new Pose2d(7.85, 1.18, Rotation2d.fromDegrees(195.83))),
+              new Pose2d(7.49, 2.03, Rotation2d.fromDegrees(133.54)),
+              new Pose2d(7.87, 0.91, Rotation2d.fromDegrees(180.0))),
           2.0,
           1.5,
           0.0,
@@ -78,9 +78,9 @@ public final class Trajectories {
   public static Trajectory bottomPathAndPush2 =
       generateTrajectory(
           List.of(
-              new Pose2d(7.85, 1.18, Rotation2d.fromDegrees(195.83)),
-              new Pose2d(4.21, 0.56, Rotation2d.fromDegrees(180.0)),
-              new Pose2d(1.81, 1.09, Rotation2d.fromDegrees(180))),
+              new Pose2d(7.87, 0.91, Rotation2d.fromDegrees(180.0)),
+              new Pose2d(4.14, 0.71, Rotation2d.fromDegrees(180.0)),
+              new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180.0))),
           2.0,
           1.5,
           1.0,
@@ -90,11 +90,7 @@ public final class Trajectories {
       generateTrajectory(
           List.of(
               new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180)),
-              new Pose2d(6.79, 0.94, Rotation2d.fromDegrees(180)),
-              new Pose2d(
-                  7.57,
-                  4.62,
-                  Rotation2d.fromDegrees(180))),
+              new Pose2d(6.33, 0.70, Rotation2d.fromDegrees(180))),
           2.0,
           1.0,
           0.0,
