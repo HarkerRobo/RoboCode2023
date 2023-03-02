@@ -1,10 +1,12 @@
 package frc.robot.auton;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotMap;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.OpenClaw;
+import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.elevator.MoveToPosition;
 import frc.robot.commands.elevator.ZeroElevator;
 
@@ -26,12 +28,12 @@ public final class Autons {
           new CloseClaw(),
           new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
           new OpenClaw(),
-          new ZeroElevator(),
+          new MoveToPosition(0),
           new SwervePositionController(
               Trajectories.chargePad,
-              () -> Rotation2d.fromDegrees(180),
-              () -> Rotation2d.fromDegrees(180)));
-  //     new AlignPitch());
+              () -> Rotation2d.fromDegrees(179),
+              () -> Rotation2d.fromDegrees(179)),
+      new AlignPitch());
 
   public static final SequentialCommandGroup topPathAndPush =
       new SequentialCommandGroup(

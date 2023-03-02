@@ -7,24 +7,27 @@ import frc.robot.subsystems.AngledElevator;
 public class MoveToPosition extends CommandBase {
 
   private double position;
-  private double time;
+  private final Timer timer = new Timer();
 
   public MoveToPosition(double position) {
     this.position = position;
     addRequirements(AngledElevator.getInstance());
-    time = Timer.getFPGATimestamp();
   }
 
+  public void initialize() {
+    timer.reset();
+    timer.start();
+  }
   public void execute() {
     AngledElevator.getInstance().moveToPosition(position);
   }
 
   public void end(boolean interrupted) {
-    AngledElevator.getInstance().resetPosition();
+    AngledElevator.getInstance().resetPosition(position, true);
   }
 
   public boolean isFinished() {
-    return AngledElevator.getInstance().checkExtend(position)
-        || Timer.getFPGATimestamp() - time > 5.5;
+    return (AngledElevator.getInstance().checkExtend(position)
+      || timer.get() > 2.5);
   }
 }

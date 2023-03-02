@@ -17,6 +17,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.commands.drivetrain.SwerveManual;
 import frc.robot.util.SwerveModule;
 
 public class Drivetrain extends SubsystemBase {
@@ -31,8 +32,6 @@ public class Drivetrain extends SubsystemBase {
   private double prevHeading;
 
   public static double PIGEON_kP = 0.127;
-
-  public static final double MAX_ERROR_PITCH = 0.1; // TODO
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.05, 0.05, 0.05);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
@@ -69,6 +68,7 @@ public class Drivetrain extends SubsystemBase {
     pigeon.configFactoryDefault();
     pigeon.configMountPoseYaw(90);
     pigeon.configMountPosePitch(0);
+    pigeon.configMountPoseRoll(0);
     pigeon.setYaw(0);
   }
 
@@ -91,8 +91,8 @@ public class Drivetrain extends SubsystemBase {
     return pigeon.getPitch();
   }
 
-  public boolean checkPitch(double desired) {
-    return Math.abs(desired - getPitch()) < MAX_ERROR_PITCH;
+  public double getRoll() {
+    return pigeon.getRoll();
   }
 
   public Rotation2d getRotation() {
@@ -170,6 +170,7 @@ public class Drivetrain extends SubsystemBase {
     builder.addDoubleProperty(
         "Translation kV", () -> SwerveModule.TRANSLATION_kV, swerveModules[0]::setkV);
     builder.addDoubleProperty("Pitch Value", () -> getPitch(), null);
+    builder.addDoubleProperty("Roll Value", () -> getRoll(), null);
 
     for (int i = 0; i < 4; i++) {
       builder.addDoubleProperty(

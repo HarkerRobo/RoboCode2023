@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
             .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
         Autons.bottomPathAndPush.schedule();
         break;
-      default:
+      case "Middle Path":
         Drivetrain.getInstance()
             .setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));
         Autons.middlePath.schedule();

@@ -16,15 +16,17 @@ public class AngledElevator extends SubsystemBase {
   private HSFalcon master;
   private HSFalcon follower;
 
-  private static final double kP = 0.135;
-  private static final double kG = 0.04687;
+  private static final double kP = 0.15;
+  private static final double kG = 0.085;
 
-  private static final double MAX_ERROR = 100;
+  private static final double MAX_ERROR = 550;
+
+  private double prevPosition;
 
   private DigitalInput limitSwitch;
 
   private static final double CRUISE_VELOCITY = 7447;
-  private static final double CRUISE_ACCELERATION = 7447;
+  private static final double CRUISE_ACCELERATION = 4447;
 
   private AngledElevator() {
     master =
@@ -52,8 +54,13 @@ public class AngledElevator extends SubsystemBase {
     master.set(ControlMode.MotionMagic, height);
   }
 
-  public void resetPosition() {
-    master.set(ControlMode.Position, getPosition(), DemandType.ArbitraryFeedForward, kG);
+  public void resetPosition(double desired, boolean set) {
+    if (set) prevPosition = desired;
+    master.set(ControlMode.Position, prevPosition);
+  }
+
+  public void resetPosition(double desired) {
+    resetPosition(desired, false);
   }
 
   private void initElevator() {
@@ -70,6 +77,7 @@ public class AngledElevator extends SubsystemBase {
     master.configMotionCruiseVelocity(CRUISE_VELOCITY);
     master.configMotionAcceleration(CRUISE_ACCELERATION);
     master.configClosedloopRamp(0.01);
+    prevPosition = 0;
   }
 
   public void addToPositions(double value) {

@@ -36,12 +36,12 @@ public class OI {
     driver.getRightDPadButton().onTrue(new OpenClaw());
     driver.getLeftDPadButton().onTrue(new CloseClaw());
     driver.getButtonY().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]));
-    driver.getButtonX().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]));
+    driver.getButtonX().whileTrue(new OpenClaw().andThen(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3])));
     driver.getButtonA().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
     driver.getButtonB().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]));
     driver.getRightBumper().whileTrue(new AlignYaw());
     driver.getLeftBumper().whileTrue(new AlignPitch());
-    driver.getButtonStart().onTrue(new InstantCommand(() -> Drivetrain.getInstance().setYaw(0)));
+    driver.getButtonStart().onTrue(new InstantCommand(()->Drivetrain.getInstance().setYaw(0)));
     driver.getButtonSelect().onTrue(new ZeroElevator());
 
     operator

@@ -38,9 +38,9 @@ public class SwervePositionController extends CommandBase {
           THETA_kD,
           new Constraints(RobotMap.MAX_ANGLE_VELOCITY, RobotMap.MAX_ANGLE_ACCELERATION));
 
-  private final Trajectory trajectory;
-  private final Supplier<Rotation2d> refHeading;
-  private final Supplier<Rotation2d> startHeading;
+  private Trajectory trajectory;
+  private Supplier<Rotation2d> refHeading;
+  private Supplier<Rotation2d> startHeading;
   private final Timer timer = new Timer();
 
   public SwervePositionController(
@@ -48,6 +48,7 @@ public class SwervePositionController extends CommandBase {
     this.trajectory = trajectory;
     this.refHeading = refHeading;
     this.startHeading = startHeading;
+    System.out.println("hi");
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
     addRequirements(Drivetrain.getInstance());
   }
@@ -110,6 +111,7 @@ public class SwervePositionController extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    System.out.println("bye");
     return timer.get() >= trajectory.getTotalTimeSeconds();
   }
 
