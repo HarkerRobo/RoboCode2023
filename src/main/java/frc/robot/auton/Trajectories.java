@@ -22,12 +22,13 @@ public final class Trajectories {
   public static Trajectory chargePad =
       generateTrajectory(
           List.of(
-              new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(179)),
-              new Pose2d(3.88, 2.75, Rotation2d.fromDegrees(179))),
+              new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180)),
+              new Pose2d(3.88, 2.75, Rotation2d.fromDegrees(180))),
           2.0,
           1.0,
           0.0,
-          0.0);
+          0.0,
+          true);
 
   public static Trajectory topPathAndPush1 =
       generateTrajectory(
@@ -38,7 +39,8 @@ public final class Trajectories {
           2.0,
           1.5,
           0,
-          1.0);
+          1.0,
+          true);
 
   public static Trajectory topPathAndPush2 =
       generateTrajectory(
@@ -50,7 +52,8 @@ public final class Trajectories {
           2.0,
           1.5,
           1.0,
-          0);
+          0,
+          false);
 
   public static Trajectory topPath =
       generateTrajectory(
@@ -61,7 +64,8 @@ public final class Trajectories {
           2.0,
           1.0,
           0,
-          0);
+          0,
+          true);
 
   public static Trajectory bottomPathAndPush1 =
       generateTrajectory(
@@ -72,7 +76,8 @@ public final class Trajectories {
           2.0,
           1.5,
           0.0,
-          1.0);
+          1.0,
+          true);
   public static Trajectory bottomPathAndPush2 =
       generateTrajectory(
           List.of(
@@ -83,7 +88,8 @@ public final class Trajectories {
           2.0,
           1.5,
           1.0,
-          0.0);
+          0.0,
+          false);
 
   public static Trajectory bottomPath =
       generateTrajectory(
@@ -93,7 +99,8 @@ public final class Trajectories {
           2.0,
           1.0,
           0.0,
-          0.0);
+          0.0,
+          true);
 
   public static Trajectory generateTrajectory(
       List<Pose2d> points,
@@ -101,6 +108,7 @@ public final class Trajectories {
       double maxAccel,
       double startVel,
       double endVel,
+      boolean reversed,
       TrajectoryConstraint... constraints) {
     TrajectoryConfig config = new TrajectoryConfig(maxVel, maxAccel);
     for (TrajectoryConstraint c : constraints) {
@@ -108,6 +116,7 @@ public final class Trajectories {
     }
     config.setStartVelocity(startVel);
     config.setEndVelocity(endVel);
+    config.setReversed(reversed);
     List<Translation2d> interiorPoints = new ArrayList<Translation2d>();
     for (int i = 1; i < points.size() - 1; i++) {
       interiorPoints.add(points.get(i).getTranslation());

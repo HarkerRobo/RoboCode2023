@@ -1,7 +1,6 @@
 package frc.robot.auton;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotMap;
 import frc.robot.commands.claw.CloseClaw;
@@ -33,7 +32,7 @@ public final class Autons {
               Trajectories.chargePad,
               () -> Rotation2d.fromDegrees(179),
               () -> Rotation2d.fromDegrees(179)),
-      new AlignPitch());
+          new AlignPitch());
 
   public static final SequentialCommandGroup topPathAndPush =
       new SequentialCommandGroup(

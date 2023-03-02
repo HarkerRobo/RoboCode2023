@@ -48,7 +48,6 @@ public class SwervePositionController extends CommandBase {
     this.trajectory = trajectory;
     this.refHeading = refHeading;
     this.startHeading = startHeading;
-    System.out.println("hi");
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
     addRequirements(Drivetrain.getInstance());
   }
