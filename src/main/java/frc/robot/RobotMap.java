@@ -30,7 +30,7 @@ public final class RobotMap {
     // fl, fr, bl, br
     public static final int[] TRANSLATION_ID = {1, 2, 3, 4};
 
-    public static final boolean[] TRANSLATION_INVERT = {false, false, false, false}; // TODO
+    public static final boolean[] TRANSLATION_INVERT = {false, false, false, false};
 
     public static final int[] ROTATION_ID = {5, 6, 7, 8};
 
@@ -38,7 +38,7 @@ public final class RobotMap {
 
     public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
-    public static final double[] CAN_CODER_OFFSETS = {200.215, 61.699, 84.551, 252.773};
+    public static final double[] CAN_CODER_OFFSETS = {200.215, 61.699, 84.551, 337.148-180};
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;

@@ -18,6 +18,7 @@ public class ZeroElevator extends CommandBase {
   public void end(boolean interrupted) {
     if (!interrupted) AngledElevator.getInstance().resetEncoders();
     AngledElevator.getInstance().setExtensionPower(0);
+    AngledElevator.getInstance().resetPosition(0, true);
   }
 
   @Override

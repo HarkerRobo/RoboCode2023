@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
 
   public static double PIGEON_kP = 0.127;
 
-  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.05, 0.05, 0.05);
+  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.03, 0.03, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
   private Drivetrain() {
@@ -104,10 +104,14 @@ public class Drivetrain extends SubsystemBase {
     swerveModules[2].zeroTranslation();
     swerveModules[3].zeroTranslation();
     setYaw(pose.getRotation().getDegrees());
+    resetTrans();
     poseEstimator.resetPosition(pose.getRotation(), getModulePositions(), pose);
   }
 
   public void setYaw(double yaw) {
+    yaw %= 360;
+    yaw += 360;
+    pigeon.zeroGyroBiasNow();
     pigeon.setYaw(yaw);
     setPreviousHeading(yaw);
   }
@@ -148,6 +152,13 @@ public class Drivetrain extends SubsystemBase {
     //     CameraPoseEstimation.getInstance()
     //         .getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
     // poseEstimator.addVisionMeasurement(cameraPose.getFirst(), cameraPose.getSecond());
+  }
+
+  public void resetTrans() {
+    swerveModules[0].zeroTranslation();
+    swerveModules[1].zeroTranslation();
+    swerveModules[2].zeroTranslation();
+    swerveModules[3].zeroTranslation();
   }
 
   public static Drivetrain getInstance() {

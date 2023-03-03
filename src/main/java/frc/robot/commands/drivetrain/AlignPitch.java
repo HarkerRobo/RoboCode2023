@@ -12,7 +12,7 @@ public class AlignPitch extends CommandBase {
   public static final double kD = 0.0;
 
   public static final double SETPOINT = 0;
-  public static final double MAX_ERROR_PITCH = 0.1;
+  public static final double MAX_ERROR_PITCH = 0.03;
   private static PIDController pitchController = new PIDController(kP, kI, kD);
 
   public AlignPitch() {
@@ -25,7 +25,8 @@ public class AlignPitch extends CommandBase {
     SmartDashboard.putNumber("Pitch kP", kP);
     double error = SETPOINT - Drivetrain.getInstance().getRoll();
     double forwardAmount = pitchController.calculate(error, SETPOINT);
-    ChassisSpeeds speeds = new ChassisSpeeds(forwardAmount, 0, 0);
+    double omega = Drivetrain.getInstance().adjustPigeon(0);
+    ChassisSpeeds speeds = new ChassisSpeeds(forwardAmount, 0, -omega);
     Drivetrain.getInstance().setAngleAndDrive(speeds);
   }
 

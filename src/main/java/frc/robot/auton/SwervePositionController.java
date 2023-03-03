@@ -17,15 +17,15 @@ import java.util.function.Supplier;
 
 public class SwervePositionController extends CommandBase {
   // TODO
-  public static double X_kP = 3.5;
+  public static double X_kP = 3.0;
   public static double X_kI = 0.0;
   public static double X_kD = 0.0;
 
-  public static double Y_kP = 3.0;
+  public static double Y_kP = 2.5;
   public static double Y_kI = 0.0;
   public static double Y_kD = 0.0;
 
-  public static double THETA_kP = 2.5;
+  public static double THETA_kP = 0.5;
   public static double THETA_kI = 0.0;
   public static double THETA_kD = 0.0;
 
@@ -92,7 +92,8 @@ public class SwervePositionController extends CommandBase {
             clampAdd);
     // poseError = poseRef.relativeTo(currentPose);
     Rotation2d rotationError = angleRef.minus(currentPose.getRotation());
-
+    SmartDashboard.putNumber("rotation pose", Math.toDegrees(currentPose.getRotation().getRadians()));
+    SmartDashboard.putNumber("error", Math.toDegrees(rotationError.getRadians()));
     // Calculate feedback velocities (based on position error).
     double xFeedback = xController.calculate(currentPose.getX(), goal.poseMeters.getX());
     double yFeedback = yController.calculate(currentPose.getY(), goal.poseMeters.getY());
@@ -110,7 +111,6 @@ public class SwervePositionController extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    System.out.println("bye");
     return timer.get() >= trajectory.getTotalTimeSeconds();
   }
 

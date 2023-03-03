@@ -66,6 +66,8 @@ public class SwerveModule {
     canCoder.clearStickyFaults();
     canCoder.configSensorInitializationStrategy(
         SensorInitializationStrategy.BootToAbsolutePosition);
+    canCoder.setPositionToAbsolute();
+    canCoder.configSensorDirection(false);
   }
 
   public void setAngleAndDrive(SwerveModuleState state) {

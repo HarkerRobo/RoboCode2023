@@ -30,8 +30,8 @@ public final class Autons {
           new MoveToPosition(0),
           new SwervePositionController(
               Trajectories.chargePad,
-              () -> Rotation2d.fromDegrees(179),
-              () -> Rotation2d.fromDegrees(179)),
+              () -> Rotation2d.fromDegrees(181),
+              () -> Rotation2d.fromDegrees(180)),
           new AlignPitch());
 
   public static final SequentialCommandGroup topPathAndPush =

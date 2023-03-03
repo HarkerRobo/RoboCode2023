@@ -23,12 +23,11 @@ public final class Trajectories {
       generateTrajectory(
           List.of(
               new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180)),
-              new Pose2d(3.88, 2.75, Rotation2d.fromDegrees(180))),
+              new Pose2d(4.50, 2.75, Rotation2d.fromDegrees(181))),
+          3.0,
           2.0,
-          1.0,
           0.0,
-          0.0,
-          true);
+          0.0, true);
 
   public static Trajectory topPathAndPush1 =
       generateTrajectory(
@@ -39,8 +38,7 @@ public final class Trajectories {
           2.0,
           1.5,
           0,
-          1.0,
-          true);
+          1.0, true);
 
   public static Trajectory topPathAndPush2 =
       generateTrajectory(
@@ -52,8 +50,7 @@ public final class Trajectories {
           2.0,
           1.5,
           1.0,
-          0,
-          false);
+          0, false);
 
   public static Trajectory topPath =
       generateTrajectory(
@@ -64,8 +61,7 @@ public final class Trajectories {
           2.0,
           1.0,
           0,
-          0,
-          true);
+          0, true);
 
   public static Trajectory bottomPathAndPush1 =
       generateTrajectory(
@@ -76,8 +72,7 @@ public final class Trajectories {
           2.0,
           1.5,
           0.0,
-          1.0,
-          true);
+          1.0, true);
   public static Trajectory bottomPathAndPush2 =
       generateTrajectory(
           List.of(
@@ -88,9 +83,10 @@ public final class Trajectories {
           2.0,
           1.5,
           1.0,
-          0.0,
-          false);
+          0.0, false);
 
+//   public static Trajectory roomAuto = 
+//         generateTrajectory(List.of(new Pose2d(1.91, 1.09, Rotationd.fromDegrees(180.0)), new Pose2d()), 0, 0, 0, 0, isFlipped(), null)
   public static Trajectory bottomPath =
       generateTrajectory(
           List.of(
