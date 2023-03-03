@@ -68,7 +68,6 @@ public class Drivetrain extends SubsystemBase {
     pigeon.configMountPoseYaw(90);
     pigeon.configMountPosePitch(0);
     pigeon.configMountPoseRoll(0);
-    pigeon.setYaw(0);
   }
 
   public double adjustPigeon(double omega) {
@@ -109,8 +108,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setYaw(double yaw) {
-    yaw %= 360;
-    yaw += 360;
     pigeon.zeroGyroBiasNow();
     pigeon.setYaw(yaw);
     setPreviousHeading(yaw);
