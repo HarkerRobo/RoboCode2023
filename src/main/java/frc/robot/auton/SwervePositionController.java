@@ -25,18 +25,17 @@ public class SwervePositionController extends CommandBase {
   public static double Y_kI = 0.0;
   public static double Y_kD = 0.0;
 
-  public static double THETA_kP = 0.5;
+  public static double THETA_kP = 1.0;
   public static double THETA_kI = 0.0;
   public static double THETA_kD = 0.0;
 
   private static PIDController xController = new PIDController(X_kP, X_kI, X_kD);
   private static PIDController yController = new PIDController(Y_kP, Y_kI, Y_kD);
-  private static ProfiledPIDController thetaController =
-      new ProfiledPIDController(
+  private static PIDController thetaController =
+      new PIDController(
           THETA_kP,
           THETA_kI,
-          THETA_kD,
-          new Constraints(RobotMap.MAX_ANGLE_VELOCITY, RobotMap.MAX_ANGLE_ACCELERATION));
+          THETA_kD);
 
   private Trajectory trajectory;
   private Supplier<Rotation2d> refHeading;
@@ -60,6 +59,9 @@ public class SwervePositionController extends CommandBase {
   public void initialize() {
     timer.reset();
     timer.start();
+    thetaController.reset();
+    xController.reset();
+    yController.reset();
   }
 
   @Override
@@ -80,20 +82,17 @@ public class SwervePositionController extends CommandBase {
     Rotation2d angleRef = Trajectories.apply(refHeading.get());
 
     Pose2d currentPose = Drivetrain.getInstance().getPoseEstimatorPose2d();
+    Rotation2d currentRotation = Drivetrain.getInstance().getRotation();
     double clampAdd =
         1
-            + Math.abs(angleRef.getRadians() - currentPose.getRotation().getRadians())
+            + Math.abs(angleRef.getRadians() - currentRotation.getRadians())
                 * (2 / Math.PI);
-    double thetaFF =
-        MathUtil.clamp(
-            thetaController.calculate(
-                currentPose.getRotation().getRadians(), angleRef.getRadians()),
-            -clampAdd,
-            clampAdd);
-    // poseError = poseRef.relativeTo(currentPose);
-    Rotation2d rotationError = angleRef.minus(currentPose.getRotation());
-    SmartDashboard.putNumber("rotation pose", Math.toDegrees(currentPose.getRotation().getRadians()));
-    SmartDashboard.putNumber("error", Math.toDegrees(rotationError.getRadians()));
+    double thetaFF = MathUtil.clamp(thetaController.calculate(
+                currentRotation.getRadians(), angleRef.getRadians()), -clampAdd, clampAdd);
+
+    SmartDashboard.putNumber("x", currentPose.getX());
+    SmartDashboard.putNumber("y", currentPose.getY());
+    SmartDashboard.putNumber("rotation pose", currentRotation.getRadians());
     // Calculate feedback velocities (based on position error).
     double xFeedback = xController.calculate(currentPose.getX(), goal.poseMeters.getX());
     double yFeedback = yController.calculate(currentPose.getY(), goal.poseMeters.getY());

@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -40,17 +41,19 @@ public class Robot extends TimedRobot {
     LiveWindow.setEnabled(true);
     LiveWindow.enableAllTelemetry();
     SmartDashboard.putData(RobotMap.Field.FIELD);
+    SmartDashboard.putBoolean("red", Trajectories.isFlipped());
     SmartDashboard.putNumber("Pitch kP", AlignPitch.kP);
     SmartDashboard.putNumber("Pigeon kP", Drivetrain.PIGEON_kP);
     CommandScheduler.getInstance().setDefaultCommand(Drivetrain.getInstance(), new SwerveManual());
     CommandScheduler.getInstance()
         .setDefaultCommand(AngledElevator.getInstance(), new ElevatorManual());
     autonChooser = new SendableChooser<String>();
-    autonChooser.setDefaultOption("Middle Path", "Middle Path");
+    autonChooser.setDefaultOption("Middle And Cross Path", "Middle And Cross Path");
+    autonChooser.addOption("Middle Path", "Middle Path");
     autonChooser.addOption("Bottom Path", "Bottom Path");
     autonChooser.addOption("Top Path", "Top Path");
-    autonChooser.addOption("Top Path And Push", "Top Path And Push");
-    autonChooser.addOption("Bottom Path And Push", "Bottom Path And Push");
+    // autonChooser.addOption("Top Path And Push", "Top Path And Push");
+    // autonChooser.addOption("Bottom Path And Push", "Bottom Path And Push");
     SmartDashboard.putData("Auton Chooser", autonChooser);
   }
 
@@ -81,20 +84,24 @@ public class Robot extends TimedRobot {
             .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
         Autons.bottomPath.schedule();
         break;
-      case "Top Path And Push":
-        Drivetrain.getInstance()
-            .setPose(Trajectories.apply(new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180))));
-        Autons.topPathAndPush.schedule();
-        break;
-      case "Bottom Path And Push":
-        Drivetrain.getInstance()
-            .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
-        Autons.bottomPathAndPush.schedule();
-        break;
+      // case "Top Path And Push":
+      //   Drivetrain.getInstance()
+      //       .setPose(Trajectories.apply(new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180))));
+      //   Autons.topPathAndPush.schedule();
+      //   break;
+      // case "Bottom Path And Push":
+      //   Drivetrain.getInstance()
+      //       .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
+      //   Autons.bottomPathAndPush.schedule();
+      //    break;
       case "Middle Path":
         Drivetrain.getInstance()
             .setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));
         Autons.middlePath.schedule();
+      default:
+        Drivetrain.getInstance()
+            .setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));
+        Autons.middleAndCross.schedule();
     }
   }
 

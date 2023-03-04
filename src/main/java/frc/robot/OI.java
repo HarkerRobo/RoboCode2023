@@ -1,6 +1,9 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.auton.Autons;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.drivetrain.AlignPitch;
@@ -44,9 +47,8 @@ public class OI {
     driver.getButtonB().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]));
     driver.getRightBumper().whileTrue(new AlignYaw());
     driver.getLeftBumper().whileTrue(new AlignPitch());
-    driver.getButtonStart().onTrue(new InstantCommand(() -> Drivetrain.getInstance().setYaw(0)));
+    driver.getButtonStart().onTrue(new InstantCommand(() -> {Drivetrain.getInstance().setYaw(0); }));
     driver.getButtonSelect().onTrue(new ZeroElevator());
-
     operator
         .getButtonX()
         .onTrue(

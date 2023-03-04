@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.Pigeon2;
+
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -17,6 +18,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.auton.Trajectories;
 import frc.robot.util.SwerveModule;
 
 public class Drivetrain extends SubsystemBase {
@@ -30,9 +32,9 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = 0.127;
+  public static double PIGEON_kP = 0.15;
 
-  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.03, 0.03, 0.01);
+  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
   private Drivetrain() {
@@ -68,6 +70,8 @@ public class Drivetrain extends SubsystemBase {
     pigeon.configMountPoseYaw(90);
     pigeon.configMountPosePitch(0);
     pigeon.configMountPoseRoll(0);
+    pigeon.setYaw(0);
+    pigeon.configEnableCompass(false);
   }
 
   public double adjustPigeon(double omega) {
@@ -103,12 +107,10 @@ public class Drivetrain extends SubsystemBase {
     swerveModules[2].zeroTranslation();
     swerveModules[3].zeroTranslation();
     setYaw(pose.getRotation().getDegrees());
-    resetTrans();
     poseEstimator.resetPosition(pose.getRotation(), getModulePositions(), pose);
   }
 
   public void setYaw(double yaw) {
-    pigeon.zeroGyroBiasNow();
     pigeon.setYaw(yaw);
     setPreviousHeading(yaw);
   }
@@ -149,13 +151,6 @@ public class Drivetrain extends SubsystemBase {
     //     CameraPoseEstimation.getInstance()
     //         .getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
     // poseEstimator.addVisionMeasurement(cameraPose.getFirst(), cameraPose.getSecond());
-  }
-
-  public void resetTrans() {
-    swerveModules[0].zeroTranslation();
-    swerveModules[1].zeroTranslation();
-    swerveModules[2].zeroTranslation();
-    swerveModules[3].zeroTranslation();
   }
 
   public static Drivetrain getInstance() {
