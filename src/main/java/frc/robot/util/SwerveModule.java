@@ -59,7 +59,6 @@ public class SwerveModule {
 
   private void initModule() {
     rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
-    setAbsolutePosition();
     translation.enableVoltageCompensation(false);
     translation.configVelocityMeasurementWindow(32);
     canCoder.configFactoryDefault();
@@ -68,6 +67,7 @@ public class SwerveModule {
         SensorInitializationStrategy.BootToAbsolutePosition);
     canCoder.setPositionToAbsolute();
     canCoder.configSensorDirection(false);
+    setAbsolutePosition();
   }
 
   public void setAngleAndDrive(SwerveModuleState state) {
