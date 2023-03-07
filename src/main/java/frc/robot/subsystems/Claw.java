@@ -28,6 +28,11 @@ public class Claw extends SubsystemBase {
     claw.set(Value.kForward);
   }
 
+  public void toggle() {
+    if (claw.get() == DoubleSolenoid.Value.kForward) release();
+    else pinch();
+  }
+
   public static Claw getInstance() {
     if (instance == null) instance = new Claw();
     return instance;
