@@ -115,7 +115,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {}
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    AngledElevator.getInstance().resetPosition(0, true);
+  }
 
   @Override
   public void disabledPeriodic() {}

@@ -18,7 +18,7 @@ public class ElevatorManual extends IndefiniteCommand {
       AngledElevator.getInstance().setExtensionPower(PERCENT_OUTPUT);
     else if (OI.getInstance().getDriver().getDownDPadButtonState())
       AngledElevator.getInstance().setExtensionPower(-PERCENT_OUTPUT);
-    else AngledElevator.getInstance().resetPosition(AngledElevator.getInstance().getPosition());
+    else AngledElevator.getInstance().resetPosition();
   }
 
   @Override

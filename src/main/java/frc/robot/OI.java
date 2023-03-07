@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.auton.Autons;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.OpenClaw;
+import frc.robot.commands.claw.ToggleClaw;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
 import frc.robot.commands.elevator.MoveToPosition;
@@ -36,13 +37,13 @@ public class OI {
   }
 
   private void initBindings() {
-    driver.getRightDPadButton().onTrue(new OpenClaw());
+    driver.getRightDPadButton().onTrue(new ToggleClaw());
     driver.getLeftDPadButton().onTrue(new CloseClaw());
     driver.getButtonY().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]));
     driver
         .getButtonX()
-        .whileTrue(
-            new OpenClaw().andThen(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3])));
+        .whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]));
+
     driver.getButtonA().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
     driver.getButtonB().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]));
     driver.getRightBumper().whileTrue(new AlignYaw());
