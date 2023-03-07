@@ -24,7 +24,7 @@ public class MoveToPosition extends CommandBase {
   }
 
   public void end(boolean interrupted) {
-    AngledElevator.getInstance().resetPosition(position, true);
+    AngledElevator.getInstance().moveToPosition(position, true);
   }
 
   public boolean isFinished() {

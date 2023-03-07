@@ -51,16 +51,12 @@ public class AngledElevator extends SubsystemBase {
   }
 
   public void moveToPosition(double height) {
-    master.set(ControlMode.MotionMagic, height);
+    moveToPosition(height, false);
   }
 
-  public void resetPosition(double desired, boolean set) {
+  public void moveToPosition(double desired, boolean set) {
     if (set) prevPosition = desired;
-    master.set(ControlMode.Position, prevPosition);
-  }
-
-  public void resetPosition(double desired) {
-    resetPosition(desired, false);
+    master.set(ControlMode.MotionMagic, prevPosition);
   }
 
   private void initElevator() {
