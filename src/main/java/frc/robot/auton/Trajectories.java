@@ -9,7 +9,6 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.TrajectoryConstraint;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 import java.util.ArrayList;
@@ -28,52 +27,54 @@ public final class Trajectories {
           2.0,
           1.5,
           0.0,
-          0.0, true);
+          0.0,
+          true);
 
-    public static Trajectory middleAndCross1 =
-          generateTrajectory(
-              List.of(
-                  new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180)),
-                  new Pose2d(6.24, 2.75, Rotation2d.fromDegrees(180))),
-              2.2,
-              1.0,
-              0.0,
-              0.0, true);
-    public static Trajectory middleAndCross2 =
-          generateTrajectory(
-              List.of(
-                  new Pose2d(6.24, 2.75, Rotation2d.fromDegrees(180)),
-                  new Pose2d(4.00, 2.75, Rotation2d.fromDegrees(180))),
-              3.0,
-              1.5,
-              0.0,
-              0.0, false); 
+  public static Trajectory middleAndCross1 =
+      generateTrajectory(
+          List.of(
+              new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180)),
+              new Pose2d(6.24, 2.75, Rotation2d.fromDegrees(180))),
+          2.2,
+          1.0,
+          0.0,
+          0.0,
+          true);
+  public static Trajectory middleAndCross2 =
+      generateTrajectory(
+          List.of(
+              new Pose2d(6.24, 2.75, Rotation2d.fromDegrees(180)),
+              new Pose2d(4.00, 2.75, Rotation2d.fromDegrees(180))),
+          3.0,
+          1.5,
+          0.0,
+          0.0,
+          false);
 
-//   public static Trajectory topPathAndPush1 =
-    //   generateTrajectory(
-    //       List.of(
-    //           new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180.0)),
-    //           new Pose2d(4.94, 5.01, Rotation2d.fromDegrees(180.0)),
-    //           new Pose2d(7.52, 5.58, Rotation2d.fromDegrees(212.64))),
-    //       2.0,
-    //       1.5,
-    //       0,
-    //       1.0, true);
+  //   public static Trajectory topPathAndPush1 =
+  //   generateTrajectory(
+  //       List.of(
+  //           new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180.0)),
+  //           new Pose2d(4.94, 5.01, Rotation2d.fromDegrees(180.0)),
+  //           new Pose2d(7.52, 5.58, Rotation2d.fromDegrees(212.64))),
+  //       2.0,
+  //       1.5,
+  //       0,
+  //       1.0, true);
 
-//   public static Trajectory topPathAndPush2 =
-//       generateTrajectory(
-//           List.of(
-//               new Pose2d(7.52, 5.58, Rotation2d.fromDegrees(212.64)),
-//               new Pose2d(7.79, 4.66, Rotation2d.fromDegrees(180.0)),
-//               new Pose2d(4.57, 4.62, Rotation2d.fromDegrees(180.0)),
-//               new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180.0))),
-//           2.0,
-//           1.5,
-//           1.0,
-//           0, false);
+  //   public static Trajectory topPathAndPush2 =
+  //       generateTrajectory(
+  //           List.of(
+  //               new Pose2d(7.52, 5.58, Rotation2d.fromDegrees(212.64)),
+  //               new Pose2d(7.79, 4.66, Rotation2d.fromDegrees(180.0)),
+  //               new Pose2d(4.57, 4.62, Rotation2d.fromDegrees(180.0)),
+  //               new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180.0))),
+  //           2.0,
+  //           1.5,
+  //           1.0,
+  //           0, false);
 
-  public static Trajectory 
-  topPath =
+  public static Trajectory topPath =
       generateTrajectory(
           List.of(
               new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180)),
@@ -82,40 +83,42 @@ public final class Trajectories {
           2.0,
           1.0,
           0,
-          0, true);
+          0,
+          true);
 
-//   public static Trajectory bottomPathAndPush1 =
-//       generateTrajectory(
-//           List.of(
-//               new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180.0)),
-//               new Pose2d(4.13, 0.70, Rotation2d.fromDegrees(180.0))),
-//           2.0,
-//           1.5,
-//           0.0,
-//           1.0, true);
-//     public static Trajectory bottomPathAndPush2 =
-//       generateTrajectory(
-//           List.of(
-//             new Pose2d(4.13, 0.70, Rotation2d.fromDegrees(180.0)),
-//             new Pose2d(7.49, 2.03, Rotation2d.fromDegrees(-133.54+360))),
-//           2.0,
-//           1.5,
-//           1.0,
-//           1.0, true);
-//   public static Trajectory bottomPathAndPush3 =
-//       generateTrajectory(
-//           List.of(
-//               new Pose2d(7.49, 2.03, Rotation2d.fromDegrees(-133.54+360)),
-//               new Pose2d(7.87, 0.91, Rotation2d.fromDegrees(180.0)),
-//               new Pose2d(4.14, 0.71, Rotation2d.fromDegrees(180.0)),
-//               new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180.0))),
-//           2.0,
-//           1.5,
-//           1.0,
-//           0.0, false);
+  //   public static Trajectory bottomPathAndPush1 =
+  //       generateTrajectory(
+  //           List.of(
+  //               new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180.0)),
+  //               new Pose2d(4.13, 0.70, Rotation2d.fromDegrees(180.0))),
+  //           2.0,
+  //           1.5,
+  //           0.0,
+  //           1.0, true);
+  //     public static Trajectory bottomPathAndPush2 =
+  //       generateTrajectory(
+  //           List.of(
+  //             new Pose2d(4.13, 0.70, Rotation2d.fromDegrees(180.0)),
+  //             new Pose2d(7.49, 2.03, Rotation2d.fromDegrees(-133.54+360))),
+  //           2.0,
+  //           1.5,
+  //           1.0,
+  //           1.0, true);
+  //   public static Trajectory bottomPathAndPush3 =
+  //       generateTrajectory(
+  //           List.of(
+  //               new Pose2d(7.49, 2.03, Rotation2d.fromDegrees(-133.54+360)),
+  //               new Pose2d(7.87, 0.91, Rotation2d.fromDegrees(180.0)),
+  //               new Pose2d(4.14, 0.71, Rotation2d.fromDegrees(180.0)),
+  //               new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180.0))),
+  //           2.0,
+  //           1.5,
+  //           1.0,
+  //           0.0, false);
 
-//   public static Trajectory roomAuto = 
-//         generateTrajectory(List.of(new Pose2d(1.91, 1.09, Rotationd.fromDegrees(180.0)), new Pose2d()), 0, 0, 0, 0, isFlipped(), null)
+  //   public static Trajectory roomAuto =
+  //         generateTrajectory(List.of(new Pose2d(1.91, 1.09, Rotationd.fromDegrees(180.0)), new
+  // Pose2d()), 0, 0, 0, 0, isFlipped(), null)
 
   public static Trajectory bottomPath =
       generateTrajectory(

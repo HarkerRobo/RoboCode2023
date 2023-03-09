@@ -2,16 +2,13 @@ package frc.robot.auton;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 import java.util.function.Supplier;
 
@@ -31,11 +28,7 @@ public class SwervePositionController extends CommandBase {
 
   private static PIDController xController = new PIDController(X_kP, X_kI, X_kD);
   private static PIDController yController = new PIDController(Y_kP, Y_kI, Y_kD);
-  private static PIDController thetaController =
-      new PIDController(
-          THETA_kP,
-          THETA_kI,
-          THETA_kD);
+  private static PIDController thetaController = new PIDController(THETA_kP, THETA_kI, THETA_kD);
 
   private Trajectory trajectory;
   private Supplier<Rotation2d> refHeading;
@@ -84,11 +77,12 @@ public class SwervePositionController extends CommandBase {
     Pose2d currentPose = Drivetrain.getInstance().getPoseEstimatorPose2d();
     Rotation2d currentRotation = Drivetrain.getInstance().getRotation();
     double clampAdd =
-        1
-            + Math.abs(angleRef.getRadians() - currentRotation.getRadians())
-                * (2 / Math.PI);
-    double thetaFF = MathUtil.clamp(thetaController.calculate(
-                currentRotation.getRadians(), angleRef.getRadians()), -clampAdd, clampAdd);
+        1 + Math.abs(angleRef.getRadians() - currentRotation.getRadians()) * (2 / Math.PI);
+    double thetaFF =
+        MathUtil.clamp(
+            thetaController.calculate(currentRotation.getRadians(), angleRef.getRadians()),
+            -clampAdd,
+            clampAdd);
 
     SmartDashboard.putNumber("x", currentPose.getX());
     SmartDashboard.putNumber("y", currentPose.getY());

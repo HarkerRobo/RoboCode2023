@@ -1,6 +1,5 @@
 package frc.robot.commands.drivetrain;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
@@ -16,7 +15,9 @@ public class AlignPitch extends CommandBase {
 
   public static final double SETPOINT = 0;
   public static final double MAX_ERROR_PITCH = 0.03;
-  private static ProfiledPIDController pitchController = new ProfiledPIDController(kP, kI, kD, new Constraints(RobotMap.MAX_DRIVING_SPEED, RobotMap.MAX_DRIVING_SPEED / 2));
+  private static ProfiledPIDController pitchController =
+      new ProfiledPIDController(
+          kP, kI, kD, new Constraints(RobotMap.MAX_DRIVING_SPEED, RobotMap.MAX_DRIVING_SPEED / 2));
 
   public AlignPitch() {
     addRequirements(Drivetrain.getInstance());

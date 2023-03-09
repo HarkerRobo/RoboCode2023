@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -84,16 +83,16 @@ public class Robot extends TimedRobot {
             .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
         Autons.bottomPath.schedule();
         break;
-      // case "Top Path And Push":
-      //   Drivetrain.getInstance()
-      //       .setPose(Trajectories.apply(new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180))));
-      //   Autons.topPathAndPush.schedule();
-      //   break;
-      // case "Bottom Path And Push":
-      //   Drivetrain.getInstance()
-      //       .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
-      //   Autons.bottomPathAndPush.schedule();
-      //    break;
+        // case "Top Path And Push":
+        //   Drivetrain.getInstance()
+        //       .setPose(Trajectories.apply(new Pose2d(1.91, 4.44, Rotation2d.fromDegrees(180))));
+        //   Autons.topPathAndPush.schedule();
+        //   break;
+        // case "Bottom Path And Push":
+        //   Drivetrain.getInstance()
+        //       .setPose(Trajectories.apply(new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180))));
+        //   Autons.bottomPathAndPush.schedule();
+        //    break;
       case "Middle Path":
         Drivetrain.getInstance()
             .setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));

@@ -1,11 +1,7 @@
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.auton.Autons;
 import frc.robot.commands.claw.CloseClaw;
-import frc.robot.commands.claw.OpenClaw;
 import frc.robot.commands.claw.ToggleClaw;
 import frc.robot.commands.drivetrain.AlignPitch;
 import frc.robot.commands.drivetrain.AlignYaw;
@@ -40,15 +36,19 @@ public class OI {
     driver.getRightDPadButton().onTrue(new ToggleClaw());
     driver.getLeftDPadButton().onTrue(new CloseClaw());
     driver.getButtonY().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]));
-    driver
-        .getButtonX()
-        .whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]));
+    driver.getButtonX().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]));
 
     driver.getButtonA().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
     driver.getButtonB().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]));
     driver.getRightBumper().whileTrue(new AlignYaw());
     driver.getLeftBumper().whileTrue(new AlignPitch());
-    driver.getButtonStart().onTrue(new InstantCommand(() -> {Drivetrain.getInstance().setYaw(0); }));
+    driver
+        .getButtonStart()
+        .onTrue(
+            new InstantCommand(
+                () -> {
+                  Drivetrain.getInstance().setYaw(0);
+                }));
     driver.getButtonSelect().onTrue(new ZeroElevator());
     operator
         .getButtonX()
