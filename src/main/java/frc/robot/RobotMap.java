@@ -38,7 +38,7 @@ public final class RobotMap {
 
     public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
-    public static final double[] CAN_CODER_OFFSETS = {215.332, 61.699, 86.572, 16.611};
+    public static final double[] CAN_CODER_OFFSETS = {324.141-180, 245.479-180, 267.188-180, 271.494-180};
 
     // Current Limiting Constants
     public static final double ROTATION_MOTOR_CURRENT_CONTINUOUS = 25;
@@ -95,10 +95,10 @@ public final class RobotMap {
     public static final double FOLLOWER_CURRENT_CONTINOUS = 30; // TODO
     public static final double FOLLOWER_CURRENT_PEAK_DUR = 0.1; // TODO
 
-    public static final double FORWARD_LIMIT = 38000;
+    public static final double FORWARD_LIMIT = 39000;
     public static final double REVERSE_LIMIT = 0;
 
     // low, middle, high, human player
-    public static final double[] POSITIONS = {12018, 28000, 38000, 29000}; // TODO
+    public static final double[] POSITIONS = {12018, 28000, 38500, 29000}; // TODO
   }
 }
