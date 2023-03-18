@@ -13,18 +13,17 @@ public class MoveToPosition extends CommandBase {
     this.position = position;
     addRequirements(AngledElevator.getInstance());
   }
-
   public void initialize() {
     timer.reset();
     timer.start();
   }
-
   public void execute() {
     AngledElevator.getInstance().moveToPosition(position);
   }
 
   public void end(boolean interrupted) {
-    AngledElevator.getInstance().moveToPosition(position, true);
+    AngledElevator.getInstance().setDesiredPosition(position);
+    AngledElevator.getInstance().setExtensionPower(0);
   }
 
   public boolean isFinished() {

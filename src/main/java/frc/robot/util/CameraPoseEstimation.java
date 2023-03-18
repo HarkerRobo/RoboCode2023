@@ -87,6 +87,7 @@ public final class CameraPoseEstimation {
   public CameraPoseEstimation() {
     aprilTagFieldLayout = new AprilTagFieldLayout(CameraPoseEstimation.aprilTags, 16.4846, 8.1026);
     cam = new PhotonCamera("limelight");
+    setCamPipeline(0);
     robotToCam =
         new Transform3d(
             new Translation3d(0, Units.inchesToMeters(10.81259), 0), new Rotation3d(0, 0, 0));
@@ -97,16 +98,14 @@ public final class CameraPoseEstimation {
             aprilTagFieldLayout, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, camList);
   }
 
-  public Pair<Pose2d, Double> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
-    robotPoseEstimator.setReferencePose(prevEstimatedRobotPose);
-    double currentTime = Timer.getFPGATimestamp();
-    Optional<Pair<Pose3d, Double>> result = robotPoseEstimator.update();
-    if (result.isPresent()) {
-      return new Pair<Pose2d, Double>(
-          result.get().getFirst().toPose2d(), currentTime - result.get().getSecond());
-    } else {
-      return new Pair<Pose2d, Double>(null, 0.0);
-    }
+  public void setCamPipeline(int index)
+  {
+    if (cam.getPipelineIndex() != index)
+      cam.setPipelineIndex(index);
+  }
+  public PhotonCamera getCamera()
+  {
+    return cam;
   }
 
   public static CameraPoseEstimation getInstance() {

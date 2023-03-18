@@ -10,13 +10,15 @@ public final class RobotMap {
     public static final double fieldWidth = Units.inchesToMeters(315.5);
 
     public static final Field2d FIELD = new Field2d();
+    public static final int APRILTAG_INDEX = 1;
+    public static final int TAPE_INDEX = 0;
   }
 
   public static final String CAN_CHAIN = "rio";
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
-  public static final double MAX_DRIVING_ACCELERATION = 15.0;
+  public static final double MAX_DRIVING_ACCELERATION = 10.0;
   public static final double MAX_ANGLE_VELOCITY = Math.PI;
   public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY / 2;
 
@@ -39,7 +41,7 @@ public final class RobotMap {
     public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
     public static final double[] CAN_CODER_OFFSETS = {
-      324.141 - 180, 245.479 - 180, 267.188 - 180, 271.494 - 180
+      323.613 - 180, 244.951 - 180, 266.572 + 180, 270.615 - 180
     };
 
     // Current Limiting Constants
@@ -78,8 +80,8 @@ public final class RobotMap {
   }
 
   public static final class Claw {
-    public static final int CLAW_FOWARD_ID = 1;
-    public static final int CLAW_REVERSE_ID = 0;
+    public static final int CLAW_FOWARD_ID = 0;
+    public static final int CLAW_REVERSE_ID = 1;
   }
 
   public static final class AngledElevator {
@@ -97,10 +99,10 @@ public final class RobotMap {
     public static final double FOLLOWER_CURRENT_CONTINOUS = 30; // TODO
     public static final double FOLLOWER_CURRENT_PEAK_DUR = 0.1; // TODO
 
-    public static final double FORWARD_LIMIT = 39000;
+    public static final double FORWARD_LIMIT = 40000;
     public static final double REVERSE_LIMIT = 0;
 
     // low, middle, high, human player
-    public static final double[] POSITIONS = {12018, 28000, 38500, 29000}; // TODO
+    public static double[] POSITIONS = {10018, 27000, 39500, 27500}; // TODO
   }
 }

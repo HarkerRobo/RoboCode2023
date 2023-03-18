@@ -22,12 +22,12 @@ public class SwerveModule {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  public static double ROTATION_kP = 0.15;
+  public static double ROTATION_kP = 0.17;
   public static double TRANSLATION_kS = 0.02569;
   public static double TRANSLATION_kV = 2.84584;
   public static double TRANSLATION_kA = 0.21522;
 
-  public static final double TRANSLATION_QELMS = 3;
+  public static final double TRANSLATION_QELMS = 5;
 
   public SwerveModule(int id) {
     this.id = id;

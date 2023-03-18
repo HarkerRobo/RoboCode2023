@@ -9,7 +9,7 @@ import frc.robot.auton.Trajectories;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignYaw extends CommandBase {
-  public static final double kP = 4.5; // TODO
+  public static final double kP = 3.5; // TODO
   public static final double kI = 0.0;
   public static final double kD = 0.0;
 

@@ -24,7 +24,7 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180)),
               new Pose2d(3.48, 2.75, Rotation2d.fromDegrees(180))),
-          2.0,
+          3.0,
           1.5,
           0.0,
           0.0,
@@ -34,7 +34,7 @@ public final class Trajectories {
       generateTrajectory(
           List.of(
               new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180)),
-              new Pose2d(6.24, 2.75, Rotation2d.fromDegrees(180))),
+              new Pose2d(6.5, 2.75, Rotation2d.fromDegrees(180))),
           2.2,
           1.0,
           0.0,
@@ -43,7 +43,7 @@ public final class Trajectories {
   public static Trajectory middleAndCross2 =
       generateTrajectory(
           List.of(
-              new Pose2d(6.24, 2.75, Rotation2d.fromDegrees(180)),
+              new Pose2d(6.5, 2.75, Rotation2d.fromDegrees(180)),
               new Pose2d(4.00, 2.75, Rotation2d.fromDegrees(180))),
           3.0,
           1.5,
@@ -123,10 +123,10 @@ public final class Trajectories {
   public static Trajectory bottomPath =
       generateTrajectory(
           List.of(
-              new Pose2d(1.91, 1.09, Rotation2d.fromDegrees(180)),
-              new Pose2d(6.33, 0.70, Rotation2d.fromDegrees(180))),
-          2.0,
-          1.0,
+              new Pose2d(1.91, 0.95, Rotation2d.fromDegrees(180)),
+              new Pose2d(7, 0.55, Rotation2d.fromDegrees(180))),
+          3.0,
+          1.5,
           0.0,
           0.0,
           true);

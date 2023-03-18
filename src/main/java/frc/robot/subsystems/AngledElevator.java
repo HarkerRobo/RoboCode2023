@@ -17,16 +17,15 @@ public class AngledElevator extends SubsystemBase {
   private HSFalcon follower;
 
   private static final double kP = 0.135;
-  private static final double kG = 0.08;
+  private static final double kG = 0.09;
 
-  private static final double MAX_ERROR = 350;
-
-  private double prevPosition;
-
+  private static final double MAX_ERROR = 100;
   private DigitalInput limitSwitch;
 
+  private double desired;
+
   private static final double CRUISE_VELOCITY = 7447;
-  private static final double CRUISE_ACCELERATION = 7447;
+  private static final double CRUISE_ACCELERATION = 4447;
 
   private AngledElevator() {
     master =
@@ -50,13 +49,16 @@ public class AngledElevator extends SubsystemBase {
     initElevator();
   }
 
-  public void moveToPosition(double height) {
-    moveToPosition(height, false);
+  public void moveToPosition(double desired) {
+    master.set(ControlMode.MotionMagic, desired, DemandType.ArbitraryFeedForward, kG);
   }
 
-  public void moveToPosition(double desired, boolean set) {
-    if (set) prevPosition = desired;
-    master.set(ControlMode.MotionMagic, prevPosition, DemandType.ArbitraryFeedForward, kG);
+  public void setDesiredPosition(double position) {
+    this.desired = position;
+  }
+
+  public double getDesiredPosition() {
+    return desired;
   }
 
   private void initElevator() {
@@ -73,14 +75,6 @@ public class AngledElevator extends SubsystemBase {
     master.configMotionCruiseVelocity(CRUISE_VELOCITY);
     master.configMotionAcceleration(CRUISE_ACCELERATION);
     master.configClosedloopRamp(0.01);
-    prevPosition = 0;
-  }
-
-  public void addToPositions(double value) {
-    RobotMap.AngledElevator.POSITIONS[0] += value;
-    RobotMap.AngledElevator.POSITIONS[1] += value;
-    RobotMap.AngledElevator.POSITIONS[2] += value;
-    RobotMap.AngledElevator.POSITIONS[3] += value;
   }
 
   public boolean checkExtend(double desired) {
@@ -107,6 +101,10 @@ public class AngledElevator extends SubsystemBase {
 
   public boolean extensionStop() {
     return !limitSwitch.get();
+  }
+
+  public boolean isFarExtended() {
+    return getPosition() > RobotMap.AngledElevator.POSITIONS[1];
   }
 
   public static AngledElevator getInstance() {

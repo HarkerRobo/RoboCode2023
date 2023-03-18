@@ -2,6 +2,7 @@ package frc.robot.auton;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.RobotMap;
 import frc.robot.commands.claw.CloseClaw;
 import frc.robot.commands.claw.OpenClaw;
@@ -33,6 +34,15 @@ public final class Autons {
               () -> Rotation2d.fromDegrees(180),
               () -> Rotation2d.fromDegrees(180)),
           new AlignPitch());
+
+public static final SequentialCommandGroup noAuton =
+          new SequentialCommandGroup(
+              new ZeroElevator(),
+              new CloseClaw(),
+              new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]),
+              new OpenClaw(),
+              new MoveToPosition(0)
+          );
   public static final SequentialCommandGroup middleAndCross =
       new SequentialCommandGroup(
           new ZeroElevator(),
@@ -50,6 +60,7 @@ public final class Autons {
               () -> Rotation2d.fromDegrees(180),
               () -> Rotation2d.fromDegrees(180)),
           new AlignPitch());
+
   //   public static final SequentialCommandGroup topPathAndPush =
   //       new SequentialCommandGroup(
   //           new ZeroElevator(),

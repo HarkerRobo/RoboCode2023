@@ -21,6 +21,7 @@ import frc.robot.commands.elevator.ElevatorManual;
 import frc.robot.subsystems.AngledElevator;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.util.CameraPoseEstimation;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -51,8 +52,7 @@ public class Robot extends TimedRobot {
     autonChooser.addOption("Middle Path", "Middle Path");
     autonChooser.addOption("Bottom Path", "Bottom Path");
     autonChooser.addOption("Top Path", "Top Path");
-    // autonChooser.addOption("Top Path And Push", "Top Path And Push");
-    // autonChooser.addOption("Bottom Path And Push", "Bottom Path And Push");
+    autonChooser.addOption("No auton", "No auton");
     SmartDashboard.putData("Auton Chooser", autonChooser);
   }
 
@@ -60,6 +60,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     RobotMap.Field.FIELD.setRobotPose(Drivetrain.getInstance().getPoseEstimatorPose2d());
+    SmartDashboard.putString("Auton running:", autonChooser.getSelected());
     SmartDashboard.putData(Drivetrain.getInstance());
     NetworkTableInstance.getDefault().flushLocal();
     NetworkTableInstance.getDefault().flush();
@@ -97,6 +98,11 @@ public class Robot extends TimedRobot {
         Drivetrain.getInstance()
             .setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));
         Autons.middlePath.schedule();
+        break;
+      case "No auton":
+         Drivetrain.getInstance().setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));
+         Autons.noAuton.schedule();
+         break;
       default:
         Drivetrain.getInstance()
             .setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));
@@ -108,14 +114,30 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    Autons.bottomPath.cancel();
+    Autons.topPath.cancel();
+    Autons.middlePath.cancel();
+    Autons.middleAndCross.cancel();
+    Autons.noAuton.cancel();
+  }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    // if (Drivetrain.getInstance().getPoseEstimatorPose2d().getX() > RobotMap.Field.fieldLength/2) {
+    //   CameraPoseEstimation.getInstance().setCamPipeline(RobotMap.Field.APRILTAG_INDEX); // check which is reflective tape and which is april tags
+    // }
+    // else {
+      CameraPoseEstimation.getInstance().setCamPipeline(RobotMap.Field.TAPE_INDEX);
+    // }
+  }
+
+
 
   @Override
   public void disabledInit() {
-    AngledElevator.getInstance().moveToPosition(0, true);
+    AngledElevator.getInstance().setDesiredPosition(0);
+    AngledElevator.getInstance().moveToPosition(0);
   }
 
   @Override
