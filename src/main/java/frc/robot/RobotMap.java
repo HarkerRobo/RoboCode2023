@@ -12,6 +12,8 @@ public final class RobotMap {
     public static final Field2d FIELD = new Field2d();
     public static final int APRILTAG_INDEX = 1;
     public static final int TAPE_INDEX = 0;
+    public static final int CONE_INDEX = 2;
+    public static final int CUBE_INDEX = 3;
   }
 
   public static final String CAN_CHAIN = "rio";

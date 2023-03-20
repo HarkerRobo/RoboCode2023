@@ -10,6 +10,7 @@ import frc.robot.commands.elevator.MoveToPosition;
 import frc.robot.commands.elevator.ZeroElevator;
 import frc.robot.subsystems.AngledElevator;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.util.CameraPoseEstimation;
 import harkerrobolib.joysticks.XboxGamepad;
 import harkerrobolib.util.Constants;
 
@@ -50,6 +51,14 @@ public class OI {
                   Drivetrain.getInstance().setYaw(0);
                 }));
     driver.getButtonSelect().onTrue(new ZeroElevator());
+
+    operator.getButtonSelect().onTrue(new ZeroElevator());
+    operator.getLeftBumper().whileTrue(new AlignPitch());
+    operator.getDownDPadButton().onTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
+    operator.getButtonA().onTrue(new InstantCommand(() -> {CameraPoseEstimation.getInstance().setCamPipeline(RobotMap.Field.TAPE_INDEX);}));
+    operator.getButtonB().onTrue(new InstantCommand(() -> {CameraPoseEstimation.getInstance().setCamPipeline(RobotMap.Field.APRILTAG_INDEX);}));
+    operator.getButtonX().onTrue(new InstantCommand(() -> {CameraPoseEstimation.getInstance().setCamPipeline(RobotMap.Field.CONE_INDEX);}));
+    operator.getButtonY().onTrue(new InstantCommand(() -> {CameraPoseEstimation.getInstance().setCamPipeline(RobotMap.Field.CUBE_INDEX);}));
   }
 
   public static OI getInstance() {

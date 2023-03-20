@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Position;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.HSFalconBuilder;
@@ -55,6 +56,32 @@ public class AngledElevator extends SubsystemBase {
 
   public void setDesiredPosition(double position) {
     this.desired = position;
+  }
+
+  public void setDesiredState(Position state) {
+    switch (state)
+    {
+      case LOW:
+        this.desired = RobotMap.AngledElevator.POSITIONS[0];
+        break;
+      case MIDDLE:
+        this.desired = RobotMap.AngledElevator.POSITIONS[1];
+        break;
+      case HIGH:
+        this.desired = RobotMap.AngledElevator.POSITIONS[2];
+        break;
+      case HP:
+        this.desired = RobotMap.AngledElevator.POSITIONS[3];
+        break;
+      case UP:
+        this.desired = getPosition() + 500;
+        break;
+      case DOWN:
+        this.desired = getPosition() - 500;
+        break;
+      default:
+        this.desired = 0;
+    }
   }
 
   public double getDesiredPosition() {

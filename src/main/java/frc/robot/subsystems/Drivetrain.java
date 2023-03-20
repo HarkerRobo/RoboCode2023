@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -13,10 +14,13 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
+import frc.robot.util.CameraPoseEstimation;
 import frc.robot.util.SwerveModule;
 
 public class Drivetrain extends SubsystemBase {
@@ -34,6 +38,14 @@ public class Drivetrain extends SubsystemBase {
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
+
+  private static final double THETA_P = 3.95; //TODO
+  private static final double THETA_I = 0.0; //TODO
+  private static final double THETA_D = 0.0; //TODO
+  
+  private static ProfiledPIDController thetaController = new ProfiledPIDController(THETA_P, THETA_I, THETA_D, new Constraints(RobotMap.MAX_DRIVING_SPEED, RobotMap.MAX_DRIVING_SPEED / 2));
+  public static final double MAX_ERROR_YAW = Math.toRadians(0.1);
+  public static final double OFFSET = Math.toRadians(12); // TODO
 
   private Drivetrain() {
     swerveModules =
@@ -140,6 +152,18 @@ public class Drivetrain extends SubsystemBase {
 
   public Pose2d getPoseEstimatorPose2d() {
     return poseEstimator.getEstimatedPosition();
+  }
+
+  public double alignToTarget(double omega) {
+    var result = CameraPoseEstimation.getInstance().getCamera().getLatestResult();
+    if (result.hasTargets()) {
+        omega =
+            -thetaController.calculate(Math.toRadians(result.getBestTarget().getYaw()) - OFFSET);
+        Drivetrain.getInstance().setPreviousHeading(Drivetrain.getInstance().getHeading());
+    }
+    thetaController.reset(new State());
+    thetaController.setTolerance(MAX_ERROR_YAW);
+    return omega;
   }
 
   @Override
