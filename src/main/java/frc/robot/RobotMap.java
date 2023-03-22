@@ -10,10 +10,8 @@ public final class RobotMap {
     public static final double fieldWidth = Units.inchesToMeters(315.5);
 
     public static final Field2d FIELD = new Field2d();
-    public static final int APRILTAG_INDEX = 1;
     public static final int TAPE_INDEX = 0;
-    public static final int CONE_INDEX = 2;
-    public static final int CUBE_INDEX = 3;
+    public static final int CONE_INDEX = 1;
   }
 
   public static final String CAN_CHAIN = "rio";
@@ -105,6 +103,9 @@ public final class RobotMap {
     public static final double REVERSE_LIMIT = 0;
 
     // low, middle, high, human player
-    public static double[] POSITIONS = {10018, 27000, 39500, 27500}; // TODO
+    public static double[] POSITIONS = {10018, 27000, 39500, 27500};
+
+    // middle, high, human player
+    public static double[] HORIZONTAL_OFFSET = {10018, 27000, 39500};
   }
 }

@@ -34,18 +34,17 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = 0.032;
+  public static double PIGEON_kP = 0.031;
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
-  private static final double THETA_P = 3.95; //TODO
+  private static final double THETA_P = 3.5; //TODO
   private static final double THETA_I = 0.0; //TODO
   private static final double THETA_D = 0.0; //TODO
   
-  private static ProfiledPIDController thetaController = new ProfiledPIDController(THETA_P, THETA_I, THETA_D, new Constraints(RobotMap.MAX_DRIVING_SPEED, RobotMap.MAX_DRIVING_SPEED / 2));
-  public static final double MAX_ERROR_YAW = Math.toRadians(0.1);
-  public static final double OFFSET = Math.toRadians(12); // TODO
+  private static ProfiledPIDController thetaController = new ProfiledPIDController(THETA_P, THETA_I, THETA_D, new Constraints(RobotMap.MAX_ANGLE_VELOCITY, RobotMap.MAX_ANGLE_ACCELERATION));
+  public static final double MAX_ERROR_YAW = Math.toRadians(0.5);
 
   private Drivetrain() {
     swerveModules =
@@ -158,12 +157,25 @@ public class Drivetrain extends SubsystemBase {
     var result = CameraPoseEstimation.getInstance().getCamera().getLatestResult();
     if (result.hasTargets()) {
         omega =
-            -thetaController.calculate(Math.toRadians(result.getBestTarget().getYaw()) - OFFSET);
-        Drivetrain.getInstance().setPreviousHeading(Drivetrain.getInstance().getHeading());
+            -thetaController.calculate(Math.toRadians(result.getBestTarget().getYaw()) - getOffset());
+        setPreviousHeading(getHeading());
     }
     thetaController.reset(new State());
     thetaController.setTolerance(MAX_ERROR_YAW);
     return omega;
+  }
+
+  public double getOffset() {
+    switch (AngledElevator.getInstance().getState()) {
+      case MIDDLE:
+        return Math.toRadians(12);
+      case HIGH:
+        return Math.toRadians(18);
+      case HP:
+        return Math.toRadians(8);
+      default:
+        return Math.toRadians(11);
+    }
   }
 
   @Override

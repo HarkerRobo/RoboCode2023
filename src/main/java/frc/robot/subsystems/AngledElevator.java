@@ -25,8 +25,20 @@ public class AngledElevator extends SubsystemBase {
 
   private double desired;
 
+  // private double targetHeight;
+  // private double horizontalOffset;
+
   private static final double CRUISE_VELOCITY = 7447;
   private static final double CRUISE_ACCELERATION = 4447;
+
+  public static enum State {
+    ZERO,
+    HP,
+    MIDDLE,
+    HIGH,
+  }
+
+  private State state;
 
   private AngledElevator() {
     master =
@@ -58,30 +70,8 @@ public class AngledElevator extends SubsystemBase {
     this.desired = position;
   }
 
-  public void setDesiredState(Position state) {
-    switch (state)
-    {
-      case LOW:
-        this.desired = RobotMap.AngledElevator.POSITIONS[0];
-        break;
-      case MIDDLE:
-        this.desired = RobotMap.AngledElevator.POSITIONS[1];
-        break;
-      case HIGH:
-        this.desired = RobotMap.AngledElevator.POSITIONS[2];
-        break;
-      case HP:
-        this.desired = RobotMap.AngledElevator.POSITIONS[3];
-        break;
-      case UP:
-        this.desired = getPosition() + 500;
-        break;
-      case DOWN:
-        this.desired = getPosition() - 500;
-        break;
-      default:
-        this.desired = 0;
-    }
+  public void setDesiredState(State state) {
+    this.state = state;
   }
 
   public double getDesiredPosition() {
@@ -102,6 +92,7 @@ public class AngledElevator extends SubsystemBase {
     master.configMotionCruiseVelocity(CRUISE_VELOCITY);
     master.configMotionAcceleration(CRUISE_ACCELERATION);
     master.configClosedloopRamp(0.01);
+    state = State.ZERO;
   }
 
   public boolean checkExtend(double desired) {
@@ -132,6 +123,50 @@ public class AngledElevator extends SubsystemBase {
 
   public boolean isFarExtended() {
     return getPosition() > RobotMap.AngledElevator.POSITIONS[1];
+  }
+
+  // public void offsetTargetHeights() {
+  //   switch (getState()) {
+  //     case MIDDLE:
+  //       setHorizontalOffset(RobotMap.AngledElevator.HORIZONTAL_OFFSET[0]);
+  //       setTargetHeight(0.86); // meters
+  //       break;
+  //     case HP:
+  //       setHorizontalOffset(RobotMap.AngledElevator.HORIZONTAL_OFFSET[2]);
+  //       setTargetHeight(0.95); // meters
+  //       break;
+  //     case HIGH:
+  //       setHorizontalOffset(RobotMap.AngledElevator.HORIZONTAL_OFFSET[1]);
+  //       setTargetHeight(1.17); // meters
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
+
+  // public void setHorizontalOffset(double meters) {
+  //   horizontalOffset = meters;
+  // }
+
+  // public void setTargetHeight(double meters) {
+  //   targetHeight = meters;
+  // }
+
+  // public double getTargetHeight() {
+  //   return targetHeight;
+  // }
+
+  // public double getHorizontalOffset() {
+  //   return horizontalOffset;
+  // }
+
+  @Override
+  public void periodic() {
+    // offsetTargetHeights();
+  }
+
+  public State getState() {
+    return state;
   }
 
   public static AngledElevator getInstance() {

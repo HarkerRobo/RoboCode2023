@@ -128,7 +128,6 @@ public class Robot extends TimedRobot {
     //   CameraPoseEstimation.getInstance().setCamPipeline(RobotMap.Field.APRILTAG_INDEX); // check which is reflective tape and which is april tags
     // }
     // else {
-      CameraPoseEstimation.getInstance().setCamPipeline(RobotMap.Field.TAPE_INDEX);
     // }
   }
 
