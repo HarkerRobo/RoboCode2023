@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.Pigeon2;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -34,17 +35,17 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = 0.031;
+  public static double PIGEON_kP = 0.035;
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
-  private static final double THETA_P = 3.5; //TODO
-  private static final double THETA_I = 0.0; //TODO
+  private static final double THETA_P = 0.124; //TODO
+  private static final double THETA_I = 0.0001; //TODO
   private static final double THETA_D = 0.0; //TODO
   
-  private static ProfiledPIDController thetaController = new ProfiledPIDController(THETA_P, THETA_I, THETA_D, new Constraints(RobotMap.MAX_ANGLE_VELOCITY, RobotMap.MAX_ANGLE_ACCELERATION));
-  public static final double MAX_ERROR_YAW = Math.toRadians(0.5);
+  private static ProfiledPIDController thetaController = new ProfiledPIDController(THETA_P, THETA_I, THETA_D, new Constraints(4, 3.5));
+  public static final double MAX_ERROR_YAW = 0.1;
 
   private Drivetrain() {
     swerveModules =
@@ -61,6 +62,7 @@ public class Drivetrain extends SubsystemBase {
             new Translation2d(RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, RobotMap.ROBOT_WIDTH / 2),
             new Translation2d(-RobotMap.ROBOT_LENGTH / 2, -RobotMap.ROBOT_WIDTH / 2));
+   thetaController.setTolerance(MAX_ERROR_YAW);
 
     Pose2d initalPoseMeters = new Pose2d();
 
@@ -157,24 +159,22 @@ public class Drivetrain extends SubsystemBase {
     var result = CameraPoseEstimation.getInstance().getCamera().getLatestResult();
     if (result.hasTargets()) {
         omega =
-            -thetaController.calculate(Math.toRadians(result.getBestTarget().getYaw()) - getOffset());
+            -thetaController.calculate(result.getBestTarget().getYaw() - getOffset());
         setPreviousHeading(getHeading());
     }
-    thetaController.reset(new State());
-    thetaController.setTolerance(MAX_ERROR_YAW);
     return omega;
   }
 
   public double getOffset() {
     switch (AngledElevator.getInstance().getState()) {
       case MIDDLE:
-        return Math.toRadians(12);
+        return 18;
       case HIGH:
-        return Math.toRadians(18);
+        return 10.5;
       case HP:
-        return Math.toRadians(8);
+        return 8;
       default:
-        return Math.toRadians(11);
+        return 11;
     }
   }
 
