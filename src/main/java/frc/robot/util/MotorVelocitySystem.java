@@ -18,7 +18,7 @@ public class MotorVelocitySystem {
   private LinearSystemLoop<N1, N1, N1> loop;
 
   private static final Vector<N1> MODEL_STD_DEV = VecBuilder.fill(0.1); // mps
-  private static final Vector<N1> ENCODER_STD_DEV = VecBuilder.fill(0.01); // mps
+  private static final Vector<N1> ENCODER_STD_DEV = VecBuilder.fill(0.1); // mps
 
   private static final Vector<N1> RELMS = VecBuilder.fill(Constants.MAX_VOLTAGE);
   private double kS;

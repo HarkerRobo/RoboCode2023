@@ -18,7 +18,7 @@ public final class RobotMap {
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
-  public static final double MAX_DRIVING_ACCELERATION = 10.0;
+  public static final double MAX_DRIVING_ACCELERATION = 15.0;
   public static final double MAX_ANGLE_VELOCITY = Math.PI;
   public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY / 2;
 
@@ -41,7 +41,7 @@ public final class RobotMap {
     public static final int[] CAN_CODER_ID = {9, 10, 11, 12};
 
     public static final double[] CAN_CODER_OFFSETS = {
-      323.613 - 180, 244.951 - 180, 266.572 + 180, 270.615 - 180
+      323.613 - 180, 244.951 - 180, 266.572 + 180, 91.406
     };
 
     // Current Limiting Constants
@@ -76,7 +76,7 @@ public final class RobotMap {
     // Pigeon ID
     public static final int PIGEON_ID = 1;
 
-    public static final double MIN_OUTPUT = 0.001;
+    public static final double MIN_OUTPUT = 0.01;
   }
 
   public static final class Claw {

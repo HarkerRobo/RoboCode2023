@@ -35,17 +35,19 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = 0.035;
+  public static double PIGEON_kP = 0.027;
 
-  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.01, 0.01, 0.01);
+  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
-  private static final double THETA_P = 0.124; //TODO
-  private static final double THETA_I = 0.0001; //TODO
+  private static final double THETA_P = 0.118; //TODO
+  private static final double THETA_I = 0.0; //TODO
   private static final double THETA_D = 0.0; //TODO
   
   private static ProfiledPIDController thetaController = new ProfiledPIDController(THETA_P, THETA_I, THETA_D, new Constraints(4, 3.5));
-  public static final double MAX_ERROR_YAW = 0.1;
+  public static final double MAX_ERROR_YAW = 0.5;
+
+  public static final double OFFSET = 9.5;
 
   private Drivetrain() {
     swerveModules =
@@ -159,24 +161,24 @@ public class Drivetrain extends SubsystemBase {
     var result = CameraPoseEstimation.getInstance().getCamera().getLatestResult();
     if (result.hasTargets()) {
         omega =
-            -thetaController.calculate(result.getBestTarget().getYaw() - getOffset());
+            -thetaController.calculate(result.getBestTarget().getYaw() - OFFSET);
         setPreviousHeading(getHeading());
     }
     return omega;
   }
 
-  public double getOffset() {
-    switch (AngledElevator.getInstance().getState()) {
-      case MIDDLE:
-        return 18;
-      case HIGH:
-        return 10.5;
-      case HP:
-        return 8;
-      default:
-        return 11;
-    }
-  }
+  // public double getOffset() {
+  //   switch (AngledElevator.getInstance().getState()) {
+  //     case MIDDLE:
+  //       return 18;
+  //     case HIGH:
+  //       return 10.5;
+  //     case HP:
+  //       return 9.5;
+  //     default:
+  //       return 11;
+  //   }
+  // }
 
   @Override
   public void periodic() {

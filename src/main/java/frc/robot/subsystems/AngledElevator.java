@@ -31,14 +31,14 @@ public class AngledElevator extends SubsystemBase {
   private static final double CRUISE_VELOCITY = 7447;
   private static final double CRUISE_ACCELERATION = 4447;
 
-  public static enum State {
-    ZERO,
-    HP,
-    MIDDLE,
-    HIGH,
-  }
+  // public static enum State {
+  //   ZERO,
+  //   HP,
+  //   MIDDLE,
+  //   HIGH,
+  // }
 
-  private State state;
+  // private State state;
 
   private AngledElevator() {
     master =
@@ -70,9 +70,9 @@ public class AngledElevator extends SubsystemBase {
     this.desired = position;
   }
 
-  public void setDesiredState(State state) {
-    this.state = state;
-  }
+  // public void setDesiredState(State state) {
+  //   this.state = state;
+  // }
 
   public double getDesiredPosition() {
     return desired;
@@ -92,7 +92,7 @@ public class AngledElevator extends SubsystemBase {
     master.configMotionCruiseVelocity(CRUISE_VELOCITY);
     master.configMotionAcceleration(CRUISE_ACCELERATION);
     master.configClosedloopRamp(0.01);
-    state = State.ZERO;
+    // state = State.ZERO;
   }
 
   public boolean checkExtend(double desired) {
@@ -165,9 +165,9 @@ public class AngledElevator extends SubsystemBase {
     // offsetTargetHeights();
   }
 
-  public State getState() {
-    return state;
-  }
+  // public State getState() {
+  //   return state;
+  // }
 
   public static AngledElevator getInstance() {
     if (instance == null) {

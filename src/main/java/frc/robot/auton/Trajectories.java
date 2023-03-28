@@ -24,8 +24,8 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180)),
               new Pose2d(3.48, 2.75, Rotation2d.fromDegrees(180))),
-          3.0,
-          1.5,
+          2.0,
+          1.0,
           0.0,
           0.0,
           true);
@@ -35,7 +35,7 @@ public final class Trajectories {
           List.of(
               new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180)),
               new Pose2d(6.5, 2.75, Rotation2d.fromDegrees(180))),
-          2.2,
+          2.5,
           1.0,
           0.0,
           0.0,

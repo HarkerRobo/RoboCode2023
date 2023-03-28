@@ -9,12 +9,12 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignPitch extends CommandBase {
-  public static final double kP = 0.0368;
+  public static final double kP = 0.037;
   public static final double kI = 0.0;
   public static final double kD = 0.0;
 
   public static final double SETPOINT = 0;
-  public static final double MAX_ERROR_PITCH = 0.03;
+  public static final double MAX_ERROR_PITCH = 0.01;
   private static ProfiledPIDController pitchController =
       new ProfiledPIDController(
           kP, kI, kD, new Constraints(RobotMap.MAX_DRIVING_SPEED, RobotMap.MAX_DRIVING_SPEED / 2));
