@@ -5,6 +5,7 @@ import frc.robot.OI;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.AngledElevator;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.AngledElevator.State;
 import harkerrobolib.commands.IndefiniteCommand;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.MathUtil;
@@ -13,7 +14,9 @@ public class SwerveManual extends IndefiniteCommand {
 
   public static final double SPEED_MULTIPLIER = 0.9;
   public static final double ROT_MULITPLLIER = 0.25;
-  public static final double CLAMP_MULTIPLIER = 0.30;
+  public static final double CLAMP_MULTIPLIER = 0.63;
+  public static final double MAX_ACCELERATION = 17.0;
+  public static final double MAX_ACCELERATION_EXTENDED = 7.0;
 
   private double vx, vy, prevvx, prevvy, omega;
 
@@ -67,11 +70,11 @@ public class SwerveManual extends IndefiniteCommand {
   }
 
   private double limitAcceleration(double value, double prevValue) {
-    if (Math.abs(value - prevValue) / Constants.ROBOT_LOOP > RobotMap.MAX_DRIVING_ACCELERATION) {
+    if (Math.abs(value - prevValue) / Constants.ROBOT_LOOP > ((AngledElevator.getInstance().isFarExtended()) ? MAX_ACCELERATION_EXTENDED : MAX_ACCELERATION)) {
       value =
           prevValue
               + Math.signum(value - prevValue)
-                  * RobotMap.MAX_DRIVING_ACCELERATION
+                  * ((AngledElevator.getInstance().isFarExtended()) ? MAX_ACCELERATION_EXTENDED : MAX_ACCELERATION)
                   * Constants.ROBOT_LOOP;
     }
     return value;

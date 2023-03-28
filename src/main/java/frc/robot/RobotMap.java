@@ -18,7 +18,6 @@ public final class RobotMap {
 
   // Robot Constants
   public static final double MAX_DRIVING_SPEED = 4.0; // m/s
-  public static final double MAX_DRIVING_ACCELERATION = 10.0;
   public static final double MAX_ANGLE_VELOCITY = Math.PI;
   public static final double MAX_ANGLE_ACCELERATION = MAX_ANGLE_VELOCITY / 2;
 
