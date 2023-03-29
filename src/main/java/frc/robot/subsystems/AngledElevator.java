@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Position;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.HSFalconBuilder;
