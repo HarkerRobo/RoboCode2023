@@ -11,9 +11,11 @@ import harkerrobolib.util.MathUtil;
 
 public class SwerveManual extends IndefiniteCommand {
 
-  public static final double SPEED_MULTIPLIER = 0.9;
+  public static final double SPEED_MULTIPLIER = 1.0;
   public static final double ROT_MULITPLLIER = 0.25;
-  public static final double CLAMP_MULTIPLIER = 0.30;
+  public static final double CLAMP_MULTIPLIER = 0.63;
+  public static final double MAX_ACCELERATION = 17.5;
+  public static final double MAX_ACCELERATION_EXTENDED = 5.5;
 
   private double vx, vy, prevvx, prevvy, omega;
 
@@ -40,10 +42,7 @@ public class SwerveManual extends IndefiniteCommand {
     vy = scaleValues(vy, RobotMap.MAX_DRIVING_SPEED) * ((AngledElevator.getInstance().isFarExtended()) ? CLAMP_MULTIPLIER : SPEED_MULTIPLIER);
     omega = scaleValues(omega, RobotMap.MAX_ANGLE_VELOCITY) * ((AngledElevator.getInstance().isFarExtended()) ? ROT_MULITPLLIER : SPEED_MULTIPLIER);
 
-
-    // pigeon alignment
-
-    // limit accelerationevvx);
+    // limit acceleration;
     vy = limitAcceleration(vy, prevvy);
     vx = limitAcceleration(vx, prevvx);
 
@@ -52,12 +51,13 @@ public class SwerveManual extends IndefiniteCommand {
       vy = 0;
     }
 
+    Drivetrain.getInstance().adjustPigeon(omega);
+    
     if (OI.getInstance().getDriver().getRightBumperState())
       omega = Drivetrain.getInstance().alignToTarget(omega);
-    else omega = Drivetrain.getInstance().adjustPigeon(omega);
 
     if (Math.abs(omega) < RobotMap.Drivetrain.MIN_OUTPUT) {
-      omega = RobotMap.Drivetrain.MIN_OUTPUT;
+      omega = 0;
     }
 
     Drivetrain.getInstance()
@@ -67,11 +67,11 @@ public class SwerveManual extends IndefiniteCommand {
   }
 
   private double limitAcceleration(double value, double prevValue) {
-    if (Math.abs(value - prevValue) / Constants.ROBOT_LOOP > RobotMap.MAX_DRIVING_ACCELERATION) {
+    if (Math.abs(value - prevValue) / Constants.ROBOT_LOOP > ((AngledElevator.getInstance().isFarExtended()) ? MAX_ACCELERATION_EXTENDED : MAX_ACCELERATION)) {
       value =
           prevValue
               + Math.signum(value - prevValue)
-                  * RobotMap.MAX_DRIVING_ACCELERATION
+                  * ((AngledElevator.getInstance().isFarExtended()) ? MAX_ACCELERATION_EXTENDED : MAX_ACCELERATION)
                   * Constants.ROBOT_LOOP;
     }
     return value;

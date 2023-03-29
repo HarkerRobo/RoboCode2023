@@ -37,13 +37,10 @@ public class OI {
   private void initBindings() {
     driver.getRightDPadButton().onTrue(new ToggleClaw());
     driver.getLeftDPadButton().onTrue(new CloseClaw());
-    driver.getButtonY().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]));
-    // .alongWith(new InstantCommand(()->AngledElevator.getInstance().setDesiredState(State.HIGH))));
     driver.getButtonX().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[3]));
-    // .alongWith(new InstantCommand(()->AngledElevator.getInstance().setDesiredState(State.HP))));
-
-    driver.getButtonA().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
+    driver.getButtonY().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[2]));
     driver.getButtonB().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[1]));
+    driver.getButtonA().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
     // .alongWith(new InstantCommand(()->AngledElevator.getInstance().setDesiredState(State.MIDDLE))));
     driver.getLeftBumper().whileTrue(new AlignPitch());
     driver
@@ -56,8 +53,7 @@ public class OI {
     driver.getButtonSelect().onTrue(new ZeroElevator());
 
     operator.getButtonSelect().onTrue(new ZeroElevator());
-    operator.getLeftBumper().whileTrue(new AlignPitch());
-    operator.getDownDPadButton().onTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
+    operator.getButtonA().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
   }
 
   public static OI getInstance() {

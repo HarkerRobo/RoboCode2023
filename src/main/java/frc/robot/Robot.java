@@ -107,6 +107,7 @@ public class Robot extends TimedRobot {
         Drivetrain.getInstance()
             .setPose(Trajectories.apply(new Pose2d(1.91, 2.75, Rotation2d.fromDegrees(180))));
         Autons.middleAndCross.schedule();
+        break;
     }
   }
 
@@ -120,6 +121,7 @@ public class Robot extends TimedRobot {
     Autons.middlePath.cancel();
     Autons.middleAndCross.cancel();
     Autons.noAuton.cancel();
+    Drivetrain.getInstance().setYaw(180);
   }
 
   @Override
