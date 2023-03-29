@@ -27,7 +27,7 @@ public class SwerveModule {
   public static double TRANSLATION_kV = 2.84584;
   public static double TRANSLATION_kA = 0.21522;
 
-  public static final double TRANSLATION_QELMS = 5;
+  public static final double TRANSLATION_QELMS = 8;
 
   public SwerveModule(int id) {
     this.id = id;

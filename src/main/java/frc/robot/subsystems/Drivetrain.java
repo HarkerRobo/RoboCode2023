@@ -35,7 +35,7 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = 0.9;
+  public static double PIGEON_kP = 2.7;
 
   private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.01);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
