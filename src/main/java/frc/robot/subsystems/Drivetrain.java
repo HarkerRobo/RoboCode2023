@@ -35,14 +35,14 @@ public class Drivetrain extends SubsystemBase {
   private Pigeon2 pigeon;
   private double prevHeading;
 
-  public static double PIGEON_kP = 2.7;
+  public static final double PIGEON_kP = 1.0;
 
-  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.01);
+  private static Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.2);
   private static Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.05, 0.025, 0.05);
 
-  private static final double THETA_P = 0.118; //TODO
-  private static final double THETA_I = 0.0; //TODO
-  private static final double THETA_D = 0.0; //TODO
+  private static final double THETA_P = 0.118;
+  private static final double THETA_I = 0.0;
+  private static final double THETA_D = 0.0;
   
   private static ProfiledPIDController thetaController = new ProfiledPIDController(THETA_P, THETA_I, THETA_D, new Constraints(4, 3.5));
   public static final double MAX_ERROR_YAW = 0.5;
@@ -88,8 +88,6 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double adjustPigeon(double omega) {
-    PIGEON_kP = SmartDashboard.getNumber("Pigeon kP", PIGEON_kP);
-    SmartDashboard.putNumber("Pigeon kP", PIGEON_kP);
     if (Math.abs(omega) <= RobotMap.Drivetrain.MIN_OUTPUT)
       omega = -PIGEON_kP * (prevHeading - getHeading());
     else prevHeading = getHeading();
@@ -191,7 +189,7 @@ public class Drivetrain extends SubsystemBase {
 
   public static Drivetrain getInstance() {
     if (instance == null) instance = new Drivetrain();
-    return instance;
+      return instance;
   }
 
   public SwerveDriveKinematics getKinematics() {
@@ -203,10 +201,6 @@ public class Drivetrain extends SubsystemBase {
     builder.setSmartDashboardType("Drivetrain");
     builder.setActuator(true);
     builder.setSafeState(() -> setAngleAndDrive(new ChassisSpeeds()));
-    builder.addDoubleProperty(
-        "Translation kS", () -> SwerveModule.TRANSLATION_kS, swerveModules[0]::setkS);
-    builder.addDoubleProperty(
-        "Translation kV", () -> SwerveModule.TRANSLATION_kV, swerveModules[0]::setkV);
     builder.addDoubleProperty("Pitch Value", () -> getPitch(), null);
     builder.addDoubleProperty("Roll Value", () -> getRoll(), null);
 

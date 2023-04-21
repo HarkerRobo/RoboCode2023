@@ -6,6 +6,7 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import harkerrobolib.util.Constants;
 import harkerrobolib.util.HSFalconBuilder;
@@ -22,12 +23,12 @@ public class SwerveModule {
   private MotorVelocitySystem transLoop;
 
   // PID Constants
-  public static double ROTATION_kP = 0.12;
-  public static double TRANSLATION_kS = 0.02569;
-  public static double TRANSLATION_kV = 2.84584;
+  public static double ROTATION_kP = 0.25;
+  public static double TRANSLATION_kS = 0.00; // 0.02569;
+  public static double TRANSLATION_kV = 1.954584;
   public static double TRANSLATION_kA = 0.21522;
 
-  public static final double TRANSLATION_QELMS = 8;
+  public static final double TRANSLATION_QELMS = 15;
 
   public SwerveModule(int id) {
     this.id = id;
@@ -57,6 +58,7 @@ public class SwerveModule {
     initModule();
   }
 
+
   private void initModule() {
     rotation.config_kP(Constants.SLOT_INDEX, ROTATION_kP);
     translation.enableVoltageCompensation(false);
@@ -78,39 +80,34 @@ public class SwerveModule {
   }
 
   private SwerveModuleState optimize(SwerveModuleState desiredState) {
-    var angle = desiredState.angle.getDegrees();
+    double currentAngle = Math.toRadians(getAngle());
+    double targetAngleSetpoint = Math.IEEEremainder(desiredState.angle.getRadians(), Math.PI * 2);
+    double remainder =  currentAngle % (Math.PI * 2);
+    var adjusted = targetAngleSetpoint + (currentAngle - remainder);
+
     var speed = desiredState.speedMetersPerSecond;
+    SmartDashboard.putNumber(swerveIDToName(id) + " Desired Translation Speed", speed);
     // desiredState.angle.rotateBy(Rotation2d.fromDegrees(getAngle()).unaryMinus());
-    while (angle - getAngle() > 180) {
-      angle -= 360;
+
+    
+    if (adjusted - currentAngle > Math.PI) {
+      adjusted -= Math.PI * 2;
       // delta = desiredState.angle.getDegrees() - getAngle();
     }
 
-    while (angle - getAngle() < -180) {
-      angle += 360;
+    if (adjusted - currentAngle < -Math.PI) {
+      adjusted += Math.PI * 2;
       // delta = desiredState.angle.minus(getAngle());
     }
 
-    if (angle - getAngle() > 90) {
-      angle -= 180;
+    if (adjusted - currentAngle > Math.PI / 2) {
+      adjusted -= Math.PI;
       speed *= -1;
-    } else if (angle - getAngle() < -90) {
-      angle += 180;
+    } else if (adjusted - currentAngle < -Math.PI / 2) {
+      adjusted += Math.PI;
       speed *= -1;
     }
-    return new SwerveModuleState(speed, Rotation2d.fromDegrees(angle));
-  }
-
-  public void setkS(double kS) {
-    TRANSLATION_kS = kS;
-    transLoop =
-        new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
-  }
-
-  public void setkV(double kV) {
-    TRANSLATION_kV = kV;
-    transLoop =
-        new MotorVelocitySystem(TRANSLATION_kS, TRANSLATION_kV, TRANSLATION_kA, TRANSLATION_QELMS);
+    return new SwerveModuleState(speed, Rotation2d.fromRadians(adjusted));
   }
 
   private void setAbsolutePosition() {

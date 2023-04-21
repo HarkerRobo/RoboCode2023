@@ -11,11 +11,11 @@ import harkerrobolib.util.MathUtil;
 
 public class SwerveManual extends IndefiniteCommand {
 
-  public static final double SPEED_MULTIPLIER = 1.0;
+  public static final double SPEED_MULTIPLIER = 1.5;
   public static final double ROT_MULITPLLIER = 0.25;
-  public static final double CLAMP_MULTIPLIER = 0.63;
-  public static final double MAX_ACCELERATION = 17.5;
-  public static final double MAX_ACCELERATION_EXTENDED = 5.5;
+  public static final double CLAMP_MULTIPLIER = 0.7;
+  public static final double MAX_ACCELERATION = 35;
+  public static final double MAX_ACCELERATION_EXTENDED = 6.5;
 
   private double vx, vy, prevvx, prevvy, omega;
 
@@ -52,12 +52,12 @@ public class SwerveManual extends IndefiniteCommand {
     }
 
     Drivetrain.getInstance().adjustPigeon(omega);
-    
+
     if (OI.getInstance().getDriver().getRightBumperState())
       omega = Drivetrain.getInstance().alignToTarget(omega);
 
     if (Math.abs(omega) < RobotMap.Drivetrain.MIN_OUTPUT) {
-      omega = 0;
+      omega = 0.0001;
     }
 
     Drivetrain.getInstance()

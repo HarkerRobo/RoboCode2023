@@ -52,7 +52,7 @@ public class OI {
                 }));
     driver.getButtonSelect().onTrue(new ZeroElevator());
 
-    operator.getButtonSelect().onTrue(new ZeroElevator());
+    operator.getButtonX().onTrue(new ZeroElevator());
     operator.getButtonA().whileTrue(new MoveToPosition(RobotMap.AngledElevator.POSITIONS[0]));
   }
 

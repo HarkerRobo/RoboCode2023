@@ -9,7 +9,7 @@ import frc.robot.RobotMap;
 import frc.robot.subsystems.Drivetrain;
 
 public class AlignPitch extends CommandBase {
-  public static final double kP = 0.037;
+  public static final double kP = 0.05;
   public static final double kI = 0.0;
   public static final double kD = 0.0;
 
@@ -30,12 +30,10 @@ public class AlignPitch extends CommandBase {
   }
 
   public void execute() {
-    pitchController.setP(SmartDashboard.getNumber("Pitch kP", kP));
-    SmartDashboard.putNumber("Pitch kP", kP);
     double error = SETPOINT - Drivetrain.getInstance().getRoll();
     double forwardAmount = pitchController.calculate(error);
     double omega = Drivetrain.getInstance().adjustPigeon(0);
-    ChassisSpeeds speeds = new ChassisSpeeds(forwardAmount, 0, -omega);
+    ChassisSpeeds speeds = new ChassisSpeeds(forwardAmount, 0, 0);
     Drivetrain.getInstance().setAngleAndDrive(speeds);
   }
 
