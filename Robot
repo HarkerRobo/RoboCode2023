@@ -1,0 +1,299 @@
+HOME
+RESEARCH
+Toggle navigation
+HomeWhois Lookup168.209.201.74
+IP Information for 168.209.201.74
+
+ Quick Stats
+IP Location	South Africa South Africa Cape Town Dimension Data
+ASN	South Africa AS3741 IS, ZA (registered Aug 01, 1994)
+Whois Server	whois.afrinic.net
+IP Address	168.209.201.74
+% No abuse contact registered for 168.209.0.0 - 168.210.255.255
+
+inetnum:        168.209.0.0 - 168.210.255.255
+netname:        NEDNET2
+descr:          Dimension Data
+descr:          Guardian National
+descr:          10th Floor West wing
+descr:          Libridge building
+descr:          Ameshof Street
+descr:          Braamfontein
+descr:          Johannesburg
+country:        ZA
+org:            ORG-DD1-AFRINIC
+admin-c:        JA50-AFRINIC
+admin-c:        ZT12-AFRINIC
+admin-c:        CLR1-AFRINIC
+admin-c:        PD19-AFRINIC
+admin-c:        MDP1-AFRINIC
+admin-c:        ZM11-AFRINIC
+admin-c:        NK18-AFRINIC
+admin-c:        FH9-AFRINIC
+admin-c:        EK43-AFRINIC
+admin-c:        HL16-AFRINIC
+admin-c:        ES46-AFRINIC
+admin-c:        DA25-AFRINIC
+tech-c:         JA50-AFRINIC
+tech-c:         ZT12-AFRINIC
+tech-c:         CLR1-AFRINIC
+tech-c:         PD19-AFRINIC
+tech-c:         MDP1-AFRINIC
+tech-c:         ZM11-AFRINIC
+tech-c:         NK18-AFRINIC
+tech-c:         FH9-AFRINIC
+tech-c:         EK43-AFRINIC
+tech-c:         HL16-AFRINIC
+tech-c:         DA25-AFRINIC
+status:         ALLOCATED PA
+notify:         
+notify:         
+mnt-by:         AFRINIC-HM-MNT
+mnt-lower:      TF-168-209-0-0-168-210-255-255-MNT
+changed:         19940713
+changed:         20000612
+changed:         20050221
+changed:         20210209
+changed:         20210505
+changed:         20211226
+source:         AFRINIC
+parent:         0.0.0.0 - 255.255.255.255
+
+organisation:   ORG-DD1-AFRINIC
+org-name:       Dimension Data
+org-type:       LIR
+country:        ZA
+address:        The Campus,
+address:        57 Sloane St,
+address:        Bryanston
+address:        Johannesburg 2021
+e-mail:         
+phone:          tel:+27-72-614-3611
+phone:          tel:+27-11-575-0325
+admin-c:        ZT12-AFRINIC
+admin-c:        ES46-AFRINIC
+admin-c:        NK18-AFRINIC
+admin-c:        MDP1-AFRINIC
+admin-c:        CLR1-AFRINIC
+admin-c:        EK43-AFRINIC
+admin-c:        DA25-AFRINIC
+admin-c:        JA50-AFRINIC
+admin-c:        HL16-AFRINIC
+admin-c:        FH9-AFRINIC
+admin-c:        PD19-AFRINIC
+admin-c:        ZM11-AFRINIC
+tech-c:         ZT12-AFRINIC
+tech-c:         NK18-AFRINIC
+tech-c:         MDP1-AFRINIC
+tech-c:         CLR1-AFRINIC
+tech-c:         EK43-AFRINIC
+tech-c:         DA25-AFRINIC
+tech-c:         JA50-AFRINIC
+tech-c:         HL16-AFRINIC
+tech-c:         FH9-AFRINIC
+tech-c:         PD19-AFRINIC
+tech-c:         ZM11-AFRINIC
+mnt-ref:        AFRINIC-HM-MNT
+mnt-ref:        TF-168-209-0-0-168-210-255-255-MNT
+mnt-by:         AFRINIC-HM-MNT
+notify:         
+changed:         19930706
+changed:         19930706
+changed:         20050221
+changed:         20110714
+changed:         20160923
+changed:         20200211
+changed:         20200507
+changed:         20210207
+changed:         20210222
+changed:         20210324
+changed:         20210412
+changed:         20210713
+changed:         20211223
+changed:         20220107
+changed:         20220126
+source:         AFRINIC
+
+person:         Corne Le Roux
+nic-hdl:        CLR1-AFRINIC
+address:        The Campus, 57 Sloane Street
+address:        Bryanston, Gauteng
+address:        Johannesburg 2021
+address:        South Africa
+address:        Johannesburg
+address:        Other
+e-mail:         
+phone:          tel:+27-87-353-0546
+mnt-by:         GENERATED-BONXRQXVLRDI3ALQZMW2BX1XVXRYYYLX-MNT
+changed:         20190426
+changed:         20220901
+source:         AFRINIC
+
+person:         DNS Administration
+address:        PO BOX 3234
+address:        Parklands, Gauteng 2121
+address:        ZA
+phone:          tel:+27-11-447-5566
+fax-no:         tel:+27-11-447-5567
+e-mail:         
+nic-hdl:        DA25-AFRINIC
+mnt-by:         GENERATED-5DRIE83KKFOSLY1J26BA6OERWG7UT3KG-MNT
+changed:         19960719
+changed:         20050221
+source:         AFRINIC
+
+person:         Elne Kramer
+address:        The Campus, 57 Sloane Street
+address:        Bryanston, Gauteng
+address:        Johannesburg 2021
+address:        South Africa
+phone:          tel:+27-11-575-7845
+e-mail:         
+nic-hdl:        EK43-AFRINIC
+mnt-by:         GENERATED-MH5BHHWXXJNMX1MQLYAJHIY9HED5QGHA-MNT
+changed:         20190620
+source:         AFRINIC
+
+person:         Eddie Stassen
+nic-hdl:        ES46-AFRINIC
+address:        100 Fairway Close
+address:        Parow
+address:        Cape Town 7500
+address:        South Africa
+e-mail:         
+phone:          tel:+27-82-823-5592
+mnt-by:         GENERATED-0D8VXXK6EO1P8QRG27MEEBRNJPFIYKCX-MNT
+changed:         20211223
+changed:         20220105
+source:         AFRINIC
+
+person:         Faiz Hartley
+nic-hdl:        FH9-AFRINIC
+address:        100 Fairway Close
+address:        Cape Town 7500
+address:        South Africa
+address:        Cape Town
+address:        Other
+e-mail:         
+phone:          tel:+27-21-596-4700
+mnt-by:         GENERATED-SRDU2OPM7ENJQXAL2K51PPF7CBCIQAGH-MNT
+changed:         20160707
+changed:         20160901
+changed:         20180524
+changed:         20191113
+changed:         20201201
+source:         AFRINIC
+
+person:         Hermann Lang
+nic-hdl:        HL16-AFRINIC
+address:        100 Fairway Close
+address:        Parow
+address:        Cape Town 7500
+address:        South Africa
+e-mail:         
+phone:          tel:+27-87-379-5440
+mnt-by:         GENERATED-TNAMF1BCHAOXF5NVEBVC1EG2C2NYPRJY-MNT
+changed:         20210412
+changed:         20220105
+source:         AFRINIC
+
+person:         Jehad Arnold
+address:        100 Fairway Close
+address:        Cape Town 7500
+address:        South Africa
+phone:          +0215964700
+e-mail:         
+nic-hdl:        JA50-AFRINIC
+mnt-by:         GENERATED-TVETECITNYRHD1CINUQQA0H9U7STCYUA-MNT
+changed:         20160715
+source:         AFRINIC
+
+person:         Marcel Di Perna
+address:        Mweb Building
+address:        100 Fairway Close
+address:        Parow
+address:        Cape Town 7500
+address:        South Africa
+phone:          tel:+27-21-596-4755
+e-mail:         
+e-mail:         
+org:            ORG-MA20-AFRINIC
+nic-hdl:        MDP1-AFRINIC
+mnt-by:         AFRINIC-HM-MNT
+changed:         20090311
+changed:         20151208
+changed:         20160704
+source:         AFRINIC
+
+person:         Niel Kruger
+nic-hdl:        NK18-AFRINIC
+address:        The Campus, 57 Sloane Street
+address:        Bryanston, Gauteng
+address:        Johannesburg 2021
+address:        South Africa
+address:        JHB
+address:        South Africa
+e-mail:         
+e-mail:         
+phone:          tel:+27-87-354-0207
+mnt-by:         GENERATED-ACXHGWHAPVIDGKL5YZMHPRHOLBXUU0GO-MNT
+changed:         20170425
+changed:         20210323
+source:         AFRINIC
+
+person:         Pawel Dabrowski
+address:        The Campus, 57 Sloane Street
+address:        Bryanston, Gauteng
+address:        Johannesburg 2021
+address:        South Africa
+address:        Johannesburg
+address:        South Africa
+phone:          tel:+27-83-554-1177
+phone:          tel:+27-11-575-0044
+e-mail:         
+e-mail:         
+nic-hdl:        PD19-AFRINIC
+mnt-by:         GENERATED-ZWDYJ2VCIBPGR9R7QJRROAVSGRMM4TCU-MNT
+changed:         20160802
+changed:         20170929
+source:         AFRINIC
+
+person:         Ziyaad Munshi
+address:        The Campus, 57 Sloane Street
+address:        Bryanston
+address:        Gauteng
+address:        Johannesburg 2021
+phone:          tel:+27-11-575-0211
+e-mail:         
+nic-hdl:        ZM11-AFRINIC
+mnt-by:         GENERATED-CSQQAVAMDFYEN4RG8RLAQ3T44NPRWWIG-MNT
+changed:         20160512
+source:         AFRINIC
+
+person:         IS Hostmaster
+nic-hdl:        ZT12-AFRINIC
+address:        The Internet Solution
+address:        The Campus, 57 Sloane Street
+address:        Bryanston
+address:        Gauteng
+address:        Johannesburg 2021
+address:        South Africa
+e-mail:         
+e-mail:         
+e-mail:         
+phone:          tel:+27-11-575-1000
+org:            ORG-TIS1-AFRINIC
+notify:         
+mnt-by:         GENERATED-4THKYWBYLLP54MAK15NBL6CWUURHVN1A-MNT
+changed:         20050712
+changed:         20110505
+changed:         20140911
+changed:         20200414
+changed:         20200904
+source:         AFRINIC
+Iris Investigation Platform
+Tools
+ 
+   
+Sitemap Blog Terms Privacy Contact California Privacy Notice Do Not Sell My Personal Information  
+© 2023 DomainTools
